@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @Table(name = "user")
 public class User {
-    // co vai lon
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;

@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/Swp490TwApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/Swp490TwApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/UserStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +67,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/DO_an/SWP490_G19_Fall2022",
+    "last_opened_file_path": "D:/learning/DO_AN/SWP490_G19_Fall2022",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -82,6 +76,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.capstone.project.domain" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.capstone.project.repository" />
     </key>
@@ -104,6 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1664804088149</updated>
       <workItem from="1664804089587" duration="12318000" />
+      <workItem from="1664869161256" duration="3774000" />
     </task>
     <servers />
   </component>

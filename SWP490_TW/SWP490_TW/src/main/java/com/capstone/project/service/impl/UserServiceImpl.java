@@ -10,7 +10,6 @@ import com.capstone.project.repository.StatusRepository;
 import com.capstone.project.repository.UserRepository;
 import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getALL() {
-        return null;
+        return userRepository.findAll().stream().map(UserMapper :: convertToUserDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -41,6 +40,11 @@ public class UserServiceImpl implements UserService {
                         .status(userStatus.get())
                 .build());
         return UserMapper.convertToUserDTO(user);
+    }
+
+    @Override
+    public UserDTO delete(int id) {
+        return null;
     }
 
     @Override

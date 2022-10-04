@@ -1,7 +1,5 @@
 package com.capstone.project.dto;
 
-import com.capstone.project.domain.Role;
-import com.capstone.project.domain.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
