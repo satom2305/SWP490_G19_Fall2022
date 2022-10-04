@@ -1,48 +1,31 @@
 package com.capstone.project.domain;
-
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "Role")
+@Data
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long roleID;
+    @Column(name = "role_id")
+    private int roleId;
 
-    @Column(name = "roleName")
+    @Column(name = "role_name")
     private String roleName;
 
-    @OneToMany(mappedBy = "roleID", fetch = FetchType.LAZY)
-    private List<User> users;
 
-    public Role() {
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleID=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                '}';
     }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public long getRoleID() {
-        return roleID;
-    }
-
-    public void setRoleID(long roleID) {
-        this.roleID = roleID;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-
 }

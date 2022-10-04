@@ -12,7 +12,7 @@ public class Order {
     private long orderID;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_id")
     private User userID;
 
 }
