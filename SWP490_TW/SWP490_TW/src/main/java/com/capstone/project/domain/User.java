@@ -38,14 +38,12 @@ public class User {
     @JsonIgnore
     private Role role;
 
-    // cho toi ti
-    // no de nhu nay
     @ManyToOne
     @JoinColumn(name = "status_id",nullable = true)
     @JsonIgnore
     private UserStatus status;
 
-    @OneToMany(mappedBy = "userID", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Order> orders;
 
 }

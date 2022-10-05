@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="08a1a630-cee6-43ba-9b38-f80b8abae230" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/ProductStatus.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
-=======
-    <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="" />
->>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,23 +57,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/learning/DO_AN/SWP490_G19_Fall2022",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/learning/DO_AN/SWP490_G19_Fall2022&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8f7ebfbcd911a00647c9f0d885d4f2f8&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.capstone.project.domain" />
@@ -104,16 +101,16 @@
       <option name="presentableId" value="Default" />
       <updated>1664804088149</updated>
       <workItem from="1664804089587" duration="12318000" />
-<<<<<<< Updated upstream
-      <workItem from="1664869161256" duration="3774000" />
-=======
-      <workItem from="1664864773290" duration="66000" />
->>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.xml.ws:jakarta.xml.ws-api" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
