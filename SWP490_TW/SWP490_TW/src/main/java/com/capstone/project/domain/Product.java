@@ -49,13 +49,13 @@ public class Product {
     @Column(name="created_date")
     private String createdDate;
 
+    @NotNull
+    @Column(name="product_status")
+    private String productStatus;
+
     @ManyToOne
     @JoinColumn(name = "category_id",nullable = true)
     @JsonIgnore
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "status_pid",nullable = true)
-    @JsonIgnore
-    private ProductStatus productStatus;
 }

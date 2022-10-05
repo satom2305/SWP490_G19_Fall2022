@@ -33,15 +33,14 @@ public class User {
     @Column(name="email")
     private String email;
 
+    @NotNull
+    @Column(name="user_status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "role_id",nullable = true)
     @JsonIgnore
     private Role role;
-
-
-    @NotNull
-    @Column(name="user_status")
-    private String status;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Order> orders;

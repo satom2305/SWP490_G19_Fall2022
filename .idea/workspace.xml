@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="workspace.xsd" version="4">
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="" />
+    <list default="true" id="08a1a630-cee6-43ba-9b38-f80b8abae230" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/ProductStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,8 +75,24 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "spring.configuration.checksum": "8f7ebfbcd911a00647c9f0d885d4f2f8"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/learning/DO_AN/SWP490_G19_Fall2022&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8f7ebfbcd911a00647c9f0d885d4f2f8&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.capstone.project.domain" />
@@ -103,6 +127,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.xml.ws:jakarta.xml.ws-api" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
