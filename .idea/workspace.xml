@@ -12,6 +12,9 @@
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
+=======
+    <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +104,11 @@
       <option name="presentableId" value="Default" />
       <updated>1664804088149</updated>
       <workItem from="1664804089587" duration="12318000" />
+<<<<<<< Updated upstream
       <workItem from="1664869161256" duration="3774000" />
+=======
+      <workItem from="1664864773290" duration="66000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
