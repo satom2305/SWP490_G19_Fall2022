@@ -9,10 +9,10 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderID;
+    private long orderId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userID;
+    private User userId;
 
 }

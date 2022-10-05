@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/dto/UserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SWP490_TW/SWP490_TW/src/main/java/com/capstone/project/service/impl/UserServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="af7b0ad6-9390-4c12-8797-f98570c44eb1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,12 +60,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/learning/DO_AN/SWP490_G19_Fall2022",
+    "last_opened_file_path": "C:/s9/SWP490_git/SWP490_G19_Fall2022",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "spring.configuration.checksum": "8f7ebfbcd911a00647c9f0d885d4f2f8"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -102,6 +96,8 @@
       <updated>1664804088149</updated>
       <workItem from="1664804089587" duration="12318000" />
       <workItem from="1664869161256" duration="3774000" />
+      <workItem from="1664905420531" duration="1549000" />
+      <workItem from="1664974783239" duration="10817000" />
     </task>
     <servers />
   </component>

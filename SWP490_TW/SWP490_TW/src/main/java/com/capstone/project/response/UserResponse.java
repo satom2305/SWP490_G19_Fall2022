@@ -1,21 +1,19 @@
-package com.capstone.project.dto;
+package com.capstone.project.response;
+
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class UserRequest {
-
+@ToString
+public class UserResponse {
     private String username;
     private String password;
     private String email;
-    private int roleId;
+    private RoleResponse role;
     private int statusId;
-
-
 }
