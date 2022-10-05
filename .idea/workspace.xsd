@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="project">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="component" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence minOccurs="0">
+              <xs:element name="option" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence minOccurs="0">
+                    <xs:element name="list" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="option">
+                            <xs:complexType>
+                              <xs:attribute name="value" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="map" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="entry" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="key" use="required" />
+                              <xs:attribute name="value" type="xs:boolean" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="MavenGeneralSettings" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="option">
+                            <xs:complexType>
+                              <xs:attribute name="name" use="required" />
+                              <xs:attribute name="value" type="xs:boolean" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:ID" use="required" />
+                  <xs:attribute name="value" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="list" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence minOccurs="0">
+                    <xs:element name="change" minOccurs="0">
+                      <xs:complexType>
+                        <xs:attribute name="beforePath" use="required" />
+                        <xs:attribute name="beforeDir" type="xs:boolean" use="required" fixed="false" />
+                        <xs:attribute name="afterPath" />
+                        <xs:attribute name="afterDir" type="xs:boolean" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="default" type="xs:boolean" use="required" />
+                  <xs:attribute name="id" use="required" />
+                  <xs:attribute name="name" use="required" />
+                  <xs:attribute name="comment" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:ID" use="required" />
+            <xs:attribute name="id" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:integer" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
