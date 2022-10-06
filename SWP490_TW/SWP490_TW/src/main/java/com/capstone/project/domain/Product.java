@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -43,15 +44,15 @@ public class Product {
 
     @NotNull
     @Column(name="amount")
-    private String amount;
+    private int amount;
 
     @NotNull
     @Column(name="created_date")
-    private String createdDate;
+    private Date createdDate;
 
     @NotNull
     @Column(name="product_status")
-    private String productStatus;
+    private int productStatus;
 
     @ManyToOne
     @JoinColumn(name = "category_id",nullable = true)

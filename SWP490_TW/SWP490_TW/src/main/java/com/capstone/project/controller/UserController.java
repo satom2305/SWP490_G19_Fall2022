@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
+@RequestMapping("/users")
 @RequiredArgsConstructor
 
 public class UserController {
 
-    @Autowired
     private final UserService userService;
-    @GetMapping("/users")
+    @GetMapping("/")
     public ResponseEntity<List<UserResponse>> getAllAccounts() {
         return ResponseEntity.ok(userService.getALL());
     }
