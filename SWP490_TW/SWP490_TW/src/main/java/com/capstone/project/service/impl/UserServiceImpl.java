@@ -19,8 +19,6 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final StatusRepository statusRepository;
     private final ModelMapper mapper;
 
     @Override

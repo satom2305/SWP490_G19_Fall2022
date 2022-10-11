@@ -21,11 +21,4 @@ public class UserStatus {
     @Column(name = "status_name")
     private String statusName;
 
-    @Override
-    public String toString() {
-        return "UserStatus{" +
-                "statusID=" + statusId +
-                ", statusName='" + statusName + '\'' +
-                '}';
-    }
 }
