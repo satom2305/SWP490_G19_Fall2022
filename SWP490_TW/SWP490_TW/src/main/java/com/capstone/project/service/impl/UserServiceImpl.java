@@ -1,4 +1,6 @@
 package com.capstone.project.service.impl;
+import com.capstone.project.config.exception.AppException;
+import com.capstone.project.domain.User;
 import com.capstone.project.repository.RoleRepository;
 import com.capstone.project.repository.StatusRepository;
 import com.capstone.project.repository.UserRepository;
@@ -23,7 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserByUsername(String username) {
-        return null;
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("User not found", 404));
+        return mapper.map(user, UserResponse.class);
     }
 
     @Override

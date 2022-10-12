@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -58,5 +59,9 @@ public class Product {
     @JoinColumn(name = "category_id",nullable = true)
     @JsonIgnore
     private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts;
+
 
 }

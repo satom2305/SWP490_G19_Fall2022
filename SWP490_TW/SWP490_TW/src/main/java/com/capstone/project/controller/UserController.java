@@ -21,5 +21,9 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getAllAccounts() {
         return ResponseEntity.ok(userService.getALL());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserByUsername(@PathVariable("id") String Username){
+        return ResponseEntity.ok(userService.getUserByUsername(Username));
+    }
 
 }

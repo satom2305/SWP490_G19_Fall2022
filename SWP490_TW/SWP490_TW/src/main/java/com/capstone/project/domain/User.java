@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -35,14 +37,15 @@ public class User {
 
     @NotNull
     @Column(name="user_status")
-    private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id",nullable = true)
-    @JsonIgnore
-    private Role role;
+    private Boolean status;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Order> orders;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id")
+            ,inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles  = new HashSet<>();
+
 
 }

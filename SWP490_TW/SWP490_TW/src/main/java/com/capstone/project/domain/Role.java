@@ -20,12 +20,4 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "roleID=" + roleId +
-                ", roleName='" + roleName + '\'' +
-                '}';
-    }
 }
