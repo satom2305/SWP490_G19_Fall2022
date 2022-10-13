@@ -26,4 +26,7 @@ public class OrderStatus {
     @Column(name="status_name")
     private String statusName;
 
+    @OneToMany(mappedBy = "order_status")
+    List<Order> orders;
+
 }

@@ -62,8 +62,9 @@ public class CartServiceImpl implements CartService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(!(auth instanceof AnonymousAuthenticationToken)){
             String username = auth.getName();
-            User user = userRepository.findByUsername(username).orElseThrow(()->new AppException("User not found",404));
-            return cartRepository.findCartByUserId(user.getUserId())
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(()->new AppException("User not found",404));
+            return cartRepository.findByUser(user)
                     .stream()
                     .map(cart -> mapper.map(cart,CartResponse.class))
                     .collect(Collectors.toList());

@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class CartResponse {
     private int cartId;
     private Product product;
     private int amount;
     private User user;
+
 }

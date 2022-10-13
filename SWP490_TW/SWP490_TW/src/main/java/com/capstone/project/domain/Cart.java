@@ -22,7 +22,7 @@ public class Cart {
     private int cartId;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",nullable = false)
+    @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 
@@ -31,7 +31,7 @@ public class Cart {
     private int amount;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 

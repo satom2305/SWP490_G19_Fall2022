@@ -23,9 +23,9 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "order_status")
-    private OrderStatus orderStatus;
+    private OrderStatus order_status;
 
     @NotNull
     @Column(name="total_price")
