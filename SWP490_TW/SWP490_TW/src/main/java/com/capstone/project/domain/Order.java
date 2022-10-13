@@ -1,10 +1,18 @@
 package com.capstone.project.domain;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "order")
 public class Order {
     @Id
@@ -13,9 +21,9 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "order_status")
     private OrderStatus orderStatus;
 
