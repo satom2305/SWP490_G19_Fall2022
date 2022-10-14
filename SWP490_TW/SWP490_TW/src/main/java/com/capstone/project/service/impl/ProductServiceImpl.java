@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse findById(Integer id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new AppException("Product not found", 404));
-        return mapper.map(product , ProductResponse.class);
+        return mapper.map(product, ProductResponse.class);
     }
 
     @Override
@@ -51,35 +51,35 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new AppException("Category not found", 404));
         Product product = productRepository.save(Product.builder()
-                        .productName(request.getProductName())
-                        .description(request.getDescription())
-                        .originalPrice(request.getOriginalPrice())
-                        .sellPrice(request.getSellPrice())
-                        .salePercent(request.getSalePercent())
-                        .category(category)
-                        .amount(request.getAmount())
-                        .createdDate(request.getCreatedDate())
-                        .productStatus(request.getProductStatus())
+                .productName(request.getProductName())
+                .description(request.getDescription())
+                .originalPrice(request.getOriginalPrice())
+                .sellPrice(request.getSellPrice())
+                .salePercent(request.getSalePercent())
+                .category(category)
+                .amount(request.getAmount())
+                .createdDate(request.getCreatedDate())
+                .productStatus(request.getProductStatus())
                 .build());
         return mapper.map(product, ProductResponse.class);
     }
 
     @Override
-    public ProductResponse update(Integer id,ProductRequest request) {
+    public ProductResponse update(Integer id, ProductRequest request) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException("Product not found", 404));
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new AppException("Category not found", 404));
-                product.setProductName(request.getProductName());
-                product.setDescription(request.getDescription());
-                product.setOriginalPrice(request.getOriginalPrice());
-                product.setSellPrice(request.getSellPrice());
-                product.setSalePercent(request.getSalePercent());
-                product.setCategory(category);
-                product.setAmount(request.getAmount());
-                product.setCreatedDate(request.getCreatedDate());
-                product.setProductStatus(request.getProductStatus());
-                productRepository.save(product);
+        product.setProductName(request.getProductName());
+        product.setDescription(request.getDescription());
+        product.setOriginalPrice(request.getOriginalPrice());
+        product.setSellPrice(request.getSellPrice());
+        product.setSalePercent(request.getSalePercent());
+        product.setCategory(category);
+        product.setAmount(request.getAmount());
+        product.setCreatedDate(request.getCreatedDate());
+        product.setProductStatus(request.getProductStatus());
+        productRepository.save(product);
         return mapper.map(product, ProductResponse.class);
     }
 

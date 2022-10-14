@@ -2,17 +2,15 @@ package com.capstone.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,10 +21,7 @@ public class OrderStatus {
     private int id;
 
     @NotNull
-    @Column(name="status_name")
+    @Column(name = "status_name")
     private String statusName;
-
-    @OneToMany(mappedBy = "order_status")
-    List<Order> orders;
 
 }

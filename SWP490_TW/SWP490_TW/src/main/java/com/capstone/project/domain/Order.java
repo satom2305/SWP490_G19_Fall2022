@@ -1,15 +1,14 @@
 package com.capstone.project.domain;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,30 +16,51 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private int orderId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "order_status")
-    private OrderStatus order_status;
+    @NotNull
+    @Column(name = "total_price")
+    private float totalPrice;
 
     @NotNull
-    @Column(name="total_price")
-    private String totalPrice;
-
-    @NotNull
-    @Column(name="note")
+    @Column(name = "note")
     private String note;
 
     @NotNull
-    @Column(name="date")
-    private String date;
+    @Column(name = "date")
+    private Date date;
+
+    @NotNull
+    @Column(name = "address")
+    private String address;
+
+    @NotNull
+    @Column(name = "city")
+    private String city;
+
+    @NotNull
+    @Column(name = "district")
+    private String district;
+
+    @NotNull
+    @Column(name = "wards")
+    private String wards;
+
+    @NotNull
+    @Column(name = "phone_number")
+    private int phoneNumber;
+
 
     @OneToOne
     @JoinColumn(name = "promotion_id")
-    private Promotion promotionId;
+    private Promotion promotion;
+    @OneToOne
+    @JoinColumn(name = "order_status")
+    private OrderStatus orderStatus;
+
 
 }

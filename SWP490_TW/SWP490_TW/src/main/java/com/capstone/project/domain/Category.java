@@ -23,10 +23,10 @@ public class Category {
     private int categoryId;
 
     @NotNull
-    @Column(name="category_name")
+    @Column(name = "category_name")
     private String categoryName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     List<Product> products;
 }

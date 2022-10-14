@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.save(Category.builder()
                 .categoryName(request.getCategoryName())
                 .build());
-        return mapper.map(category , CategoryResponse.class);
+        return mapper.map(category, CategoryResponse.class);
     }
 
     @Override
@@ -42,14 +42,14 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new AppException("Category not found", 404));
         category.setCategoryName(request.getCategoryName());
         categoryRepository.save(category);
-        return mapper.map(category , CategoryResponse.class);
+        return mapper.map(category, CategoryResponse.class);
     }
 
     @Override
     public CategoryResponse findById(Integer id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Category not found", 404));
-        return mapper.map(category , CategoryResponse.class);
+        return mapper.map(category, CategoryResponse.class);
     }
 
     @Override

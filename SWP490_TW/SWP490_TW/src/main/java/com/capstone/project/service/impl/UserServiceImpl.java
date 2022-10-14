@@ -1,4 +1,5 @@
 package com.capstone.project.service.impl;
+
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.User;
 import com.capstone.project.repository.RoleRepository;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
                 .map(account -> mapper.map(account, UserResponse.class))
                 .collect(Collectors.toList());
     }
+
     @Override
     public UserResponse disableUser(String username) {
         return null;

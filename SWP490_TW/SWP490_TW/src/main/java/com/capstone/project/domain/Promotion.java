@@ -2,15 +2,13 @@ package com.capstone.project.domain;
 
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,15 +20,15 @@ public class Promotion {
     private int promotionId;
 
     @NotNull
-    @Column(name="promotion_code")
+    @Column(name = "promotion_code")
     private String promotionCode;
 
     @NotNull
-    @Column(name="sale_percent")
+    @Column(name = "sale_percent")
     private float salePercent;
 
     @NotNull
-    @Column(name="amount")
+    @Column(name = "amount")
     private int amount;
 
 
