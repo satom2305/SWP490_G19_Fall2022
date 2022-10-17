@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,17 @@ public class Order {
     @Column(name = "note")
     private String note;
 
+    @OneToOne
+    @JoinColumn(name = "order_status")
+    private OrderStatus orderStatus;
+
     @NotNull
     @Column(name = "date")
     private Date date;
+
+    @OneToOne
+    @JoinColumn(name = "promotion_id")
+    private Promotion promotion;
 
     @NotNull
     @Column(name = "address")
@@ -53,14 +61,5 @@ public class Order {
     @NotNull
     @Column(name = "phone_number")
     private int phoneNumber;
-
-
-    @OneToOne
-    @JoinColumn(name = "promotion_id")
-    private Promotion promotion;
-    @OneToOne
-    @JoinColumn(name = "order_status")
-    private OrderStatus orderStatus;
-
 
 }
