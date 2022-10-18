@@ -1,6 +1,9 @@
 <template>
   <body>
-  <!-- Page Preloder -->
+<!--  &lt;!&ndash; Page Preloder &ndash;&gt;-->
+<!--  <div id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--  </div>-->
 
   <!-- Humberger Begin -->
   <div class="humberger__menu__overlay"></div>
@@ -62,83 +65,83 @@
   <!-- Humberger End -->
 
   <!-- Header Section Begin -->
-  <header class="header">
-    <div class="header__top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6">
-            <div class="header__top__left">
-              <ul>
-                <li><font-awesome-icon icon="fa fa-envelope"/> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="header__top__right">
-              <!--              <div class="header__top__right__social">-->
-              <!--                <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-              <!--                <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-              <!--                <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-              <!--                <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
-              <!--              </div>-->
-              <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                  <li><a href="#">Spanis</a></li>
-                  <li><a href="#">English</a></li>
-                </ul>
-              </div>
-              <div class="header__top__right__auth">
-                <a href="#"><font-awesome-icon icon="fa fa-user"/> Login</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<header class="header">
+  <div class="header__top">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3">
-          <div class="header__logo">
-            <nuxt-link to="/index"><img src="@/assets/img/logo.png" alt="" /></nuxt-link>
+        <div class="col-lg-6 col-md-6">
+          <div class="header__top__left">
+            <ul>
+              <li><font-awesome-icon icon="fa fa-envelope"/> hello@colorlib.com</li>
+              <li>Free Shipping for all Order of $99</li>
+            </ul>
           </div>
         </div>
-        <div class="col-lg-6">
-          <nav class="header__menu">
-            <ul>
-              <li class="active"><nuxt-link to="/index">Home</nuxt-link></li>
-              <li><nuxt-link to="/shop-product">Shop </nuxt-link></li>
-              <li><a href="#">Pages</a>
-                <ul class="header__menu__dropdown">
-                  <li><nuxt-link to="/shop-detail">Shop Details</nuxt-link></li>
-                  <li><nuxt-link to="/shopping-cart">Shopping Carts</nuxt-link></li>
-                  <li><nuxt-link to="/check-out">Check Out</nuxt-link></li>
-                  <li><nuxt-link to="/blog-detail">Blog Details</nuxt-link></li>
-                </ul>
-              </li>
-              <li><nuxt-link to="/blog">Blog</nuxt-link></li>
-              <li><nuxt-link to="/contact">Contact </nuxt-link></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="col-lg-3">
-          <div class="header__cart">
-            <ul>
-              <li><a href="#"><font-awesome-icon icon="fa fa-heart"/> <span>1</span></a></li>
-              <li><a href="#"><font-awesome-icon icon="fa fa-shopping-bag"/> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+        <div class="col-lg-6 col-md-6">
+          <div class="header__top__right">
+            <!--              <div class="header__top__right__social">-->
+            <!--                <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
+            <!--                <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
+            <!--                <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
+            <!--                <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
+            <!--              </div>-->
+            <div class="header__top__right__language">
+              <img src="img/language.png" alt="">
+              <div>English</div>
+              <span class="arrow_carrot-down"></span>
+              <ul>
+                <li><a href="#">Spanis</a></li>
+                <li><a href="#">English</a></li>
+              </ul>
+            </div>
+            <div class="header__top__right__auth">
+              <a href="#"><font-awesome-icon icon="fa fa-user"/> Login</a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="humberger__open">
-        <font-awesome-icon icon="fa fa-bars"/>
       </div>
     </div>
-  </header>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="header__logo">
+          <nuxt-link to="/index"><img src="@/assets/img/logo.png" alt="" /></nuxt-link>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <nav class="header__menu">
+          <ul>
+            <li class="active"><nuxt-link to="/index">Home</nuxt-link></li>
+            <li><nuxt-link to="/shop-product">Shop </nuxt-link></li>
+            <li><a href="#">Pages</a>
+              <ul class="header__menu__dropdown">
+                <li><nuxt-link to="/shop-detail">Shop Details</nuxt-link></li>
+                <li><nuxt-link to="/shopping-cart">Shopping Carts</nuxt-link></li>
+                <li><nuxt-link to="/check-out">Check Out</nuxt-link></li>
+                <li><nuxt-link to="/blog-detail">Blog Details</nuxt-link></li>
+              </ul>
+            </li>
+            <li><nuxt-link to="/blog">Blog</nuxt-link></li>
+            <li><nuxt-link to="/contact">Contact </nuxt-link></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3">
+        <div class="header__cart">
+          <ul>
+            <li><a href="#"><font-awesome-icon icon="fa fa-heart"/> <span>1</span></a></li>
+            <li><a href="#"><font-awesome-icon icon="fa fa-shopping-bag"/> <span>3</span></a></li>
+          </ul>
+          <div class="header__cart__price">item: <span>$150.00</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="humberger__open">
+      <font-awesome-icon icon="fa fa-bars"/>
+    </div>
+  </div>
+</header>
   <!-- Header Section End -->
 
   <!-- Hero Section Begin -->
@@ -194,29 +197,30 @@
   </section>
   <!-- Hero Section End -->
 
-  <!-- Breadcrumb Section Begin -->
-  <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+  <!-- Blog Details Hero Begin -->
+  <section class="blog-details-hero set-bg" data-setbg="img/blog/details/details-hero.jpg">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12 text-center">
-          <div class="breadcrumb__text">
-            <h2>Blog</h2>
-            <div class="breadcrumb__option">
-              <a href="./index.html">Home</a>
-              <span>Blog</span>
-            </div>
+        <div class="col-lg-12">
+          <div class="blog__details__hero__text">
+            <h2>The Moment You Need To Remove Garlic From The Menu</h2>
+            <ul>
+              <li>By Michael Scofield</li>
+              <li>January 14, 2019</li>
+              <li>8 Comments</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- Breadcrumb Section End -->
+  <!-- Blog Details Hero End -->
 
-  <!-- Blog Section Begin -->
-  <section class="blog spad">
+  <!-- Blog Details Section Begin -->
+  <section class="blog-details spad">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-5">
+        <div class="col-lg-4 col-md-5 order-md-1 order-2">
           <div class="blog__sidebar">
             <div class="blog__sidebar__search">
               <form action="#">
@@ -279,116 +283,51 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 col-md-7">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-2.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
-                  <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
-                  </ul>
-                  <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-3.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
-                  <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
-                  </ul>
-                  <h5><a href="#">Visit the clean farm in the US</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+        <div class="col-lg-8 col-md-7 order-md-1 order-1">
+          <div class="blog__details__text">
+            <img src="img/blog/details/details-pic.jpg" alt="">
+            <p>Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet
+              dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Mauris blandit
+              aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna justo, lacinia eget consectetur
+              sed, convallis at tellus. Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada.
+              Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget tortor risus.
+              Donec rutrum congue leo eget malesuada. Curabitur non nulla sit amet nisl tempus convallis
+              quis ac lectus. Donec sollicitudin molestie malesuada. Nulla quis lorem ut libero malesuada
+              feugiat. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.</p>
+            <h3>The corner window forms a place within a place that is a resting point within the large
+              space.</h3>
+            <p>The study area is located at the back with a view of the vast nature. Together with the other
+              buildings, a congruent story has been managed in which the whole has a reinforcing effect on
+              the components. The use of materials seeks connection to the main house, the adjacent
+              stables</p>
+          </div>
+          <div class="blog__details__content">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="blog__details__author">
+                  <div class="blog__details__author__pic">
+                    <img src="img/blog/details/details-author.jpg" alt="">
+                  </div>
+                  <div class="blog__details__author__text">
+                    <h6>Michael Scofield</h6>
+                    <span>Admin</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-1.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
+              <div class="col-lg-6">
+                <div class="blog__details__widget">
                   <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
+                    <li><span>Categories:</span> Food</li>
+                    <li><span>Tags:</span> All, Trending, Cooking, Healthy Food, Life Style</li>
                   </ul>
-                  <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                  <div class="blog__details__social">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-envelope"></i></a>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-4.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
-                  <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
-                  </ul>
-                  <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-4.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
-                  <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
-                  </ul>
-                  <h5><a href="#">The Moment You Need To Remove Garlic From The Menu</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="blog__item">
-                <div class="blog__item__pic">
-                  <img src="img/blog/blog-6.jpg" alt="">
-                </div>
-                <div class="blog__item__text">
-                  <ul>
-                    <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                    <li><i class="fa fa-comment-o"></i> 5</li>
-                  </ul>
-                  <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                  <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
-                    quaerat </p>
-                  <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="product__pagination blog__pagination">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#"><i class="fa fa-long-arrow-right"></i></a>
               </div>
             </div>
           </div>
@@ -396,7 +335,68 @@
       </div>
     </div>
   </section>
-  <!-- Blog Section End -->
+  <!-- Blog Details Section End -->
+
+  <!-- Related Blog Section Begin -->
+  <section class="related-blog spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title related-blog-title">
+            <h2>Post You May Like</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="blog__item">
+            <div class="blog__item__pic">
+              <img src="img/blog/blog-1.jpg" alt="">
+            </div>
+            <div class="blog__item__text">
+              <ul>
+                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                <li><i class="fa fa-comment-o"></i> 5</li>
+              </ul>
+              <h5><a href="#">Cooking tips make cooking simple</a></h5>
+              <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="blog__item">
+            <div class="blog__item__pic">
+              <img src="img/blog/blog-2.jpg" alt="">
+            </div>
+            <div class="blog__item__text">
+              <ul>
+                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                <li><i class="fa fa-comment-o"></i> 5</li>
+              </ul>
+              <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
+              <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="blog__item">
+            <div class="blog__item__pic">
+              <img src="img/blog/blog-3.jpg" alt="">
+            </div>
+            <div class="blog__item__text">
+              <ul>
+                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                <li><i class="fa fa-comment-o"></i> 5</li>
+              </ul>
+              <h5><a href="#">Visit the clean farm in the US</a></h5>
+              <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Related Blog Section End -->
 
   <!-- Footer Section Begin -->
   <footer class="footer spad">
@@ -483,7 +483,7 @@
 
 <script>
 export default {
-  name: "blog"
+  name: "blog-detail"
 }
 </script>
 

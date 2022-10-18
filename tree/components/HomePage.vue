@@ -2,62 +2,62 @@
   <body>
 
   <!-- Humberger Begin -->
-  <div class="humberger__menu__overlay"></div>
-  <div class="humberger__menu__wrapper">
-    <div class="humberger__menu__logo">
-      <a href="#"><img src="img/logo.png" alt=""></a>
-    </div>
-    <div class="humberger__menu__cart">
-      <ul>
-        <li><a href="#"><font-awesome-icon icon="fa fa-heart"/> <span>1</span></a></li>
-        <li><a href="#"><font-awesome-icon icon="fa fa-shopping-bag"/> <span>3</span></a></li>
-      </ul>
-      <div class="header__cart__price">item: <span>$150.00</span></div>
-    </div>
-    <div class="humberger__menu__widget">
-      <div class="header__top__right__language">
-        <img src="img/language.png" alt="">
-        <div>English</div>
-        <span class="arrow_carrot-down"></span>
-        <ul>
-          <li><a href="#">Spanis</a></li>
-          <li><a href="#">English</a></li>
-        </ul>
-      </div>
-      <div class="header__top__right__auth">
-        <a href="#"><font-awesome-icon icon="fa fa-user"/> Login</a>
-      </div>
-    </div>
-    <nav class="humberger__menu__nav mobile-menu">
-      <ul>
-        <li class="active"><a href="./index.html">Home</a></li>
-        <li><a href="./shop-grid.html">Shop</a></li>
-        <li><a href="#">Pages</a>
-          <ul class="header__menu__dropdown">
-            <li><a href="./shop-details.html">Shop Details</a></li>
-            <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-            <li><a href="./checkout.html">Check Out</a></li>
-            <li><a href="./blog-details.html">Blog Details</a></li>
-          </ul>
-        </li>
-        <li><a href="./blog.html">Blog</a></li>
-        <li><a href="./contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <div id="mobile-menu-wrap"></div>
-<!--    <div class="header__top__right__social">-->
-<!--      <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-<!--      <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-<!--      <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-<!--      <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
+<!--  <div class="humberger__menu__overlay"></div>-->
+<!--  <div class="humberger__menu__wrapper">-->
+<!--    <div class="humberger__menu__logo">-->
+<!--      <a href="#"><img src="img/logo.png" alt=""></a>-->
 <!--    </div>-->
-    <div class="humberger__menu__contact">
-      <ul>
-        <li><font-awesome-icon icon="fa fa-envelope"/> hello@colorlib.com</li>
-        <li>Free Shipping for all Order of $99</li>
-      </ul>
-    </div>
-  </div>
+<!--    <div class="humberger__menu__cart">-->
+<!--      <ul>-->
+<!--        <li><a href="#"><font-awesome-icon icon="fa fa-heart"/> <span>1</span></a></li>-->
+<!--        <li><a href="#"><font-awesome-icon icon="fa fa-shopping-bag"/> <span>3</span></a></li>-->
+<!--      </ul>-->
+<!--      <div class="header__cart__price">item: <span>$150.00</span></div>-->
+<!--    </div>-->
+<!--    <div class="humberger__menu__widget">-->
+<!--      <div class="header__top__right__language">-->
+<!--        <img src="img/language.png" alt="">-->
+<!--        <div>English</div>-->
+<!--        <span class="arrow_carrot-down"></span>-->
+<!--        <ul>-->
+<!--          <li><a href="#">Spanis</a></li>-->
+<!--          <li><a href="#">English</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      <div class="header__top__right__auth">-->
+<!--        <a href="#"><font-awesome-icon icon="fa fa-user"/> Login</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <nav class="humberger__menu__nav mobile-menu">-->
+<!--      <ul>-->
+<!--        <li class="active"><a href="./index.html">Home</a></li>-->
+<!--        <li><a href="./shop-grid.html">Shop</a></li>-->
+<!--        <li><a href="#">Pages</a>-->
+<!--          <ul class="header__menu__dropdown">-->
+<!--            <li><nuxt-link to="/shop-detail">Shop Details</nuxt-link></li>-->
+<!--            <li><a href="./shoping-cart.html">Shoping Cart</a></li>-->
+<!--            <li><a href="./checkout.html">Check Out</a></li>-->
+<!--            <li><a href="./blog-details.html">Blog Details</a></li>-->
+<!--          </ul>-->
+<!--        </li>-->
+<!--        <li><a href="./blog.html">Blog</a></li>-->
+<!--        <li><a href="./contact.html">Contact</a></li>-->
+<!--      </ul>-->
+<!--    </nav>-->
+<!--    <div id="mobile-menu-wrap"></div>-->
+<!--&lt;!&ndash;    <div class="header__top__right__social">&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    <div class="humberger__menu__contact">-->
+<!--      <ul>-->
+<!--        <li><font-awesome-icon icon="fa fa-envelope"/> hello@colorlib.com</li>-->
+<!--        <li>Free Shipping for all Order of $99</li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
   <!-- Humberger End -->
   <!-- Header Section Begin -->
   <header class="header">
@@ -101,24 +101,24 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="header__logo">
-            <a href="./index.html"><img src="@/assets/img/logo.png" alt="" /></a>
+            <nuxt-link to="/index"><img src="@/assets/img/logo.png" alt="" /></nuxt-link>
           </div>
         </div>
         <div class="col-lg-6">
           <nav class="header__menu">
             <ul>
-              <li class="active"><a href="./index.html">Home</a></li>
-              <li><a href="./shop-grid.html">Shop</a></li>
+              <li class="active"><nuxt-link to="/index">Home</nuxt-link></li>
+              <li><nuxt-link to="/shop-product">Shop </nuxt-link></li>
               <li><a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
-                  <li><a href="./shop-details.html">Shop Details</a></li>
-                  <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                  <li><a href="./checkout.html">Check Out</a></li>
-                  <li><a href="./blog-details.html">Blog Details</a></li>
+                  <li><nuxt-link to="/shop-detail">Shop Details</nuxt-link></li>
+                  <li><nuxt-link to="/shopping-cart">Shopping Carts</nuxt-link></li>
+                  <li><nuxt-link to="/check-out">Check Out</nuxt-link></li>
+                  <li><nuxt-link to="/blog-detail">Blog Details</nuxt-link></li>
                 </ul>
               </li>
-              <li><a href="./blog.html">Blog</a></li>
-              <li><a href="./contact.html">Contact</a></li>
+              <li><nuxt-link to="/blog">Blog</nuxt-link></li>
+              <li><nuxt-link to="/contact">Contact </nuxt-link></li>
             </ul>
           </nav>
         </div>
@@ -739,7 +739,9 @@
 
 <script>
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  components: {}
+
 }
 </script>
 <style scoped></style>
