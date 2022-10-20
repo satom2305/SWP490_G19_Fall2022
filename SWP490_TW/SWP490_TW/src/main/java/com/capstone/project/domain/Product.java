@@ -58,6 +58,9 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
+    private List<ProductImg> productImg;
+
+    @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<Cart> carts;
 

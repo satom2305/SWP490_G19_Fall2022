@@ -16,5 +16,4 @@ public class CartResponse {
     private Product product;
     private int quantity;
     private User user;
-
 }
