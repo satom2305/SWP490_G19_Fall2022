@@ -1,5 +1,6 @@
 package com.capstone.project.service;
 
+import com.capstone.project.domain.Product;
 import com.capstone.project.request.CategoryRequest;
 import com.capstone.project.response.CategoryResponse;
 
@@ -15,4 +16,5 @@ public interface CategoryService {
     CategoryResponse findById(Integer id);
 
     void delete(Integer id);
+
 }

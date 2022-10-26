@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class PostResponse {
     private int postId;
-    private int userId;
+    private User user;
     private String title;
     private String content;
     private String image_link_detail;

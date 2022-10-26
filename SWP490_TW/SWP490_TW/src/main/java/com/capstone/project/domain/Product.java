@@ -53,16 +53,17 @@ public class Product {
     @Column(name = "product_status")
     private int productStatus;
 
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ProductImg> productImg;
 
-    @OneToMany(mappedBy = "product")
     @JsonIgnore
+    @OneToMany(mappedBy = "product")
     private List<Cart> carts;
-
 
 }

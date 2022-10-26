@@ -1,5 +1,6 @@
 package com.capstone.project.repository;
 
+import com.capstone.project.domain.Category;
 import com.capstone.project.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("Select p from Product p where p.amount > 0")
     List<Product> findAllProduct();
 
-
+    List<Product> findByCategory(Category category);
 
 }

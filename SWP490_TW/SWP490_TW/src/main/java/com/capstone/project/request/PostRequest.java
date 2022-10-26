@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 public class PostRequest {
     private int postId;
-    private User user;
+    private int userId;
     private String title;
     private String content;
     private String image_link_detail;
