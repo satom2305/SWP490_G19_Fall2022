@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/categories/**").permitAll()
                 .antMatchers("/rest/products/listProduct").permitAll()
                 .antMatchers("/rest/products/listAllProduct").permitAll()
-                .antMatchers("").permitAll()
+                .antMatchers("/rest/products/create").permitAll()
                 //.antMatchers("/rest/products/**").hasRole("ADMIN").
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().
