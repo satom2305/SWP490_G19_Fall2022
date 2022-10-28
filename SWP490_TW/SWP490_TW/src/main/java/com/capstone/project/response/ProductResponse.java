@@ -21,5 +21,6 @@ public class ProductResponse {
     private Date createdDate;
     private int productStatus;
     private CategoryResponse category;
+    private String mainImg;
 
 }
