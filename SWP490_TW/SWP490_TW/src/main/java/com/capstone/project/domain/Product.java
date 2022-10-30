@@ -53,6 +53,9 @@ public class Product {
     @Column(name = "product_status")
     private int productStatus;
 
+    @NotNull
+    @Column(name = "main_img")
+    private String mainImg;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

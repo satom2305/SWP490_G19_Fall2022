@@ -28,4 +28,5 @@ public class ProductRequest {
     private Date createdDate;
     private int productStatus;
     private int categoryId;
+    private String mainImg;
 }
