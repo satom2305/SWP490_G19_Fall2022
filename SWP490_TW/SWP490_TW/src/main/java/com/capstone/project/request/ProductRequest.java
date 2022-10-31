@@ -18,7 +18,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class ProductRequest {
-    private int productId;
     private String productName;
     private String description;
     private float originalPrice;

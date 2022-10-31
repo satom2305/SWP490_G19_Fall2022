@@ -60,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
                 .amount(request.getAmount())
                 .createdDate(request.getCreatedDate())
                 .productStatus(request.getProductStatus())
+                .mainImg(request.getMainImg())
                 .build());
         return mapper.map(product, ProductResponse.class);
     }

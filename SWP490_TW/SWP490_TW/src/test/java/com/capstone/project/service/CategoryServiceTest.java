@@ -59,7 +59,6 @@ public class CategoryServiceTest {
 
         Assert.assertEquals(category.getCategoryId(), actual.getCategoryId());
         Assert.assertEquals(category.getCategoryName(), actual.getCategoryName());
-
     }
 
     /**
