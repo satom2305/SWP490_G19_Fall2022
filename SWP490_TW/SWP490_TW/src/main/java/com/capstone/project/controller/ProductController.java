@@ -3,9 +3,11 @@ package com.capstone.project.controller;
 import com.capstone.project.repository.ProductRepository;
 import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.ProductResponse;
+import com.capstone.project.response.ResponseObject;
 import com.capstone.project.response.UserResponse;
 import com.capstone.project.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +22,17 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping("/listAllProduct")
-    public ResponseEntity<List<ProductResponse>> getAllProduct() {
-        return ResponseEntity.ok(productService.getAllProduct());
+    public ResponseEntity<?> getAllProduct() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfull",true,productService.getAllProduct())
+        );
     }
 
     @GetMapping("/listProduct")
-    public ResponseEntity<List<ProductResponse>> getAllProductAvailable(){
-        return ResponseEntity.ok((productService.getAllProductAvailable()));
+    public ResponseEntity<?> getAllProductAvailable(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfull",true,productService.getAllProductAvailable())
+        );
     }
 
     @GetMapping("/{id}")
