@@ -41,9 +41,10 @@ public class CategoryServiceTest {
     private Category category;
 
     @BeforeEach
-    public  void init (){
-        category =  new Category(1, "test category");
+    public void init() {
+        category = new Category(1, "test category");
     }
+
     @Test
     public void TestCreateCategory() {
         //set up
@@ -63,8 +64,7 @@ public class CategoryServiceTest {
 
     /**
      *
-     *
-     * **/
+     **/
     @Test
     @DisplayName("test create category fail when category is null ")
     public void TestCreateCategoryFail() {
@@ -75,7 +75,7 @@ public class CategoryServiceTest {
         Mockito.when(categoryRepository.save(category)).thenReturn(category);
 
         //execute
-        Exception ex = Assert.assertThrows(Exception.class, () -> categoryService.create(categoryRequest) );
+        Exception ex = Assert.assertThrows(Exception.class, () -> categoryService.create(categoryRequest));
 
         //verify
         Assert.assertEquals("source cannot be null", ex.getMessage());
@@ -90,7 +90,7 @@ public class CategoryServiceTest {
         Integer id = 2;
         Mockito.when(categoryRepository.findById(id)).thenThrow(new AppException("Category not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.update(id, categoryRequest) );
+        AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.update(id, categoryRequest));
 
         Assert.assertEquals("Category not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());

@@ -25,19 +25,15 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    @NotNull
     @Column(name="title")
     private String title;
 
-    @NotNull
     @Column(name="content")
     private String content;
-
 
     @Column(name="image_link_detail")
     private String image_link_detail;
 
-    @NotNull
     @Column(name="date")
     private Date date;
 

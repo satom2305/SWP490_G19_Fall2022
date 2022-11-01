@@ -5,9 +5,7 @@ import com.capstone.project.domain.Category;
 import com.capstone.project.domain.Product;
 import com.capstone.project.repository.CategoryRepository;
 import com.capstone.project.repository.ProductRepository;
-import com.capstone.project.request.CategoryRequest;
 import com.capstone.project.request.ProductRequest;
-import com.capstone.project.response.CategoryResponse;
 import com.capstone.project.response.ProductResponse;
 import com.capstone.project.service.impl.ProductServiceImpl;
 import org.junit.Assert;
@@ -83,14 +81,15 @@ public class ProductServiceTest {
     @DisplayName("test update product success")
     public void TestUpdateProductSuccess() {
         //set up
-        ProductRequest productRequest = new ProductRequest( "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest(1, "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
 
         Integer id = 1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
+        Mockito.when(categoryRepository.findById(productRequest.getCategoryId())).thenReturn(Optional.ofNullable(category));
         category = new Category(1, "test category");
         ProductResponse productResponse = productService.update(id, productRequest);
 
-        Assert.assertEquals("test ok", productResponse.getProductName());
+        Assert.assertEquals("Test product", productResponse.getProductName());
 
 
     }
@@ -99,10 +98,11 @@ public class ProductServiceTest {
     @DisplayName("test update product fail")
     public void TestUpdateProductFail() {
         //set up
-        ProductRequest productRequest = new ProductRequest( "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
 
         Integer id = 2;
         Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
+        Mockito.when(categoryRepository.findById(productRequest.getCategoryId())).thenReturn(Optional.ofNullable(category));
         AppException ex = Assert.assertThrows(AppException.class, () -> productService.update(id, productRequest) );
         Assert.assertEquals("Product not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
@@ -112,20 +112,20 @@ public class ProductServiceTest {
     @Test
     @DisplayName("test find product success")
     public void TestFindProduct() {
-        ProductRequest productRequest = new ProductRequest( "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
         Integer id = 1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
-        ProductResponse productResponse = productService.findById(id);
+        ProductResponse productResponse = productService.findById(productRequest.getProductId());
         Assert.assertEquals("Test product", productResponse.getProductName());
     }
 
     @Test
     @DisplayName("test find product fail")
     public void TestFindProductFail() {
-        ProductRequest productRequest = new ProductRequest( "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
         Integer id = 2;
         Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
-        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findById(id));
+        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findById(productRequest.getProductId()));
         Assert.assertEquals("Product not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }
