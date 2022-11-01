@@ -1,5 +1,6 @@
 package com.capstone.project.service;
 
+import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Order;
 import com.capstone.project.domain.OrderStatus;
 import com.capstone.project.domain.Promotion;
@@ -9,7 +10,9 @@ import com.capstone.project.repository.OrderStatusRepository;
 import com.capstone.project.repository.PromotionRepository;
 import com.capstone.project.repository.UserRepository;
 import com.capstone.project.request.OrderRequest;
+import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.OrderResponse;
+import com.capstone.project.response.ProductResponse;
 import com.capstone.project.service.impl.OrderServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,6 +112,36 @@ public class OrderServiceTest {
     @Test
     @DisplayName("Test update order fail")
     public void TestUpdateOrderFail() {
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        Integer id = 2;
 
+        Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findById(orderRequest.getOrderId()));
+        Assert.assertEquals("Order not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
     }
+
+    @Test
+    @DisplayName("test find order success")
+    public void TestFindOrder() {
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        Integer id = 1;
+        Mockito.when(orderRepository.findById(id)).thenReturn(Optional.ofNullable(order));
+        Optional<Order> orderResponse = orderRepository.findById(id);
+        Assert.assertEquals(orderRequest.getOrderId(), orderResponse.get().getOrderId());
+    }
+
+    @Test
+    @DisplayName("test find order fail")
+    public void TestFindProductFail() {
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        Integer id = 2;
+
+        Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findById(orderRequest.getOrderId()));
+        Assert.assertEquals("Order not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
+
 }

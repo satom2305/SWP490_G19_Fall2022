@@ -50,9 +50,7 @@ public class CategoryServiceTest {
         //set up
         CategoryRequest categoryRequest = new CategoryRequest("test category");
 
-        Mockito.when(categoryRepository.save(Category.builder()
-                .categoryName(categoryRequest.getCategoryName())
-                .build())).thenReturn(category);
+        Mockito.when(categoryRepository.save(Category.builder().categoryName(categoryRequest.getCategoryName()).build())).thenReturn(category);
 
         CategoryResponse actual = categoryService.create(categoryRequest);
 
@@ -94,8 +92,6 @@ public class CategoryServiceTest {
 
         Assert.assertEquals("Category not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
-
-
     }
 
     @Test
@@ -109,8 +105,6 @@ public class CategoryServiceTest {
         CategoryResponse categoryResponse = categoryService.update(id, categoryRequest);
 
         Assert.assertEquals("hello", categoryResponse.getCategoryName());
-
-
     }
 
 

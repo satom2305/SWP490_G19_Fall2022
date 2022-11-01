@@ -1,6 +1,7 @@
 package com.capstone.project.service.impl;
 
 import com.capstone.project.config.exception.AppException;
+import com.capstone.project.domain.Role;
 import com.capstone.project.domain.User;
 import com.capstone.project.repository.RoleRepository;
 import com.capstone.project.repository.StatusRepository;
@@ -32,8 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUserById(String username) {
-        return null;
+    public UserResponse getUserById(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException("Account not found", 404));
+        return mapper.map(user, UserResponse.class);
     }
 
     @Override
@@ -45,13 +48,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public List<UserResponse> findAll() {
-        return userRepository.findAll()
-                .stream()
-                .map(account -> mapper.map(account, UserResponse.class))
-                .collect(Collectors.toList());
-    }
-
     @Override
     public UserResponse disableUser(String username) {
         return null;
@@ -59,12 +55,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse create(UserRequest request) {
-        return null;
+        User user = userRepository.save(User.builder()
+                .username(request.getUsername())
+                .password(request.getPassword())
+                .email(request.getEmail())
+                .status(true)
+                .build());
+        return mapper.map(user, UserResponse.class);
     }
 
     @Override
-    public UserResponse update(String username, UserRequest request) {
-        return null;
+    public UserResponse update(Integer id, UserRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException("Account not found", 404));
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+        user.setEmail(request.getEmail());
+        userRepository.save(user);
+        return mapper.map(user, UserResponse.class);
     }
 
     @Override

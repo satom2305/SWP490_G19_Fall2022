@@ -9,7 +9,7 @@ public interface UserService {
 
     UserResponse getUserByUsername(String username);
 
-    UserResponse getUserById(String username);
+    UserResponse getUserById(Integer id);
 
     List<UserResponse> getALL();
 
@@ -17,7 +17,7 @@ public interface UserService {
 
     UserResponse create(UserRequest request);
 
-    UserResponse update(String username, UserRequest request);
+    UserResponse update(Integer id, UserRequest request);
 
     UserResponse changePwd(long id, String newPwd);
 

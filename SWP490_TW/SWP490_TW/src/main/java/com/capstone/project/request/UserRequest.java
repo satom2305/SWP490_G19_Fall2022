@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserRequest {
+    private Integer userId;
     private String username;
     private String password;
     private String email;
-    private int roleId;
-    private int statusId;
+    private Boolean status;
 
 }
