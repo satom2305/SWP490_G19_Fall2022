@@ -58,7 +58,8 @@ public class ProductServiceTest {
 
     @Test
     public void TestGetAllProduct() {
-        List<Product> productList = List.of(product);
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
         when(productRepository.findAllProduct()).thenReturn(productList);
 
         List<ProductResponse> actual = productService.getAllProduct();

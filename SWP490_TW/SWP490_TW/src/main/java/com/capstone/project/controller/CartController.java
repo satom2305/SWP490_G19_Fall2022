@@ -2,8 +2,10 @@ package com.capstone.project.controller;
 
 import com.capstone.project.request.CartRequest;
 import com.capstone.project.response.CartResponse;
+import com.capstone.project.response.ResponseObject;
 import com.capstone.project.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +18,14 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
     @GetMapping()
-    public ResponseEntity<List<CartResponse>> getCartByUsername(){
-        return ResponseEntity.ok(cartService.getCartByUsername());
+    public ResponseEntity<?> getCartByUsername(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,cartService.getCartByUsername()));
     }
     @PostMapping()
-    public ResponseEntity<CartResponse> addToCart(@RequestBody CartRequest request) {
-        return ResponseEntity.ok(cartService.create(request));
+    public ResponseEntity<?> addToCart(@RequestBody CartRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,cartService.create(request)));
     }
 
     @DeleteMapping("/{id}")

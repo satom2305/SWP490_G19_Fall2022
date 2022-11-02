@@ -123,7 +123,8 @@ public class UserServiceTest {
 
     @Test
     public void TestGetAllUser(){
-        List<User> userList = List.of(user);
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
         when(userRepository.findAll()).thenReturn(userList);
 
         List<UserResponse> actual = userService.getALL();

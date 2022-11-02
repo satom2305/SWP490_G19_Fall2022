@@ -24,33 +24,37 @@ public class ProductController {
     @GetMapping("/listAllProduct")
     public ResponseEntity<?> getAllProduct() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfull",true,productService.getAllProduct())
+                new ResponseObject("ok","Successfully",true,productService.getAllProduct())
         );
     }
 
     @GetMapping("/listProduct")
     public ResponseEntity<?> getAllProductAvailable(){
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfull",true,productService.getAllProductAvailable())
+                new ResponseObject("ok","Successfully",true,productService.getAllProductAvailable())
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") Integer id){
-        return ResponseEntity.ok(productService.findById(id));
+    public ResponseEntity<?> getProductById(@PathVariable("id") Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,productService.findById(id)));
     }
     @PostMapping()
-    public ResponseEntity<ProductResponse> create(@RequestBody ProductRequest request){
-        return ResponseEntity.ok(productService.create(request));
+    public ResponseEntity<?> create(@RequestBody ProductRequest request){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,productService.create(request)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable("id") Integer id,@RequestBody ProductRequest request){
-        return ResponseEntity.ok(productService.update(id,request));
+    public ResponseEntity<?> update(@PathVariable("id") Integer id,@RequestBody ProductRequest request){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,productService.update(id,request)));
     }
 
     @PutMapping("/disable/{id}")
-    public ResponseEntity<ProductResponse> disableProduct(@PathVariable("id") Integer id){
-        return ResponseEntity.ok(productService.disableProduct(id));
+    public ResponseEntity<?> disableProduct(@PathVariable("id") Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Successfully",true,productService.disableProduct(id)));
     }
 }
