@@ -31,7 +31,7 @@ public class OrderDetail {
 
     @NotNull
     @Column(name = "product_price")
-    private float productPrice;
+    private Double productPrice;
 
     @NotNull
     @Column(name = "quantity")

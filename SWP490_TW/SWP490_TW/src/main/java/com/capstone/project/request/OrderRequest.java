@@ -14,7 +14,7 @@ import java.util.Date;
 public class OrderRequest {
     private int orderId;
     private int userId;
-    private float totalPrice;
+    private Double totalPrice;
     private String note;
     private int orderStatusId;
     private Date date;

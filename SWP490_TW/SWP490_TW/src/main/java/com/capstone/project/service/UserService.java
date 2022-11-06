@@ -6,6 +6,8 @@ import com.capstone.project.response.UserResponse;
 import java.util.List;
 
 public interface UserService {
+    Boolean checkEmailExist(String email);
+    Boolean checkUserNameExist(String username);
 
     UserResponse getUserByUsername(String username);
 
@@ -13,13 +15,13 @@ public interface UserService {
 
     List<UserResponse> getALL();
 
-    UserResponse disableUser(String username);
+    UserResponse disableUser(Integer Id);
 
     UserResponse create(UserRequest request);
 
     UserResponse update(Integer id, UserRequest request);
 
-    UserResponse changePwd(long id, String newPwd);
+    UserResponse changePwd(String username, String newPwd);
+    UserResponse ForgotPwd(String username);
 
-    UserResponse delete(int id, String newPwd);
 }

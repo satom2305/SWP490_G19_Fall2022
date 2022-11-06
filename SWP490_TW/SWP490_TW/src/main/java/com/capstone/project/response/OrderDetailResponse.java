@@ -16,6 +16,6 @@ public class OrderDetailResponse {
     private Order order;
     private Product product;
     private String productName;
-    private float productPrice;
+    private Double productPrice;
     private int quantity;
 }

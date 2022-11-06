@@ -25,7 +25,7 @@ public class Promotion {
 
     @NotNull
     @Column(name = "sale_percent")
-    private float salePercent;
+    private Double salePercent;
 
     @NotNull
     @Column(name = "amount")

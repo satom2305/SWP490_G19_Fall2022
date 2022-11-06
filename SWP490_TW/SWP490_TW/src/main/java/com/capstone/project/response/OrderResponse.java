@@ -20,7 +20,7 @@ import java.util.Date;
 public class OrderResponse {
     private int orderId;
     private User user;
-    private float totalPrice;
+    private Double totalPrice;
     private String note;
     private OrderStatus orderStatus;
     private Date date;

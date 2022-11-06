@@ -23,7 +23,7 @@ public class Order {
     private User user;
 
     @Column(name = "total_price")
-    private float totalPrice;
+    private Double totalPrice;
 
     @Column(name = "note")
     private String note;

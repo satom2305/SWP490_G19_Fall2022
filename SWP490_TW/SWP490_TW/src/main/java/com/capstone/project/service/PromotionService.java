@@ -8,9 +8,11 @@ import java.util.List;
 public interface PromotionService {
     List<PromotionResponse> getAllPromotion();
     PromotionResponse getPromotionByCode(String code);
+    Boolean getPromotionById(Integer id);
     PromotionResponse create(PromotionRequest promotionRequest);
     PromotionResponse update(Integer id, PromotionRequest promotionRequest);
     void delete(Integer id);
+    boolean checkPromotion(String code);
 
 
 }

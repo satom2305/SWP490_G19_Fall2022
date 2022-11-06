@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +29,27 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public PromotionResponse getPromotionByCode(String code) {
-        Promotion promotion= promotionRepository.findByPromotionCode(code)
-                .orElseThrow(()-> new AppException("Promotion not found", 404));
-        return mapper.map(promotion, PromotionResponse.class);
+            Optional<Promotion> promotion = promotionRepository.findByPromotionCode(code);
+       return mapper.map(promotion, PromotionResponse.class);
+    }
+
+    @Override
+    public Boolean getPromotionById(Integer id) {
+        Promotion promotion = promotionRepository.findById(id)
+                .orElseThrow(() -> new AppException("Promotion not found", 404));
+        if(promotion != null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkPromotion(String code){
+        Optional<Promotion> promotion = promotionRepository.findByPromotionCode(code);
+        if(promotion.isPresent()){
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -14,6 +14,6 @@ import javax.persistence.Column;
 public class PromotionRequest {
     private int promotionId;
     private String promotionCode;
-    private float salePercent;
+    private Double salePercent;
     private int amount;
 }

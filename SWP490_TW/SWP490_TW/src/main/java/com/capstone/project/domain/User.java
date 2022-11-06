@@ -1,7 +1,6 @@
 package com.capstone.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,19 +21,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @NotNull
     @Column(name = "user_name")
     private String username;
 
-    @NotNull
     @Column(name = "password")
     private String password;
 
-    @NotNull
     @Column(name = "email")
     private String email;
 
-    @NotNull
     @Column(name = "user_status")
     private Boolean status;
 

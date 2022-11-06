@@ -15,6 +15,6 @@ public class OrderDetailRequest {
     private int orderId;
     private int productId;
     private String productName;
-    private float productPrice;
+    private Double productPrice;
     private int quantity;
 }

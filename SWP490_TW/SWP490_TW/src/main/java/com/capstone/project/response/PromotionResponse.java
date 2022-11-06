@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class PromotionResponse {
     private int promotionId;
     private String promotionCode;
-    private float salePercent;
+    private Double salePercent;
     private int amount;
 }

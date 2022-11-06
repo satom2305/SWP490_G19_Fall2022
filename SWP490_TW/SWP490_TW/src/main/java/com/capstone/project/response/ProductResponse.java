@@ -14,9 +14,9 @@ public class ProductResponse {
     private int productId;
     private String productName;
     private String description;
-    private float originalPrice;
-    private float salePercent;
-    private float sellPrice;
+    private Double originalPrice;
+    private Double salePercent;
+    private Double sellPrice;
     private int amount;
     private Date createdDate;
     private int productStatus;
