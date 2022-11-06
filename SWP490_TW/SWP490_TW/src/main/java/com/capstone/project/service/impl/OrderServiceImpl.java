@@ -1,15 +1,10 @@
 package com.capstone.project.service.impl;
 
 import com.capstone.project.config.exception.AppException;
-import com.capstone.project.domain.Order;
-import com.capstone.project.domain.OrderStatus;
-import com.capstone.project.domain.Promotion;
-import com.capstone.project.domain.User;
-import com.capstone.project.repository.OrderRepository;
-import com.capstone.project.repository.OrderStatusRepository;
-import com.capstone.project.repository.PromotionRepository;
-import com.capstone.project.repository.UserRepository;
+import com.capstone.project.domain.*;
+import com.capstone.project.repository.*;
 import com.capstone.project.request.OrderRequest;
+import com.capstone.project.response.CartResponse;
 import com.capstone.project.response.OrderResponse;
 import com.capstone.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +25,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final OrderStatusRepository orderStatusRepository;
+    private final CartRepository cartRepository;
+    private final OrderDetailRepository detailRepository;
+    private final ProductRepository productRepository;
     private final PromotionRepository promotionRepository;
     private final ModelMapper mapper;
 
@@ -53,6 +51,17 @@ public class OrderServiceImpl implements OrderService {
                     .orElseThrow(() -> new AppException("Promotion not found", 404));
             LocalDate localDate = LocalDate.now();
             Date date = java.sql.Date.valueOf(localDate);
+
+            List<CartResponse> carts = cartRepository.findByUser(user)
+                    .stream()
+                    .map(cart -> CartResponse.builder()
+                            .cartId(cart.getCartId())
+                            .user(user)
+                            .product(productRepository.findById(cart.getProduct().getProductId()).orElse(null))
+                            .quantity(cart.getQuantity())
+                            .build())
+                    .collect(Collectors.toList());
+
             Order order = orderRepository.save(Order.builder()
                     .user(user)
                     .totalPrice(orderRequest.getTotalPrice())
@@ -66,6 +75,18 @@ public class OrderServiceImpl implements OrderService {
                     .wards(orderRequest.getWards())
                     .phoneNumber(orderRequest.getPhoneNumber())
                     .build());
+
+            for(CartResponse c : carts){
+                OrderDetail orderDetail = detailRepository.save(OrderDetail.builder()
+                                .order(order)
+                                .product(productRepository.findById(c.getProduct().getProductId()).orElse(null))
+                                .productName(c.getProduct().getProductName())
+                                .productPrice(c.getProduct().getSellPrice())
+                                .quantity(c.getQuantity())
+                        .build());
+                detailRepository.save(orderDetail);
+            }
+            cartRepository.deleteByUser(user.getUserId());
             return mapper.map(order, OrderResponse.class);
         } else {
             throw new AppException("User not login", 401);
