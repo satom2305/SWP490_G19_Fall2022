@@ -1,0 +1,51 @@
+.app-header__logo {
+	cursor: pointer;
+	&:hover {
+		.logo-header-ghtk {
+			// animation: left-to-right 3s linear forwards, 3s right-to-left 3s linear forwards;
+		}
+	}
+}
+
+@keyframes left-to-right {
+	20% {
+		transform: translateX(14rem);
+		transition-duration: 1s;
+	}
+
+	100% {
+		transform: translateX(14rem) scaleX(-1);
+	}
+}
+@keyframes right-to-left {
+
+	20% {
+		transform: translateX(0) scaleX(-1);
+		transition-duration: 1s;
+	}
+
+	100% {
+		transform: scaleX(1);
+	}
+}
+
+.app-theme-white {
+	&.app-container {
+	//   background: rgb(255,240,247);
+	//   background: linear-gradient(135deg, rgba(255,240,247,1) 0%, rgba(203,228,255,1) 80%);
+	//   background-size: 400% 400%;
+	//   animation: gradient 15s ease infinite;
+	}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
