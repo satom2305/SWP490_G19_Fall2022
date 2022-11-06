@@ -59,7 +59,7 @@ public class CartServiceTest {
     @BeforeEach
     public void init() {
         category = new Category(1, "test category");
-        product = new Product(1, "Test product", "Test description", 10, 10, 10, 10, null, 1, "test img", category, null, null);
+        product = new Product(1, "Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1, "test img", category, null, null);
         user = new User(1, "admin", "admin", "admin@gmail.com", true, null, null, null);
         cart = new Cart(1,product,10,user);
     }

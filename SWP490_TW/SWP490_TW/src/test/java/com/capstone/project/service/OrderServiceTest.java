@@ -10,9 +10,7 @@ import com.capstone.project.repository.OrderStatusRepository;
 import com.capstone.project.repository.PromotionRepository;
 import com.capstone.project.repository.UserRepository;
 import com.capstone.project.request.OrderRequest;
-import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.OrderResponse;
-import com.capstone.project.response.ProductResponse;
 import com.capstone.project.service.impl.OrderServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,9 +63,9 @@ public class OrderServiceTest {
     @BeforeEach
     public void init() {
         user = new User(1, "admin", "admin", "admin@gmail.com", true, null, null, null);
-        promotion = new Promotion(1, "abc", 70, 10);
+        promotion = new Promotion(1, "abc", 70.0, 10);
         orderStatus = new OrderStatus(1, "Shipped");
-        order = new Order(1, user, 100, "test", orderStatus, null, promotion, "string", "string", "string", "string", 12345678);
+        order = new Order(1, user, 100.0, "test", orderStatus, null, promotion, "string", "string", "string", "string", 12345678);
     }
 
     @Test
@@ -95,7 +93,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("Test update order sucess")
     public void TestUpdateOrderSuccess() {
-        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
         Integer id = 1;
 
         //Mockito.when(userRepository.findById(orderRequest.getUserId())).thenReturn(Optional.ofNullable(user));
@@ -112,7 +110,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("Test update order fail")
     public void TestUpdateOrderFail() {
-        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
         Integer id = 2;
 
         Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));
@@ -124,7 +122,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("test find order success")
     public void TestFindOrder() {
-        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
         Integer id = 1;
         Mockito.when(orderRepository.findById(id)).thenReturn(Optional.ofNullable(order));
         Optional<Order> orderResponse = orderRepository.findById(id);
@@ -134,7 +132,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("test find order fail")
     public void TestFindProductFail() {
-        OrderRequest orderRequest = new OrderRequest(1, 1, 100, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", 12345678);
         Integer id = 2;
 
         Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));

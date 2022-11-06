@@ -51,7 +51,7 @@ public class ProductServiceTest {
 
     @BeforeEach
     public void init() {
-        product = new Product(1, "Test product", "Test description", 10, 10, 10, 10, null, 1, "test img", category, null, null);
+        product = new Product(1, "Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1, "test img", category, null, null);
         category = new Category(1, "test category");
     }
 
@@ -82,7 +82,7 @@ public class ProductServiceTest {
     @DisplayName("test update product success")
     public void TestUpdateProductSuccess() {
         //set up
-        ProductRequest productRequest = new ProductRequest(1, "Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest(1, "Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
 
         Integer id = 1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
@@ -99,7 +99,7 @@ public class ProductServiceTest {
     @Test
     @DisplayName("test find product success")
     public void TestFindProduct() {
-        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
         Integer id = 1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
         ProductResponse productResponse = productService.findById(productRequest.getProductId());
@@ -109,7 +109,7 @@ public class ProductServiceTest {
     @Test
     @DisplayName("test find product fail")
     public void TestFindProductFail() {
-        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10, 10, 10, 10, null, 1,1, "test img");
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
         Integer id = 2;
         Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
 

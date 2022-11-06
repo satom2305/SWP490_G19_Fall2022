@@ -42,7 +42,7 @@ public class PromotionServiceTest {
 
     @BeforeEach
     public void init() {
-        promotion = new Promotion(1, "String", 50, 10);
+        promotion = new Promotion(1, "String", 50.0, 10);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PromotionServiceTest {
     public void TestCreateCategoryFail() {
         //set up
         Promotion promotion = new Promotion();
-        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70, 10);
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
 
         Mockito.when(promotionRepository.save(promotion)).thenReturn(promotion);
 
@@ -65,7 +65,7 @@ public class PromotionServiceTest {
     @DisplayName("test update promotion success")
     public void TestUpdatePromotionSuccess() {
         //set up
-        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70, 10);
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
         Integer id = 1;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenReturn(Optional.ofNullable(promotion));
 
@@ -77,7 +77,7 @@ public class PromotionServiceTest {
     @DisplayName("test update promotion fail")
     public void TestUpdatePromotionFail() {
         //set up
-        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70, 10);
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
         Integer id = 2;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenThrow(new AppException("Promotion not found", 404));
 
@@ -90,7 +90,7 @@ public class PromotionServiceTest {
     @Test
     @DisplayName("test find promotion success")
     public void TestFindPromotion() {
-        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70, 10);
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
         Integer id = 1;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenThrow(new AppException("Promotion not found", 404));
         PromotionResponse promotionResponse = promotionService.update(id, promotionRequest);
@@ -100,7 +100,7 @@ public class PromotionServiceTest {
     @Test
     @DisplayName("test find promotion fail")
     public void TestFindPromotionFail() {
-        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70, 10);
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
         Integer id = 2;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenThrow(new AppException("Promotion not found", 404));
         AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.getPromotionByCode(promotionRequest.getPromotionCode()));
