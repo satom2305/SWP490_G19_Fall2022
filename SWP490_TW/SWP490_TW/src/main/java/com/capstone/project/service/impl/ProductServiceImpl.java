@@ -3,7 +3,9 @@ package com.capstone.project.service.impl;
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Category;
 import com.capstone.project.domain.Product;
+import com.capstone.project.domain.ProductImg;
 import com.capstone.project.repository.CategoryRepository;
+import com.capstone.project.repository.ProductImgRepository;
 import com.capstone.project.repository.ProductRepository;
 import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.ProductResponse;
@@ -14,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductImgRepository productImgRepository;
     private final ModelMapper mapper;
 
     @Override
@@ -42,8 +46,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse findById(Integer id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new AppException("Product not found", 404));
-        return mapper.map(product, ProductResponse.class);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new AppException("Product not found", 404));
+        List<ProductImg> imgs = productImgRepository.findByProduct(product);
+        return ProductResponse.builder()
+                .productId(product.getProductId())
+                .productName(product.getProductName())
+                .description(product.getDescription())
+                .originalPrice(product.getOriginalPrice())
+                .salePercent(product.getSalePercent())
+                .sellPrice(product.getSellPrice())
+                .amount(product.getAmount())
+                .createdDate(product.getCreatedDate())
+                .productStatus(product.getProductStatus())
+                .mainImg(product.getMainImg())
+                .productImgs(imgs)
+                .build();
     }
 
     @Override
