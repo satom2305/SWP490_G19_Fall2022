@@ -29,5 +29,5 @@ public class OrderResponse {
     private String city;
     private String district;
     private String wards;
-    private int phoneNumber;
+    private String phoneNumber;
 }

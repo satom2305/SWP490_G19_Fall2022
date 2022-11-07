@@ -1,8 +1,10 @@
 package com.capstone.project.controller;
 
+import com.capstone.project.domain.User;
 import com.capstone.project.request.UserRequest;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.response.UserResponse;
+import com.capstone.project.service.EmailService;
 import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
     @GetMapping("")
     public ResponseEntity<?> getAllAccounts() {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -80,6 +83,31 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok","Successfully",true,userResponse));
+    }
+
+    @PostMapping("/forgetPassword")
+    public ResponseEntity<?> sendPwdToEmail(@RequestBody String username){
+        if(username == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("fail", "Send mail fail",false,"null")
+            );
+        }
+
+        try {
+            boolean checkUsernameExist = userService.checkUserNameExist(username);
+            if(checkUsernameExist){
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        new ResponseObject("ok", "User not found",false, "null"));
+            }
+            emailService.sendMailForgetPass(username);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "succsessfully",true, username)
+            );
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("fail","mail not exist",false,"null")
+            );
+        }
     }
 
 }

@@ -52,6 +52,6 @@ public class Order {
     private String wards;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
 }

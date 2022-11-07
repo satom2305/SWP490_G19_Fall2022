@@ -13,10 +13,12 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +36,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderResponse> getAllOrder() {
         return orderRepository.findAll().stream()
+                .map(order -> mapper.map(order, OrderResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getAllOrderByUserName(@RequestBody String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("User not found", 404));
+        return orderRepository.getOrderByUser(user).stream()
                 .map(order -> mapper.map(order, OrderResponse.class))
                 .collect(Collectors.toList());
     }
