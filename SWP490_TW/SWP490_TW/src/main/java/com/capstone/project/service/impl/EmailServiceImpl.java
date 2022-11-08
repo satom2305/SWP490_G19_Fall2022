@@ -3,8 +3,8 @@ package com.capstone.project.service.impl;
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.User;
 import com.capstone.project.repository.UserRepository;
+import com.capstone.project.request.UserRequest;
 import com.capstone.project.service.EmailService;
-import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,19 +20,19 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    private JavaMailSender javaMailSender;
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final JavaMailSender javaMailSender;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     @Value("${spring.mail.username}")
     private String sendForm;
 
 
     @Override
-    public void sendMailForgetPass(String username) throws MessagingException, UnsupportedEncodingException {
+    public void sendMailForgetPass(UserRequest request) throws MessagingException, UnsupportedEncodingException {
         String subject = "Forget password from Tree World system";
         String senderName = "Tree World";
         String password = generateString(10);
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException("User name not found"));
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
@@ -40,7 +40,7 @@ public class EmailServiceImpl implements EmailService {
                 + "<h3>[[password]]</h3>" + "Cảm ơn,<br>" + "Tree World!";
 
         mailContent = mailContent.replace("[[username]]", user.getUsername());
-        mailContent = mailContent.replace("[[username]]", password);
+        mailContent = mailContent.replace("[[password]]", password);
 
         MimeMessage message = javaMailSender.createMimeMessage();
         try {

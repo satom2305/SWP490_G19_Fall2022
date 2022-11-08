@@ -18,4 +18,5 @@ public interface ProductService {
     ProductResponse update(Integer id, ProductRequest request);
 
     ProductResponse disableProduct(Integer id);
+    List<ProductResponse> getLastSixProducts();
 }

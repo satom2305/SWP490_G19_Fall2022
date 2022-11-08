@@ -110,10 +110,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse changePwd(String username, String newPwd) {
+    public UserResponse changePwd(String username, UserRequest userRequest) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException("Account not found", 404));
-        user.setPassword(encodePwd(newPwd));
+        user.setPassword(encodePwd(userRequest.getPassword()));
         userRepository.save(user);
         return mapper.map(user, UserResponse.class);
     }

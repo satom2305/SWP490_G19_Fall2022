@@ -1,15 +1,12 @@
 package com.capstone.project.controller;
 
 import com.capstone.project.request.OrderRequest;
-import com.capstone.project.response.OrderResponse;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -21,19 +18,19 @@ public class OrderController {
     @GetMapping()
     public ResponseEntity<?> getAllOrder() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,orderService.getAllOrder()));
+                new ResponseObject("ok", "Successfully", true, orderService.getAllOrder()));
     }
 
     @PostMapping()
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,orderService.create(orderRequest)));
+                new ResponseObject("ok", "Successfully", true, orderService.create(orderRequest)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@PathVariable("id") Integer id, @RequestBody OrderRequest orderRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,orderService.update(id, orderRequest)));
+                new ResponseObject("ok", "Successfully", true, orderService.update(id, orderRequest)));
     }
 
     @DeleteMapping("/{id}")

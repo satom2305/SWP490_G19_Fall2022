@@ -1,6 +1,5 @@
 package com.capstone.project.controller;
 
-import com.capstone.project.request.CategoryRequest;
 import com.capstone.project.request.PromotionRequest;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.service.PromotionService;

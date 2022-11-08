@@ -111,5 +111,13 @@ public class ProductServiceImpl implements ProductService {
         return mapper.map(product, ProductResponse.class);
     }
 
+    @Override
+    public List<ProductResponse> getLastSixProducts() {
+        return productRepository.findLastSixProducts()
+                .stream()
+                .map(product -> mapper.map(product, ProductResponse.class))
+                .collect(Collectors.toList());
+    }
+
 
 }

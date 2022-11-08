@@ -21,7 +21,7 @@ public interface UserService {
 
     UserResponse update(Integer id, UserRequest request);
 
-    UserResponse changePwd(String username, String newPwd);
+    UserResponse changePwd(String username,UserRequest userRequest);
     UserResponse ForgotPwd(String username);
 
 }

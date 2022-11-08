@@ -6,5 +6,5 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 
 public interface EmailService {
-    void sendMailForgetPass(String username) throws MessagingException, UnsupportedEncodingException;
+    void sendMailForgetPass(UserRequest userRequest) throws MessagingException, UnsupportedEncodingException;
 }

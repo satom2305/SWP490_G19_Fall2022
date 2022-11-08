@@ -41,14 +41,26 @@ public class CartServiceImpl implements CartService {
             String username = authentication.getName();
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new AppException("User not found", 404));
-            Cart cart = cartRepository.save(Cart.builder()
-                    .user(user)
-                    .product(product)
-                    .quantity(cartRequest.getQuantity())
-                    .build());
-            product.setAmount(product.getAmount() - cartRequest.getQuantity());
-            productRepository.save(product);
-            return mapper.map(cart, CartResponse.class);
+            List<Cart> carts = cartRepository.findByUser(user);
+            for (Cart c: carts) {
+                if (cartRequest.getProductId() == c.getProduct().getProductId()) {
+                    Cart cart = cartRepository.findById(c.getCartId())
+                            .orElseThrow(() -> new AppException("Cart not found", 404));
+                    cart.setQuantity(cart.getQuantity() + 1);
+                    product.setAmount(product.getAmount() - 1);
+                    cartRepository.save(cart);
+                    return mapper.map(cart, CartResponse.class);
+                }
+            }
+                    Cart cart = cartRepository.save(Cart.builder()
+                            .user(user)
+                            .product(product)
+                            .quantity(cartRequest.getQuantity())
+                            .build());
+                    product.setAmount(product.getAmount() - cartRequest.getQuantity());
+                    productRepository.save(product);
+                    return mapper.map(cart, CartResponse.class);
+
         } else {
             throw new AppException("User not login", 401);
         }

@@ -2,16 +2,12 @@ package com.capstone.project.controller;
 
 import com.capstone.project.repository.ProductRepository;
 import com.capstone.project.request.ProductRequest;
-import com.capstone.project.response.ProductResponse;
 import com.capstone.project.response.ResponseObject;
-import com.capstone.project.response.UserResponse;
 import com.capstone.project.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -24,37 +20,45 @@ public class ProductController {
     @GetMapping("/listAllProduct")
     public ResponseEntity<?> getAllProduct() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.getAllProduct())
+                new ResponseObject("ok", "Successfully", true, productService.getAllProduct())
         );
     }
 
     @GetMapping("/listProduct")
-    public ResponseEntity<?> getAllProductAvailable(){
+    public ResponseEntity<?> getAllProductAvailable() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.getAllProductAvailable())
+                new ResponseObject("ok", "Successfully", true, productService.getAllProductAvailable())
+        );
+    }
+
+    @GetMapping("/lastSixProducts")
+    public ResponseEntity<?> getLastSixProducts() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, productService.getLastSixProducts())
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.findById(id)));
+                new ResponseObject("ok", "Successfully", true, productService.findById(id)));
     }
+
     @PostMapping()
-    public ResponseEntity<?> create(@RequestBody ProductRequest request){
+    public ResponseEntity<?> create(@RequestBody ProductRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.create(request)));
+                new ResponseObject("ok", "Successfully", true, productService.create(request)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer id,@RequestBody ProductRequest request){
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody ProductRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.update(id,request)));
+                new ResponseObject("ok", "Successfully", true, productService.update(id, request)));
     }
 
     @PutMapping("/disable/{id}")
-    public ResponseEntity<?> disableProduct(@PathVariable("id") Integer id){
+    public ResponseEntity<?> disableProduct(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,productService.disableProduct(id)));
+                new ResponseObject("ok", "Successfully", true, productService.disableProduct(id)));
     }
 }

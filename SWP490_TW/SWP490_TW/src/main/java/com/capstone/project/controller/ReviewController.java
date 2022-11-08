@@ -1,10 +1,7 @@
 package com.capstone.project.controller;
 
-import com.capstone.project.request.PostRequest;
 import com.capstone.project.request.ReviewRequest;
-import com.capstone.project.response.PostResponse;
 import com.capstone.project.response.ReviewResponse;
-import com.capstone.project.service.PostService;
 import com.capstone.project.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +23,7 @@ public class ReviewController {
     }
 
     @PostMapping("/createReview")
-    public ResponseEntity<ReviewResponse> createReview(@RequestBody ReviewRequest reviewRequest){
+    public ResponseEntity<ReviewResponse> createReview(@RequestBody ReviewRequest reviewRequest) {
         return ResponseEntity.ok(reviewService.createReview(reviewRequest));
     }
 
@@ -39,8 +36,9 @@ public class ReviewController {
     public ResponseEntity<ReviewResponse> update(@PathVariable("id") Integer id, @RequestBody ReviewRequest reviewRequest) {
         return ResponseEntity.ok(reviewService.updateReview(id, reviewRequest));
     }
+
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Integer id){
+    public void delete(@PathVariable("id") Integer id) {
         reviewService.deleteReview(id);
     }
 }

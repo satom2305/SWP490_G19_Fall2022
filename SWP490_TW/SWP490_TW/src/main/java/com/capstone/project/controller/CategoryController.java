@@ -1,15 +1,12 @@
 package com.capstone.project.controller;
 
 import com.capstone.project.request.CategoryRequest;
-import com.capstone.project.response.CategoryResponse;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -19,27 +16,27 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping()
-    public ResponseEntity<?> getAllCategory(){
+    public ResponseEntity<?> getAllCategory() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,categoryService.findAll()));
+                new ResponseObject("ok", "Successfully", true, categoryService.findAll()));
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CategoryRequest request){
+    public ResponseEntity<?> create(@RequestBody CategoryRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,categoryService.create(request)));
+                new ResponseObject("ok", "Successfully", true, categoryService.create(request)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer id,@RequestBody CategoryRequest request){
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody CategoryRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,categoryService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, categoryService.update(id, request)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getCategoryById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,categoryService.findById(id)));
+                new ResponseObject("ok", "Successfully", true, categoryService.findById(id)));
     }
 
     @DeleteMapping("/{id}")

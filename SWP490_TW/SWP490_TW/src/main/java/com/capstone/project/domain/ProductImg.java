@@ -1,5 +1,6 @@
 package com.capstone.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class ProductImg {
     private String productImgUrl;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "product_id")
     private Product product;
 }

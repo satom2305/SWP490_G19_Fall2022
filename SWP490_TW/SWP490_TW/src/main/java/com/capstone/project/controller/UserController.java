@@ -1,18 +1,14 @@
 package com.capstone.project.controller;
 
-import com.capstone.project.domain.User;
 import com.capstone.project.request.UserRequest;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.response.UserResponse;
 import com.capstone.project.service.EmailService;
 import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -23,89 +19,90 @@ public class UserController {
 
     private final UserService userService;
     private final EmailService emailService;
+
     @GetMapping("")
     public ResponseEntity<?> getAllAccounts() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userService.getALL()));
+                new ResponseObject("ok", "Successfully", true, userService.getALL()));
     }
+
     @GetMapping("/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable("username") String username){
+    public ResponseEntity<?> getUserByUsername(@PathVariable("username") String username) {
         boolean checkUsernameExist = userService.checkUserNameExist(username);
-        if(checkUsernameExist == false){
+        if (checkUsernameExist == false) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok","Username is not Exist",false,"null"));
+                    new ResponseObject("ok", "Username is not Exist", false, "null"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userService.getUserByUsername(username)));
+                new ResponseObject("ok", "Successfully", true, userService.getUserByUsername(username)));
     }
 
     @GetMapping("/userId/{id}")
-    public ResponseEntity<?> getUserByUserId(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getUserByUserId(@PathVariable("id") Integer id) {
         UserResponse checkUsernameExist = userService.getUserById(id);
-        if(checkUsernameExist == null){
+        if (checkUsernameExist == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok","Username is not Exist",false,"null"));
+                    new ResponseObject("ok", "Username is not Exist", false, "null"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userService.getUserById(id)));
+                new ResponseObject("ok", "Successfully", true, userService.getUserById(id)));
     }
 
     @PutMapping("/disable/{id}")
-    public ResponseEntity<?> disableUser(@PathVariable("id")Integer id){
+    public ResponseEntity<?> disableUser(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userService.disableUser(id)));
+                new ResponseObject("ok", "Successfully", true, userService.disableUser(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody UserRequest request){
+    public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody UserRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userService.update(id,request)));
+                new ResponseObject("ok", "Successfully", true, userService.update(id, request)));
     }
 
     @PostMapping()
-    public ResponseEntity<?> createUser(@RequestBody UserRequest request){
+    public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
         System.out.println(request);
         UserResponse userResponse = userService.create(request);
-        if(userResponse == null){
+        if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok","Error",false,"null"));
+                    new ResponseObject("ok", "Error", false, "null"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userResponse));
+                new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
     @PutMapping("/changePwd/{username}")
-    public ResponseEntity<?> changePwd(@PathVariable("username") String username,@RequestBody String newPwd){
-        UserResponse userResponse = userService.changePwd(username,newPwd);
-        if(userResponse == null){
+    public ResponseEntity<?> changePwd(@PathVariable("username") String username, @RequestBody UserRequest userRequest) {
+        UserResponse userResponse = userService.changePwd(username, userRequest);
+        if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok","Error",false,"null"));
+                    new ResponseObject("ok", "Error", false, "null"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Successfully",true,userResponse));
+                new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
     @PostMapping("/forgetPassword")
-    public ResponseEntity<?> sendPwdToEmail(@RequestBody String username){
-        if(username == null){
+    public ResponseEntity<?> sendPwdToEmail(@RequestBody UserRequest request) {
+        if (request == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("fail", "Send mail fail",false,"null")
+                    new ResponseObject("fail", "Send mail fail", false, "null")
             );
         }
-
         try {
-            boolean checkUsernameExist = userService.checkUserNameExist(username);
-            if(checkUsernameExist){
+            boolean checkUsernameExist = userService.checkUserNameExist(request.getUsername());
+            if (!checkUsernameExist) {
                 return ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("ok", "User not found",false, "null"));
+                        new ResponseObject("ok", "User not found", false, "null"));
             }
-            emailService.sendMailForgetPass(username);
+            emailService.sendMailForgetPass(request);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "succsessfully",true, username)
+                    new ResponseObject("ok", "succsessfully", true, request.getUsername())
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("fail","mail not exist",false,"null")
+                    new ResponseObject("fail", "mail not exist", false, "null")
             );
         }
     }
