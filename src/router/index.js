@@ -73,15 +73,51 @@ const router = new Router({
       component: () => import("@/views/Contact"),
     },
     {
-      path: '/tree-world',
-      name: 'HomePage',
-      meta: { title: 'Tree World', layout: 'userpages' },
-      component: () => import("@/views/HomePage"),
-    },
-    {
       path: '/admin',
       name: 'DefaultPage',
       meta: { title: 'Quản lý Tree World', layout: 'default' }
+    },
+    {
+      path: '/admin/user',
+      name: 'UserManagement',
+      meta: { title: 'Quản lý người dùng', layout: 'default' },
+      component: () => import("@/views/admin/User"),
+    },
+    {
+      path: '/admin/product',
+      name: 'ProductManagement',
+      meta: { title: 'Quản lý sản phẩm', layout: 'default' },
+      component: () => import("@/views/admin/Product"),
+    },
+    {
+      path: '/admin/product/create',
+      name: 'ProductCreate',
+      meta: { title: 'Tạo sản phẩm', layout: 'default' },
+      component: () => import("@/views/admin/ProductCreate"),
+    },
+    {
+      path: '/admin/product/update/:id',
+      name: 'ProductUpdate',
+      meta: { title: 'Cập nhật sản phẩm', layout: 'default' },
+      component: () => import("@/views/admin/ProductCreate"),
+    },
+    {
+      path: '/admin/product',
+      name: 'ProductManagement',
+      meta: { title: 'Quản lý sản phẩm', layout: 'default' },
+      component: () => import("@/views/admin/Product"),
+    },
+    {
+      path: '/admin/product-category',
+      name: 'ProductCategoryManagement',
+      meta: { title: 'Quản lý loại sản phẩm', layout: 'default' },
+      component: () => import("@/views/admin/ProductCategory"),
+    },
+    {
+      path: '/admin/promotion',
+      name: 'PromotionManagement',
+      meta: { title: 'Quản lý khuyến mại', layout: 'default' },
+      component: () => import("@/views/admin/Promotion"),
     },
     {
       path: '/error-not-allow',

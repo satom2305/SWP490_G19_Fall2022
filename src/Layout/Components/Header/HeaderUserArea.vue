@@ -8,7 +8,7 @@
               {{ userInfo.fullName }}
             </div>
             <div class="widget-subheading">
-              {{ userInfo.username }}@ghtk.co
+              {{ userInfo.username }}
             </div>
           </div>
           <div class="widget-content-left ml-3">
@@ -41,18 +41,15 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import {
-  getAuthenticatedUser, logout, performLogout,
-} from "@/common/utils";
+import { getAuthenticatedUser, logout, performLogout } from "@/common/utils";
 import baseMixins from "../../../components/mixins/base";
 
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 import StorageService from "@/common/storage.service";
 import Configuration from "@/configuration";
@@ -61,12 +58,11 @@ const API_ENDPOINT = Configuration.value("baseURL");
 export default {
   name: "HeaderUserArea",
   data() {
-    return {
-    }
+    return {};
   },
   mixins: [baseMixins],
   computed: {
-    ...mapGetters(["userInfo"])
+    ...mapGetters(["userInfo"]),
   },
   mounted() {
     this.fetchUserInfo();

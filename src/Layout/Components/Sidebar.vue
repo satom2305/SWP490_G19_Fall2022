@@ -1,24 +1,21 @@
 <template>
-<div>
-  <div
+  <div>
+    <div
       class="app-sidebar sidebar-shadow"
       @mouseover="toggleSidebarHover('add', 'closed-sidebar-open')"
       @mouseleave="toggleSidebarHover('remove', 'closed-sidebar-open')"
-  >
-    <div class="app-header__logo">
-      <img
-          class="logo-header"
-          src="@/assets/static/images/logo.png"
-      />
-      <span class="title-logo">Tree World</span>
+    >
+      <div class="app-header__logo">
+        <img class="logo-header" src="@/assets/static/images/logo.png" />
+        <span class="title-logo">Tree World</span>
+      </div>
+      <div class="app-sidebar-content custom-box-shadow">
+        <VuePerfectScrollbar class="app-sidebar-scroll" v-once>
+          <SidebarV2 :menu="menu" :collapsed="collapsed" />
+        </VuePerfectScrollbar>
+      </div>
     </div>
-    <div class="app-sidebar-content custom-box-shadow">
-      <VuePerfectScrollbar class="app-sidebar-scroll" v-once>
-        <SidebarV2 :menu="menu" :collapsed="collapsed"/>
-      </VuePerfectScrollbar>
-    </div>
-  </div>
-  <div class="app-header__toggle" @click="toggleSidebar('closed-sidebar')">
+    <div class="app-header__toggle" @click="toggleSidebar('closed-sidebar')">
       <template v-if="!clickedToggleSidebar">
         <i class="fas fa-bars"></i>
       </template>
@@ -26,18 +23,18 @@
         <i class="fas fa-align-left"></i>
       </template>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import SidebarV2 from "./SidebarV2";
-import '@fortawesome/fontawesome-free/css/all.css'
+import "@fortawesome/fontawesome-free/css/all.css";
 
 export default {
   components: {
     VuePerfectScrollbar,
-    SidebarV2
+    SidebarV2,
   },
   data() {
     return {
@@ -45,13 +42,30 @@ export default {
       sidebarActive: false,
       menu: [
         {
+          title: "Sản phẩm",
+          icon: "fas fa-tree",
+          child: [
+            {
+              href: "/admin/product-category",
+              title: "Danh sách loại sản phẩm",
+            },
+            {
+              href: "/admin/product",
+              title: "Danh sách sản phẩm",
+            },
+            {
+              href: "/admin/promotion",
+              title: "Danh sách khuyến mại",
+            },
+          ],
+        },
+        {
           title: "Quản trị",
-          icon: 'fa fa-user',
+          icon: "fa fa-user",
           child: [
             {
               href: "/admin/user",
               title: "Người dùng",
-              permission: 'admin_user_list'
             },
           ],
         },
@@ -60,7 +74,7 @@ export default {
 
       windowWidth: 0,
 
-      clickedToggleSidebar: false
+      clickedToggleSidebar: false,
     };
   },
   props: {
@@ -80,7 +94,7 @@ export default {
     toggleSidebar(className) {
       const el = document.body;
       this.sidebarActive = !this.sidebarActive;
-      this.clickedToggleSidebar = !this.clickedToggleSidebar
+      this.clickedToggleSidebar = !this.clickedToggleSidebar;
 
       this.windowWidth = document.documentElement.clientWidth;
 
@@ -112,20 +126,22 @@ export default {
       this.windowWidth = document.documentElement.clientWidth;
 
       if (this.windowWidth < "1350") {
-        this.clickedToggleSidebar = true
+        this.clickedToggleSidebar = true;
         el.classList.add("closed-sidebar", "closed-sidebar-md");
       } else {
-        this.clickedToggleSidebar = false
+        this.clickedToggleSidebar = false;
         el.classList.remove("closed-sidebar", "closed-sidebar-md");
       }
     },
   },
   created() {
-    const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+    const userInfo = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
 
     if (!userInfo) return;
 
-    if (userInfo.roles.indexOf('admin') !== -1) return;
+    if (userInfo.role === "[ADMIN]") return;
 
     // userInfo.permissions = userInfo.permissions.replaceAll(' ', '').split(',')
 
@@ -136,7 +152,7 @@ export default {
     // this.menu = this.menu.filter((item) => item.child.length > 0)
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.addEventListener("resize", this.getWindowWidth);
 
       //Init
@@ -160,7 +176,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import '../../assets/custom-menu-antd.scss';
+@import "../../assets/custom-menu-antd.scss";
 .logo-src {
   background: no-repeat;
 }
@@ -175,7 +191,7 @@ export default {
   width: auto;
   display: flex;
   align-items: center;
-  transition: width .2s;
+  transition: width 0.2s;
   flex-shrink: 0;
   position: fixed;
   top: 0;

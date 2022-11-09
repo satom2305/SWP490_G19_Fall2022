@@ -279,13 +279,13 @@
             >
               <div class="featured__item__pic">
                 <img :src="item.mainImg" />
-                <ul class="featured__item__pic__hover">
+                <!-- <ul class="featured__item__pic__hover">
                   <li>
                     <a href="#">
                       <font-awesome-icon icon="fa fa-shopping-cart" />
                     </a>
                   </li>
-                </ul>
+                </ul> -->
               </div>
               <div class="featured__item__text">
                 <h6>
