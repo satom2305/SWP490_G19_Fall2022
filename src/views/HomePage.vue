@@ -183,7 +183,11 @@
                 <font-awesome-icon icon="fa fa-bars" />
                 <span>All departments</span>
               </div>
-              <ul v-for="(item, index) in listCategory" :key="index">
+              <ul
+                class="listCate"
+                v-for="(item, index) in listCategory"
+                :key="index"
+              >
                 <li>
                   <a href="#">{{ item.categoryName }}</a>
                 </li>
@@ -214,12 +218,14 @@
             </div>
             <div
               class="hero__item set-bg"
-              data-setbg="https://res.cloudinary.com/des083zke/image/upload/v1666838904/Capstone_Project_tw/gia-cay-thiet-moc-lan-dep_wb4ce1.jpg"
+              data-setbg="https://img5.thuthuatphanmem.vn/uploads/2021/10/02/ngon-co-xanh-non-tu-tu-troi-len-khoi-mat-dat-mem-mai-va-xanh_K668e_045032333.jpg"
             >
               <div class="hero__text">
-                <span>FRUIT FRESH</span>
-                <h2>Vegetable <br />100% Organic</h2>
-                <p>Free Pickup and Delivery Available</p>
+                <span>TREE WORLD</span>
+                <h2>
+                  Hãy ngắm nhìn thiên nhiên <br />để thấy tâm hồn chính mình
+                </h2>
+                <p>Vận chuyển tận tình</p>
                 <a href="#" class="primary-btn">SHOP NOW</a>
               </div>
             </div>
@@ -232,10 +238,10 @@
     <!-- Categories Section Begin -->
     <section class="">
       <VueSlickCarousel class="t-w-4/5 t-block t-mx-auto" v-bind="settings">
-        <div v-for="(item, index) in listTypeProduct" :key="index" class="p-4">
-          <img :src="item.img" />
+        <div v-for="(item, index) in listTypeProduct" :key="index" class="p-5">
+          <img :src="item.img" height="300" width="350" />
           <h5 class="t-text-center block p-4">
-            <a href="#">{{ item.name }} + {{ index }}</a>
+            <a href="#">{{ item.name }}</a>
           </h5>
         </div>
       </VueSlickCarousel>
@@ -248,9 +254,9 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Featured Product</h2>
+              <h2>Sản phẩm</h2>
             </div>
-            <div class="featured__controls">
+            <!-- <div class="featured__controls">
               <ul>
                 <li class="active" data-filter="*">All</li>
                 <li data-filter=".oranges">Oranges</li>
@@ -258,7 +264,7 @@
                 <li data-filter=".vegetables">Vegetables</li>
                 <li data-filter=".fastfood">Fastfood</li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="row row-cols-3">
@@ -267,20 +273,13 @@
             :key="index"
             class="col"
           >
-            <div class="featured__item">
+            <div
+              class="featured__item"
+              @click="showProductDetail(item.productId)"
+            >
               <div class="featured__item__pic">
                 <img :src="item.mainImg" />
                 <ul class="featured__item__pic__hover">
-                  <li>
-                    <a href="#">
-                      <font-awesome-icon icon="fa fa-heart" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <font-awesome-icon icon="fa fa-retweet" />
-                    </a>
-                  </li>
                   <li>
                     <a href="#">
                       <font-awesome-icon icon="fa fa-shopping-cart" />
@@ -290,7 +289,7 @@
               </div>
               <div class="featured__item__text">
                 <h6>
-                  <a href="#">{{ item.productName }}</a>
+                  <span>{{ item.productName }}</span>
                 </h6>
                 <h5>{{ item.sellPrice }}</h5>
               </div>
@@ -689,6 +688,7 @@
 import VueSlickCarousel from "vue-slick-carousel";
 import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
+// import { handlebotfe } from "@/common/bot-fe";
 export default {
   name: "HomePage",
   components: { VueSlickCarousel },
@@ -698,6 +698,7 @@ export default {
       listProduct: [],
       productListPaginate: [],
       listCategory: [],
+      listPost: [],
       pagination: {
         currentPage: 1,
         perPage: 3,
@@ -705,39 +706,49 @@ export default {
       },
       listTypeProduct: [
         {
-          name: "1",
+          name: "Cây Cảnh Trong Nhà",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://res.cloudinary.com/des083zke/image/upload/v1666838904/Capstone_Project_tw/gia-cay-thiet-moc-lan-dep_wb4ce1.jpg",
         },
         {
-          name: "1",
+          name: "Cây Cảnh Phong Thủy",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://res.cloudinary.com/des083zke/image/upload/v1667445194/Capstone_Project_tw/trong-cay-nguyet-que-mong-cau-vinh-quang-cho-gia-dinh-cay-nguyet-que-1-1507715523-width660height639_ejwxti.jpg",
         },
         {
-          name: "1",
+          name: "Cây Cảnh Để Bàn",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://res.cloudinary.com/des083zke/image/upload/v1667446961/Capstone_Project_tw/sen-nuda-bui-9-10cm-350-350-jpg_fk27d3.jpg",
         },
         {
-          name: "1",
+          name: "Cây Cảnh Văn Phòng",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://res.cloudinary.com/des083zke/image/upload/v1667467662/Capstone_Project_tw/cay-ngu-gia-bi-mini_wzeso7.jpg",
         },
         {
-          name: "1",
+          name: "Cây Cảnh Loại To",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://thietkesanvuonviet.com/wp-content/uploads/2020/01/cay-bong-mat-it-rung-la_14.jpg",
         },
         {
-          name: "1",
+          name: "Cây Cảnh Sen Đá",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://res.cloudinary.com/des083zke/image/upload/v1667446961/Capstone_Project_tw/sen-nuda-bui-9-10cm-350-350-jpg_fk27d3.jpg",
         },
         {
-          name: "1",
+          name: "Cây Thủy Sinh",
           img:
-            "https://res.cloudinary.com/des083zke/image/upload/v1666839170/Capstone_Project_tw/cay-bach-ma-hoang-tu-1-san-vuon-a-dong_ghuesa.jpg",
+            "https://wikihow.com.vn/wp-content/uploads/2020/04/cay-thuy-sinh-la-gi.jpg",
+        },
+        {
+          name: "Cây Dây Leo",
+          img:
+            "https://mamnonhoami.edu.vn/wp-content/uploads/2021/04/cay-day-leo-bai-tho-mam-non.jpg",
+        },
+        {
+          name: "Xương Rồng Cảnh",
+          img:
+            "https://dalatfarm.net/wp-content/uploads/2020/11/xuong-rong-kim-ho-1.jpg",
         },
       ],
       settings: {
@@ -778,8 +789,10 @@ export default {
   },
   mounted() {
     handleJQuery();
+    // handlebotfe();
     this.getListProduct();
     this.getListCategory();
+    this.getListPost();
   },
   methods: {
     async getListProduct() {
@@ -792,6 +805,7 @@ export default {
           0,
           this.pagination.perPage
         );
+        console.log(this.listProduct);
       }
     },
     async getListCategory() {
@@ -800,6 +814,16 @@ export default {
         this.listCategory = res.data.data;
         console.log(this.listCategory);
       }
+    },
+    async getListPost() {
+      const res = await this.getWithBigInt("/rest/posts");
+      if (res && res.data && res.data.data) {
+        this.listPost = res.data.data;
+        console.log(this.listPost);
+      }
+    },
+    showProductDetail(id) {
+      this.$router.push({ path: `/shop-detail/${id}` });
     },
     onPageChanged(page) {
       console.log(page);
@@ -812,4 +836,11 @@ export default {
   },
 };
 </script>
-<style lang="css"></style>
+<style lang="css">
+.listCate {
+  margin-bottom: 0px;
+}
+.featured__item {
+  cursor: pointer;
+}
+</style>

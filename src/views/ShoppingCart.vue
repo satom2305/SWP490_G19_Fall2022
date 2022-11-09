@@ -9,7 +9,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt="" /></a>
+        <a href="#"><img src="img/logo.png" alt=""/></a>
       </div>
       <div class="humberger__menu__cart">
         <ul>
@@ -114,9 +114,7 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="header__logo">
-              <a href="/"
-                ><img src="@/assets/img/logo.png" alt=""
-              /></a>
+              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -257,57 +255,30 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-for="item in listCart" :key="item">
                   <tr>
                     <td class="shoping__cart__item">
-                      <img src="img/cart/cart-1.jpg" alt="" />
-                      <h5>Vegetable’s Package</h5>
+                      <img
+                        :src="item.product.mainImg"
+                        width="150"
+                        height="150"
+                        alt=""
+                      />
+                      <h5>{{ item.product.productName }}</h5>
                     </td>
-                    <td class="shoping__cart__price">$55.00</td>
+                    <td class="shoping__cart__price">
+                      {{ item.product.sellPrice }}đ
+                    </td>
                     <td class="shoping__cart__quantity">
                       <div class="quantity">
                         <div class="pro-qty">
-                          <input type="text" value="1" />
+                          <input type="text" :value="item.quantity" />
                         </div>
                       </div>
                     </td>
-                    <td class="shoping__cart__total">$110.00</td>
-                    <td class="shoping__cart__item__close">
-                      <span class="icon_close"></span>
+                    <td class="shoping__cart__total">
+                      {{ item.product.sellPrice * item.quantity }}đ
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="shoping__cart__item">
-                      <img src="img/cart/cart-2.jpg" alt="" />
-                      <h5>Fresh Garden Vegetable</h5>
-                    </td>
-                    <td class="shoping__cart__price">$39.00</td>
-                    <td class="shoping__cart__quantity">
-                      <div class="quantity">
-                        <div class="pro-qty">
-                          <input type="text" value="1" />
-                        </div>
-                      </div>
-                    </td>
-                    <td class="shoping__cart__total">$39.99</td>
-                    <td class="shoping__cart__item__close">
-                      <span class="icon_close"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="shoping__cart__item">
-                      <img src="img/cart/cart-3.jpg" alt="" />
-                      <h5>Organic Bananas</h5>
-                    </td>
-                    <td class="shoping__cart__price">$69.00</td>
-                    <td class="shoping__cart__quantity">
-                      <div class="quantity">
-                        <div class="pro-qty">
-                          <input type="text" value="1" />
-                        </div>
-                      </div>
-                    </td>
-                    <td class="shoping__cart__total">$69.99</td>
                     <td class="shoping__cart__item__close">
                       <span class="icon_close"></span>
                     </td>
@@ -326,25 +297,29 @@
               >
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="shoping__continue">
-              <div class="shoping__discount">
-                <h5>Discount Codes</h5>
-                <form action="#">
-                  <input type="text" placeholder="Enter your coupon code" />
-                  <button type="submit" class="site-btn">APPLY COUPON</button>
-                </form>
+          <div>
+            <div class="col-lg-6">
+              <div class="shoping__continue">
+                <div class="shoping__discount">
+                  <h5>Discount Codes</h5>
+                  <form action="#">
+                    <input type="text" placeholder="Enter your coupon code" />
+                    <button type="submit" class="site-btn">APPLY COUPON</button>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="shoping__checkout">
-              <h5>Cart Total</h5>
-              <ul>
-                <li>Subtotal <span>$454.98</span></li>
-                <li>Total <span>$454.98</span></li>
-              </ul>
-              <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+            <div class="col-lg-6">
+              <div class="shoping__checkout">
+                <h5>Cart Total</h5>
+                <ul>
+                  <li>Subtotal <span>$454.98</span></li>
+                  <li>
+                    Total <span>{{ this.totalPrice }}đ</span>
+                  </li>
+                </ul>
+                <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+              </div>
             </div>
           </div>
         </div>
@@ -359,7 +334,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt=""/></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -414,8 +389,8 @@
               <div class="footer__copyright__text">
                 <p>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                  Copyright &copy; 2022
-                  All rights reserved | This template is made with
+                  Copyright &copy; 2022 All rights reserved | This template is
+                  made with
                   <i class="fa fa-heart" aria-hidden="true"></i> by
                   <a href="https://colorlib.com" target="_blank">Colorlib</a>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -436,13 +411,37 @@
 </template>
 
 <script>
-import { handleJQuery } from '../common/utils'
+import { handleJQuery } from "../common/utils";
+import baseMixins from "../components/mixins/base";
 export default {
-  name: 'ShoppingCart',
+  name: "ShoppingCart",
+  mixins: [baseMixins],
+  data() {
+    return {
+      listCart: [],
+      totalPrice: 0,
+      subPrice: 0,
+    };
+  },
+  mounted() {
+    this.getListCart();
+  },
+  methods: {
+    async getListCart() {
+      const res = await this.getWithBigInt("/rest/carts");
+      if (res && res.data && res.data.data) {
+        this.listCart = res.data.data;
+        this.listCart.forEach((element) => {
+          this.totalPrice += element.product.sellPrice * element.quantity;
+        });
+        console.log(this.listCart);
+      }
+    },
+  },
   created() {
-    handleJQuery()
-  }
-}
+    handleJQuery();
+  },
+};
 </script>
 
 <style scoped></style>

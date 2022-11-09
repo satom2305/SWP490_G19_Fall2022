@@ -8,7 +8,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt="" /></a>
+        <a href="#"><img src="img/logo.png" alt=""/></a>
       </div>
       <div class="humberger__menu__cart">
         <ul>
@@ -113,9 +113,7 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="header__logo">
-              <a href="/"
-                ><img src="@/assets/img/logo.png" alt=""
-              /></a>
+              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -223,16 +221,17 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
+    <!-- <div></div> -->
     <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
             <div class="breadcrumb__text">
-              <h2>Vegetable’s Package</h2>
+              <!-- <h2>Vegetable’s Package</h2> -->
               <div class="breadcrumb__option">
-                <a href="./">Home</a>
-                <a href="./">Vegetables</a>
-                <span>Vegetable’s Package</span>
+                <!-- <a href="./">Home</a>
+                <a href="./">Vegetables</a> -->
+                <span>{{ this.productDetail.productName }}</span>
               </div>
             </div>
           </div>
@@ -250,17 +249,21 @@
               <div class="product__details__pic__item">
                 <img
                   class="product__details__pic__item--large"
-                  src="img/product/details/product-details-1.jpg"
+                  :src="productDetail.mainImg"
                   alt=""
                 />
               </div>
-              <div class="product__details__pic__slider owl-carousel">
+              <div
+                v-for="item in listImg"
+                :key="item"
+                class="product__details__pic__slider owl-carousel"
+              >
                 <img
                   data-imgbigurl="img/product/details/product-details-2.jpg"
-                  src="img/product/details/thumb-1.jpg"
+                  :src="item[0]"
                   alt=""
                 />
-                <img
+                <!-- <img
                   data-imgbigurl="img/product/details/product-details-3.jpg"
                   src="img/product/details/thumb-2.jpg"
                   alt=""
@@ -274,36 +277,37 @@
                   data-imgbigurl="img/product/details/product-details-4.jpg"
                   src="img/product/details/thumb-4.jpg"
                   alt=""
-                />
+                /> -->
               </div>
             </div>
           </div>
           <div class="col-lg-6 col-md-6">
             <div class="product__details__text">
-              <h3>Vetgetable’s Package</h3>
+              <h3>{{ this.productDetail.productName }}</h3>
               <div class="product__details__rating">
+                <!-- <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-                <span>(18 reviews)</span>
+                <i class="fa fa-star-half-o"></i> -->
+                <!-- <span>(18 reviews)</span> -->
               </div>
-              <div class="product__details__price">$50.00</div>
+              <div class="product__details__price">
+                {{ this.productDetail.sellPrice }}
+              </div>
               <p>
-                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet
-                dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam
-                vehicula elementum sed sit amet dui. Proin eget tortor risus.
+                {{ this.productDetail.description }}
               </p>
               <div class="product__details__quantity">
                 <div class="quantity">
                   <div class="pro-qty">
-                    <input type="text" value="1" />
+                    <input type="text" v-model="quantity" />
                   </div>
                 </div>
               </div>
-              <a href="#" class="primary-btn">ADD TO CARD</a>
+              <a href="#" @click="addtoCart()" class="primary-btn"
+                >ADD TO CARD</a
+              >
               <a href="#" class="heart-icon"
                 ><span class="icon_heart_alt"></span
               ></a>
@@ -573,7 +577,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt=""/></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -628,8 +632,8 @@
               <div class="footer__copyright__text">
                 <p>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                  Copyright &copy; 2022
-                  All rights reserved | This template is made with
+                  Copyright &copy; 2022 All rights reserved | This template is
+                  made with
                   <i class="fa fa-heart" aria-hidden="true"></i> by
                   <a href="https://colorlib.com" target="_blank">Colorlib</a>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -649,13 +653,43 @@
 
 <script>
 import { handleJQuery } from "@/common/utils";
-
+import baseMixins from "../components/mixins/base";
 export default {
-  name: 'ShopDetail',
-  mounted() {
-    handleJQuery()
+  name: "ShopDetail",
+  mixins: [baseMixins],
+  props: {},
+  data() {
+    return {
+      productDetail: null,
+      listImg: [],
+      quantity: 1,
+    };
   },
-}
+  mounted() {
+    handleJQuery();
+    // const id = this.$router.push
+    this.getDetailProduct();
+    // console.log(this.$router);
+  },
+  methods: {
+    async getDetailProduct() {
+      const id = this.$router.currentRoute.params.id;
+      // const res = await clientService.getListProduct()
+      const res = await this.getWithBigInt(`/rest/products`, id);
+      if (res && res.data && res.data.data) {
+        this.productDetail = res.data.data;
+        console.log(this.productDetail);
+      }
+    },
+    addtoCart() {
+      const id = this.$router.currentRoute.params.id;
+      const res = this.post(`/rest/carts`, {
+        productId: id,
+        quantity: this.quantity,
+      });
+    },
+  },
+};
 </script>
 
 <style scoped></style>
