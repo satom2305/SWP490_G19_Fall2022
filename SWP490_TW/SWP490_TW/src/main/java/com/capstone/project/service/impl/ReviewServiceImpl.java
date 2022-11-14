@@ -48,8 +48,8 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewResponse createReview(ReviewRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException("User not found", 404));
-        Product product = productRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException("User not found", 404));
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(() -> new AppException("Product not found", 404));
 
         Review review = reviewRepository.save(Review.builder()
                 .userId(user)
