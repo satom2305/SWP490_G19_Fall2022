@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/orderDetails")
@@ -43,6 +45,12 @@ public class OrderDetailController {
     public ResponseEntity<?> updateOrderDetail(@PathVariable("id") Integer id, @RequestBody OrderDetailRequest detailRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Successfully", true, detailService.updateOrderDetail(id, detailRequest)));
+    }
+
+    @PutMapping("/order/{id}")
+    public ResponseEntity<?> updateOrderDetailByOrderId(@PathVariable("id") Integer id, @RequestBody List<OrderDetailRequest> detailRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, detailService.updateOrderDetailByOrderId(id,detailRequest)));
     }
 
     @DeleteMapping("/{id}")

@@ -13,4 +13,5 @@ public interface OrderDetailService {
     OrderDetailResponse updateOrderDetail(Integer id ,OrderDetailRequest detailRequest);
     void delete(Integer id);
     List<OrderDetailResponse> getByOrderId(Integer id);
+    List<OrderDetailResponse> updateOrderDetailByOrderId(Integer id,List<OrderDetailRequest> requests);
 }
