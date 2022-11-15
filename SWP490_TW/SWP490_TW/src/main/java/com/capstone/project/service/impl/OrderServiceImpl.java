@@ -97,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
                         .build());
                 detailRepository.save(orderDetail);
             }
+            System.out.println(order);
             cartRepository.deleteByUser(user.getUserId());
             return mapper.map(order, OrderResponse.class);
         } else {

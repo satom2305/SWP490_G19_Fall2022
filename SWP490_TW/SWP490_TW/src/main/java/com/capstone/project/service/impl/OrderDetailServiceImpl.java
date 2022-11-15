@@ -79,7 +79,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new AppException("Order not found", 404));
         Double total = 0.0;
-        for(OrderDetailRequest c : list){
+        for (OrderDetailRequest c : list) {
             Product product = productRepository.findById(c.getProductId())
                     .orElseThrow(() -> new AppException("Product not found", 404));
             OrderDetail orderDetail = detailRepository.findById(c.getOrder_detail_id())
@@ -113,6 +113,5 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .map(orderDetail -> mapper.map(orderDetail, OrderDetailResponse.class))
                 .collect(Collectors.toList());
     }
-
-
 }
+
