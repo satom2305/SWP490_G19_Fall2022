@@ -335,58 +335,12 @@
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
               <h4>Latest Products</h4>
-              <div class="latest-product__slider owl-carousel">
-                <div class="latest-prdouct__slider__item">
+              <div v-for="item in topProduct"
+                :key="item" class="latest-product__slider owl-carousel">
+                <div  class="latest-prdouct__slider__item">
                   <a href="#" class="latest-product__item">
                     <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
+                      <img :src="item.mainImg" alt="" />
                     </div>
                     <div class="latest-product__item__text">
                       <h6>Crab Pool Security</h6>
@@ -537,69 +491,57 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <div class="section-title from-blog__title">
-              <h2>From The Blog</h2>
+            <div class="section-title">
+              <h2>Sản phẩm</h2>
+            </div>
+            <!-- <div class="featured__controls">
+              <ul>
+                <li class="active" data-filter="*">All</li>
+                <li data-filter=".oranges">Oranges</li>
+                <li data-filter=".fresh-meat">Fresh Meat</li>
+                <li data-filter=".vegetables">Vegetables</li>
+                <li data-filter=".fastfood">Fastfood</li>
+              </ul>
+            </div> -->
+          </div>
+        </div>
+        <div class="row row-cols-3">
+          <div
+            v-for="(item, index) in listPostPaginate"
+            :key="index"
+            class="col"
+          >
+            <div
+              class="featured__item"
+              @click="showProductDetail(item.productId)"
+            >
+              <div class="featured__item__pic">
+                <img :src="item.image_link_thumbnail" />
+                <!-- <ul class="featured__item__pic__hover">
+                  <li>
+                    <a href="#">
+                      <font-awesome-icon icon="fa fa-shopping-cart" />
+                    </a>
+                  </li>
+                </ul> -->
+              </div>
+              <div class="featured__item__text">
+                <h4>
+                  <span>{{ item.title }}</span>
+                </h4>
+                <h6>{{ item.content }}</h6>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic">
-                <img src="img/blog/blog-1.jpg" alt="" />
-              </div>
-              <div class="blog__item__text">
-                <!--              <ul>-->
-                <!--                <li><font-awesome-icon icon="fa fa-calendar-o"/> May 4,2019</li>-->
-                <!--                <li><font-awesome-icon icon="fa fa-comment-o"/> 5</li>-->
-                <!--              </ul>-->
-                <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic">
-                <img src="img/blog/blog-2.jpg" alt="" />
-              </div>
-              <div class="blog__item__text">
-                <!--              <ul>-->
-                <!--                <li><font-awesome-icon icon="fa fa-calendar-o"/> May 4,2019</li>-->
-                <!--                <li><font-awesome-icon icon="fa fa-comment-o"/> 5</li>-->
-                <!--              </ul>-->
-                <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic">
-                <img
-                  src="https://znews-photo.zingcdn.me/w660/Uploaded/qhj_yvobvhfwbv/2018_07_18/Nguyen_Huy_Binh1.jpg"
-                  alt=""
-                />
-              </div>
-              <div class="blog__item__text">
-                <!--              <ul>-->
-                <!--                <li><font-awesome-icon icon="fa fa-calendar-o"/> May 4,2019</li>-->
-                <!--                <li><font-awesome-icon icon="fa fa-comment-o"/> 5</li>-->
-                <!--              </ul>-->
-                <h5><a href="#">Visit the clean farm in the US</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
-              </div>
-            </div>
-          </div>
+        <div class="t-mx-auto t-w-fit">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="listPost.length"
+            :per-page="pagination.perPage"
+            aria-controls="my-table"
+            @change="onPageChanged"
+          ></b-pagination>
         </div>
       </div>
     </section>
@@ -696,9 +638,11 @@ export default {
   data() {
     return {
       listProduct: [],
+      topProduct:[],
       productListPaginate: [],
       listCategory: [],
       listPost: [],
+      listPostPaginate:[],
       pagination: {
         currentPage: 1,
         perPage: 3,
@@ -793,6 +737,7 @@ export default {
     this.getListProduct();
     this.getListCategory();
     this.getListPost();
+    this.getTopProduct();
   },
   methods: {
     async getListProduct() {
@@ -808,6 +753,13 @@ export default {
         console.log(this.listProduct);
       }
     },
+    async getTopProduct() {
+      // const res = await clientService.getListProduct()
+      const res = await this.getWithBigInt("/rest/products/lastSixProducts");
+      if (res && res.data && res.data.data) {
+        this.topProduct = res.data.data;
+      }
+    },
     async getListCategory() {
       const res = await this.getWithBigInt("/rest/categories");
       if (res && res.data && res.data.data) {
@@ -819,7 +771,11 @@ export default {
       const res = await this.getWithBigInt("/rest/posts");
       if (res && res.data && res.data.data) {
         this.listPost = res.data.data;
-        console.log(this.listPost);
+        this.pagination.totalRows = res.data.data.length;
+        this.listPostPaginate = res.data.data.slice(
+          0,
+          this.pagination.perPage
+        );
       }
     },
     showProductDetail(id) {
@@ -829,6 +785,10 @@ export default {
       console.log(page);
       this.pagination.currentPage = page;
       this.productListPaginate = this.listProduct.slice(
+        (page - 1) * this.pagination.perPage,
+        page * this.pagination.perPage
+      );
+      this.listPostPaginate = this.listPost.slice(
         (page - 1) * this.pagination.perPage,
         page * this.pagination.perPage
       );
