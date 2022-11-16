@@ -293,7 +293,7 @@
                 <!-- <span>(18 reviews)</span> -->
               </div>
               <div class="product__details__price">
-                {{ this.productDetail.sellPrice }}
+                {{ this.productDetail.sellPrice }}đ
               </div>
               <p>
                 {{ this.productDetail.description }}
@@ -308,9 +308,6 @@
               <a href="#" @click="addtoCart()" class="primary-btn"
                 >ADD TO CARD</a
               >
-              <a href="#" class="heart-icon"
-                ><span class="icon_heart_alt"></span
-              ></a>
               <ul>
                 <li><b>Availability</b> <span>In Stock</span></li>
                 <li>
@@ -431,23 +428,27 @@
                 </div>
                 <div class="tab-pane" id="tabs-3" role="tabpanel">
                   <div class="product__details__tab__desc">
-                    <h6>Products Infomation</h6>
-                    <p>
-                      Vestibulum ac diam sit amet quam vehicula elementum sed
-                      sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-                      Proin eget tortor risus. Vivamus suscipit tortor eget
-                      felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Donec rutrum congue
-                      leo eget malesuada. Vivamus suscipit tortor eget felis
-                      porttitor volutpat. Curabitur arcu erat, accumsan id
-                      imperdiet et, porttitor at sem. Praesent sapien massa,
-                      convallis a pellentesque nec, egestas non nisi. Vestibulum
-                      ac diam sit amet quam vehicula elementum sed sit amet dui.
-                      Vestibulum ante ipsum primis in faucibus orci luctus et
-                      ultrices posuere cubilia Curae; Donec velit neque, auctor
-                      sit amet aliquam vel, ullamcorper sit amet ligula. Proin
-                      eget tortor risus.
-                    </p>
+                    <h6>Đánh giá của khách hàng</h6>
+                    <div>
+                      <a-comment>
+                        <template #avatar>
+                          <a-avatar
+                            src="../assets/static/avatar.png"
+                            alt="avatar"
+                          />
+                        </template>
+                        <template #content>
+                          <a-form-item>
+                            <a-textarea :rows="4" v-model="newReview" />
+                          </a-form-item>
+                          <a-form-item>
+                            <a-button type="primary" @click="createReview">
+                              Đánh giá
+                            </a-button>
+                          </a-form-item>
+                        </template>
+                      </a-comment>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -687,6 +688,9 @@ export default {
         productId: id,
         quantity: this.quantity,
       });
+    },
+    proceedToCheckout() {
+      this.$router.push({ path: `/shopping-cart` });
     },
   },
 };

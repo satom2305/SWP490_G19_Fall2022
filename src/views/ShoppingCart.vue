@@ -313,12 +313,20 @@
               <div class="shoping__checkout">
                 <h5>Cart Total</h5>
                 <ul>
-                  <li>Subtotal <span>$454.98</span></li>
+                  <li>
+                    Subtotal <span>{{ this.subPrice }}đ</span>
+                  </li>
                   <li>
                     Total <span>{{ this.totalPrice }}đ</span>
                   </li>
                 </ul>
-                <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                <div
+                  style="cursor: pointer;"
+                  @click="proceedToCheckout()"
+                  class="primary-btn"
+                >
+                  PROCEED TO CHECKOUT
+                </div>
               </div>
             </div>
           </div>
@@ -432,10 +440,17 @@ export default {
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
         this.listCart.forEach((element) => {
+          this.subPrice += element.product.sellPrice * element.quantity;
+        });
+        //chua coupon
+        this.listCart.forEach((element) => {
           this.totalPrice += element.product.sellPrice * element.quantity;
         });
         console.log(this.listCart);
       }
+    },
+    proceedToCheckout() {
+      this.$router.push({ path: `/check-out` });
     },
   },
   created() {

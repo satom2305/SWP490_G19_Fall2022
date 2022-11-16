@@ -181,7 +181,7 @@
             <div class="hero__categories">
               <div class="hero__categories__all">
                 <font-awesome-icon icon="fa fa-bars" />
-                <span>All departments</span>
+                <span>Danh Mục</span>
               </div>
               <ul
                 class="listCate"
@@ -335,9 +335,12 @@
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
               <h4>Latest Products</h4>
-              <div v-for="item in topProduct"
-                :key="item" class="latest-product__slider owl-carousel">
-                <div  class="latest-prdouct__slider__item">
+              <div
+                v-for="item in topProduct"
+                :key="item"
+                class="latest-product__slider owl-carousel"
+              >
+                <div class="latest-prdouct__slider__item">
                   <a href="#" class="latest-product__item">
                     <div class="latest-product__item__pic">
                       <img :src="item.mainImg" alt="" />
@@ -492,7 +495,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Sản phẩm</h2>
+              <h2>Tin tức</h2>
             </div>
             <!-- <div class="featured__controls">
               <ul>
@@ -511,25 +514,18 @@
             :key="index"
             class="col"
           >
-            <div
-              class="featured__item"
-              @click="showProductDetail(item.productId)"
-            >
-              <div class="featured__item__pic">
-                <img :src="item.image_link_thumbnail" />
-                <!-- <ul class="featured__item__pic__hover">
-                  <li>
-                    <a href="#">
-                      <font-awesome-icon icon="fa fa-shopping-cart" />
-                    </a>
-                  </li>
-                </ul> -->
+            <div class="blog__item" @click="showBlogDetail(item.postId)">
+              <div class="blog__item__pic">
+                <img
+                  :src="item.image_link_thumbnail"
+                  width="300"
+                  height="300"
+                />
               </div>
-              <div class="featured__item__text">
-                <h4>
-                  <span>{{ item.title }}</span>
-                </h4>
-                <h6>{{ item.content }}</h6>
+              <div class="blog__item__text">
+                <h5>
+                  <a>{{ item.title }}</a>
+                </h5>
               </div>
             </div>
           </div>
@@ -638,11 +634,11 @@ export default {
   data() {
     return {
       listProduct: [],
-      topProduct:[],
+      topProduct: [],
       productListPaginate: [],
       listCategory: [],
       listPost: [],
-      listPostPaginate:[],
+      listPostPaginate: [],
       pagination: {
         currentPage: 1,
         perPage: 3,
@@ -772,14 +768,14 @@ export default {
       if (res && res.data && res.data.data) {
         this.listPost = res.data.data;
         this.pagination.totalRows = res.data.data.length;
-        this.listPostPaginate = res.data.data.slice(
-          0,
-          this.pagination.perPage
-        );
+        this.listPostPaginate = res.data.data.slice(0, this.pagination.perPage);
       }
     },
     showProductDetail(id) {
       this.$router.push({ path: `/shop-detail/${id}` });
+    },
+    showBlogDetail(id) {
+      this.$router.push({ path: `/blog-detail/${id}` });
     },
     onPageChanged(page) {
       console.log(page);

@@ -12,34 +12,78 @@
       <template v-else>
         <b-row>
           <b-col xl="4">
-            <div class="banner-image__wrapper">
+            <div v-if="currentData" class="banner-image__wrapper">
               <b-form-group>
-                <label>Ảnh banner:</label>
+                <label>Ảnh thumbnail:</label>
                 <div
                   class="custom-banner-image banner-image__preview mb-2"
                   :style="
-                    getUrlImage
-                      ? { 'background-image': `url(${currentData.mainImg})` }
+                    currentData.image_link_thumbnail
+                      ? {
+                          'background-image': `url(${currentData.image_link_thumbnail})`,
+                        }
                       : null
                   "
                 >
-                  <div class="overlay" v-if="currentData.mainImg">
-                    <button class="banner-image__btn" @click="showImageSelect">
+                  <div class="overlay" v-if="currentData.image_link_thumbnail">
+                    <button
+                      class="banner-image__btn"
+                      @click="showImageSelect(currentData.image_link_thumbnail)"
+                    >
                       <i class="fas fa-eye"></i>
                     </button>
                     <button
                       class="banner-image__btn"
-                      @click="removeImageSelect"
+                      @click="removeImageSelect('image_link_thumbnail')"
                     >
                       <i class="fas fa-trash-alt"></i>
                     </button>
                   </div>
                 </div>
-                <b-form-group v-if="!disabledUpdateDisabledProduct">
+                <b-form-group>
                   <b-form-input
-                    id="input-file"
+                    id="input-thumbnail"
                     type="text"
-                    v-model="currentData.mainImg"
+                    v-model="currentData.image_link_thumbnail"
+                    placeholder="Nhập link ảnh thumbnail"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-form-group>
+            </div>
+            <div v-if="currentData" class="banner-image__wrapper">
+              <b-form-group>
+                <label>Ảnh chi tiết:</label>
+                <div
+                  class="custom-banner-image banner-image__preview mb-2"
+                  :style="
+                    currentData.image_link_detail
+                      ? {
+                          'background-image': `url(${currentData.image_link_detail})`,
+                        }
+                      : null
+                  "
+                >
+                  <div class="overlay" v-if="currentData.image_link_detail">
+                    <button
+                      class="banner-image__btn"
+                      @click="showImageSelect(currentData.image_link_detail)"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      class="banner-image__btn"
+                      @click="removeImageSelect('image_link_detail')"
+                    >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <b-form-group>
+                  <b-form-input
+                    id="input-img-detail"
+                    type="text"
+                    v-model="currentData.image_link_detail"
                     placeholder="Nhập link ảnh"
                   >
                   </b-form-input>
@@ -47,6 +91,7 @@
               </b-form-group>
             </div>
           </b-col>
+
           <b-col xl="8">
             <div>
               <b-row>
@@ -61,7 +106,7 @@
                     :class="{
                       'is-invalid': validationStatus($v.currentData.order),
                     }"
-                    :disabled="disabledUpdateDisabledProduct"
+                    :disabled="disabledUpdatePost"
                   ></b-form-input>
                   <div
                     v-if="!$v.currentData.order.required"
@@ -83,119 +128,31 @@
                 <b-col md="4">
                   <b-form-group>
                     <label
-                      >Tên sản phẩm <span class="text-danger">*</span>:</label
+                      >Tiêu đề bài đăng
+                      <span class="text-danger">*</span>:</label
                     >
                     <b-form-input
-                      id="input-0"
-                      v-model.trim="$v.currentData.productName.$model"
-                      placeholder="Nhập tên sản phẩm"
+                      id="input-title"
+                      v-model.trim="$v.currentData.title.$model"
+                      placeholder="Nhập tiêu đề bài đăng"
                       :class="{
-                        'is-invalid': validationStatus(
-                          $v.currentData.productName
-                        ),
+                        'is-invalid': validationStatus($v.currentData.title),
                       }"
-                      :disabled="disabledUpdateDisabledProduct"
                     ></b-form-input>
                     <div
-                      v-if="!$v.currentData.productName.required"
+                      v-if="!$v.currentData.title.required"
                       class="invalid-feedback"
                     >
-                      Tên sản phẩm không được để trống.
+                      Tiêu đề bài đăng không được để trống.
                     </div>
                     <!-- <div v-if="!$v.currentData.title.maxLength" class="invalid-feedback">
 											Tiêu đề không quá 1000 ký tự.
 										</div> -->
-                  </b-form-group>
-                </b-col>
-                <b-col md="4">
-                  <b-form-group>
-                    <label>Giá gốc <span class="text-danger">*</span>:</label>
-                    <b-form-input
-                      id="input-original-price"
-                      @keypress="validateKeyCode"
-                      @keyup="formatAmount('original')"
-                      type="text"
-                      v-model.trim="$v.currentData.originalPrice.$model"
-                      placeholder="Nhập giá gốc"
-                      :class="{
-                        'is-invalid': validationStatus(
-                          $v.currentData.originalPrice
-                        ),
-                      }"
-                      :disabled="disabledUpdateDisabledProduct"
-                    ></b-form-input>
-                    <div
-                      v-if="!$v.currentData.originalPrice.required"
-                      class="invalid-feedback"
-                    >
-                      Giá sản phẩm không được để trống.
-                    </div>
-                    <!-- <div v-if="!$v.currentData.title.maxLength" class="invalid-feedback">
-											Tiêu đề không quá 1000 ký tự.
-										</div> -->
-                  </b-form-group>
-                </b-col>
-                <b-col md="4">
-                  <b-form-group>
-                    <label>Giá bán <span class="text-danger">*</span>:</label>
-                    <b-form-input
-                      id="input-original-price"
-                      @keypress="validateKeyCode"
-                      @keyup="formatAmount('sell')"
-                      type="text"
-                      v-model.trim="$v.currentData.sellPrice.$model"
-                      placeholder="Nhập giá bán"
-                      :class="{
-                        'is-invalid': validationStatus(
-                          $v.currentData.sellPrice
-                        ),
-                      }"
-                      :disabled="disabledUpdateDisabledProduct"
-                    ></b-form-input>
-                    <!-- <div v-if="!$v.currentData.title.maxLength" class="invalid-feedback">
-											Tiêu đề không quá 1000 ký tự.
-										</div> -->
-                  </b-form-group>
-                </b-col>
-                <b-col md="4">
-                  <b-form-group>
-                    <label>Số lượng <span class="text-danger">*</span>:</label>
-                    <b-form-input
-                      id="input-original-price"
-                      v-model="$v.currentData.amount.$model"
-                      type="number"
-                      placeholder="Nhập số lượng"
-                      :class="{
-                        'is-invalid': validationStatus($v.currentData.amount),
-                      }"
-                      :disabled="disabledUpdateDisabledProduct"
-                    ></b-form-input>
-                    <div
-                      v-if="!$v.currentData.amount.required"
-                      class="invalid-feedback"
-                    >
-                      Số lượng không được để trống.
-                    </div>
-                    <!-- <div v-if="!$v.currentData.title.maxLength" class="invalid-feedback">
-											Tiêu đề không quá 1000 ký tự.
-										</div> -->
-                  </b-form-group>
-                </b-col>
-                <b-col md="4">
-                  <b-form-group>
-                    <label>Giảm giá:</label>
-                    <b-form-input
-                      id="input-original-price"
-                      v-model.trim="currentData.salePercent"
-                      type="number"
-                      placeholder="Nhập phần trăm giảm giá"
-                      :disabled="disabledUpdateDisabledProduct"
-                    ></b-form-input>
                   </b-form-group>
                 </b-col>
                 <!-- <b-col md="4">
 									<b-form-group>
-										<label>Thời gian bắt đầu sản phẩm <span class="text-danger">*</span>:</label>
+										<label>Thời gian bắt đầu bài đăng <span class="text-danger">*</span>:</label>
 										<div :class="{
 											'invalid-date':
 												(currentData.toDate &&
@@ -211,18 +168,18 @@
 															currentData.fromDate >= currentData.toDate),
 												},
 											]" v-model.trim="$v.currentData.fromDate.$model" type="datetime" format="DD/MM/YYYY HH:mm"
-												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdateDisabledProduct" />
+												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdatePost" />
 											<div class="invalid-date-feedback">
 												<span v-if="!$v.currentData.fromDate.required">
-													Thời gian bắt đầu sản phẩm không được để trống.
+													Thời gian bắt đầu bài đăng không được để trống.
 												</span>
 												<span v-if="
 													currentData.fromDate &&
 													currentData.toDate &&
 													currentData.fromDate >= currentData.toDate
 												">
-													Thời gian bắt đầu sản phẩm cần nhỏ hơn thời gian hết
-													sản phẩm.
+													Thời gian bắt đầu bài đăng cần nhỏ hơn thời gian hết
+													bài đăng.
 												</span>
 											</div>
 										</div>
@@ -230,7 +187,7 @@
 								</b-col> -->
                 <!-- <b-col md="4">
 									<b-form-group>
-										<label>Thời gian hết sản phẩm <span class="text-danger">*</span>:</label>
+										<label>Thời gian hết bài đăng <span class="text-danger">*</span>:</label>
 										<div :class="{
 											'invalid-date':
 												(currentData.toDate &&
@@ -246,18 +203,18 @@
 															currentData.fromDate >= currentData.toDate),
 												},
 											]" v-model.trim="$v.currentData.toDate.$model" type="datetime" format="DD/MM/YYYY HH:mm"
-												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdateDisabledProduct" />
+												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdatePost" />
 											<div class="invalid-date-feedback">
 												<span v-if="!$v.currentData.fromDate.required">
-													Thời gian bắt đầu sản phẩm không được để trống.
+													Thời gian bắt đầu bài đăng không được để trống.
 												</span>
 												<span v-if="
 													currentData.fromDate &&
 													currentData.toDate &&
 													currentData.fromDate >= currentData.toDate
 												">
-													Thời gian hết sản phẩm cần lớn hơn thời gian bắt đầu
-													sản phẩm.
+													Thời gian hết bài đăng cần lớn hơn thời gian bắt đầu
+													bài đăng.
 												</span>
 											</div>
 										</div>
@@ -269,20 +226,19 @@
                 <b-col md="4">
                   <b-form-group>
                     <label
-                      >Loại sản phẩm <span class="text-danger">*</span>:</label
+                      >Người đăng <span class="text-danger">*</span>:</label
                     >
                     <multiselect
-                      v-model="$v.currentData.category.$model"
+                      v-model="$v.currentData.user.$model"
                       track-by="text"
                       label="text"
                       :show-labels="false"
-                      :disabled="disabledUpdateDisabledProduct"
                       placeholder="Chọn"
-                      :options="categoryOptions"
+                      :options="userOptions"
                       :searchable="true"
                       :class="{
                         'is-invalid-option': validationStatus(
-                          $v.currentData.category
+                          $v.currentData.user
                         ),
                       }"
                     >
@@ -291,10 +247,10 @@
                       </template>
                     </multiselect>
                     <div
-                      v-if="!$v.currentData.category.required"
+                      v-if="!$v.currentData.user.required"
                       class="invalid-feedback"
                     >
-                      Loại sản phẩm không được để trống.
+                      Thông tin người đăng không được để trống.
                     </div>
                   </b-form-group>
                 </b-col>
@@ -323,22 +279,19 @@
         </b-row>
         <div class="w-100">
           <b-form-group>
-            <label>Mô tả sản phẩm <span class="text-danger">*</span>:</label>
-            <b-form-textarea
-              v-model="$v.currentData.description.$model"
-              :disabled="disabledUpdateDisabledProduct"
-            >
+            <label>Nội dung bài đăng <span class="text-danger">*</span>:</label>
+            <b-form-textarea v-model="$v.currentData.content.$model">
             </b-form-textarea>
           </b-form-group>
           <div
-            v-if="validationStatus($v.currentData.description)"
+            v-if="validationStatus($v.currentData.content)"
             class="invalid-editor"
           >
             <div
-              v-if="!$v.currentData.description.required"
+              v-if="!$v.currentData.content.required"
               class="invalid-editor-feedback"
             >
-              Mô tả sản phẩm không được để trống.
+              Nội dung bài đăng không được để trống.
             </div>
           </div>
         </div>
@@ -347,11 +300,7 @@
             <i class="fas fa-undo"></i>
             Hoàn tác
           </b-button>
-          <b-button
-            variant="primary"
-            @click.prevent="handleSubmit"
-            :disabled="disabledUpdateDisabledProduct"
-          >
+          <b-button variant="primary" @click.prevent="handleSubmit">
             <i class="fas fa-check"></i>
             Đồng ý
           </b-button>
@@ -360,19 +309,16 @@
     </b-card>
     <b-modal
       id="banner-image"
-      title="Ảnh sản phẩm"
+      title="Ảnh bài đăng"
       :no-close-on-backdrop="true"
       size="lg"
       hide-footer
     >
-      <div
-        class="d-flex justify-content-center"
-        v-if="currentMainImg || this.currentData.mainImg"
-      >
+      <div class="d-flex justify-content-center" v-if="currentUrlImage">
         <img
           style="width: 40rem"
           class="custom-banner-image"
-          :src="getUrlImage"
+          :src="currentUrlImage"
           alt="Ảnh banner"
         />
       </div>
@@ -384,6 +330,7 @@
 import PageTitle from "@/Layout/Components/PageTitle";
 import baseMixins from "@/components/mixins/base";
 import { required } from "vuelidate/lib/validators";
+import { formatTime } from "../../common/utils";
 import { formatPriceSearchV2 } from "../../common/common";
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
@@ -391,65 +338,53 @@ import moment from "moment-timezone";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import "vue2-datepicker/locale/vi";
+import router from "@/router";
 Vue.component("multiselect", Multiselect);
 import {
-  FETCH_CATEGORY,
-  FETCH_PRODUCT_BY_ID,
-  CREATE_PRODUCT,
-  UPDATE_PRODUCT,
-} from "../../store/action.type";
-const initProduct = {
-  productId: null,
-  productName: null,
-  description: null,
-  originalPrice: 0,
-  salePercent: 0,
-  sellPrice: 0,
-  category: null,
-  mainImg: null,
-  amount: 0,
-  createdDate: null,
-  productStatus: 1,
+  FETCH_USERS,
+  FETCH_POST_BY_ID,
+  CREATE_POST,
+  UPDATE_POST,
+} from "@/store/action.type";
+const initPost = {
+  postId: null,
+  title: null,
+  content: null,
+  user: null,
+  image_link_detail: null,
+  image_link_thumbnail: null,
+  date: null,
 };
 export default {
-  name: "CreatePromotion",
+  name: "CreatePost",
   components: { PageTitle, DatePicker },
   data() {
     return {
-      heading: "Tạo sản phẩm",
-      subheading: "Tạo sản phẩm",
-      currentData: Object.assign({}, initProduct),
-      saveCurrentData: Object.assign({}, initProduct),
+      heading: "Tạo bài đăng",
+      subheading: "Tạo bài đăng",
+      currentData: Object.assign({}, initPost),
+      saveCurrentData: Object.assign({}, initPost),
       userInfo: localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo"))
         : null,
       isUpdate: false,
       loadingHeader: true,
       loadingImage: false,
-      currentProductDetail: null,
-      currentMainImg: null,
-      categoryOptions: [],
+      currentPostDetail: null,
+      currentUrlImage: null,
+      userOptions: [],
     };
   },
   mixins: [baseMixins],
   validations: {
     currentData: {
-      productName: {
+      title: {
         required,
       },
-      originalPrice: {
+      user: {
         required,
       },
-      sellPrice: {
-        required,
-      },
-      amount: {
-        required,
-      },
-      category: {
-        required,
-      },
-      description: {
+      content: {
         required,
       },
     },
@@ -457,37 +392,37 @@ export default {
   created() {
     let url = this.$route.path;
     if (!url) return;
-    if (url === "/admin/product/create") {
+    if (url === "/admin/post/create") {
       setTimeout(() => {
         this.loadingHeader = false;
       }, 300);
-      this.$store.dispatch(FETCH_CATEGORY).then((res) => {
+      this.$store.dispatch(FETCH_USERS).then((res) => {
         if (res && res.status === 200 && res.data) {
-          this.categoryOptions = res.data.data.map((item) => {
+          this.userOptions = res.data.data.map((item) => {
             return {
-              text: item.categoryName,
-              value: item.categoryId,
+              text: item.username,
+              value: item.userId,
             };
           });
         }
       });
       return;
     }
-    if (url.includes("/admin/product/update")) {
-      this.heading = "Cập nhật sản phẩm";
-      this.subheading = "Cập nhật thông tin sản phẩm";
+    if (url.includes("/admin/post/update")) {
+      this.heading = "Cập nhật bài đăng";
+      this.subheading = "Cập nhật thông tin bài đăng";
       this.isUpdate = true;
-      let productId = this.$route.params.id;
-      if (!productId) return;
+      let postId = this.$route.params.id;
+      if (!postId) return;
       Promise.all([
-        this.$store.dispatch(FETCH_CATEGORY),
-        this.$store.dispatch(FETCH_PRODUCT_BY_ID, productId),
+        this.$store.dispatch(FETCH_USERS),
+        this.$store.dispatch(FETCH_POST_BY_ID, postId),
       ]).then((res) => {
         if (res[0] && res[0].status === 200 && res[0].data) {
-          this.categoryOptions = res[0].data.data.map((item) => {
+          this.userOptions = res[0].data.data.map((item) => {
             return {
-              text: item.categoryName,
-              value: item.categoryId,
+              text: item.username,
+              value: item.userId,
             };
           });
         }
@@ -497,27 +432,18 @@ export default {
         if (res[1] && res[1].status === 200) {
           this.currentData = Object.assign({}, { ...res[1].data.data });
           this.saveCurrentData = Object.assign({}, { ...res[1].data.data });
-          this.currentMainImg = res[1].data.data.mainImg;
-          this.currentData.category = this.currentData.category
+
+          this.currentData.user = this.currentData.user
             ? {
-                text: this.currentData.category.categoryName,
-                value: this.currentData.category.categoryId,
+                text: this.currentData.user.username,
+                value: this.currentData.user.userId,
               }
             : null;
-          this.formatAmount("sell");
-          this.formatAmount("original");
         }
       });
     }
   },
-  computed: {
-    getUrlImage() {
-      return this.currentData.mainImg;
-    },
-    disabledUpdateDisabledProduct() {
-      return this.currentData.productStatus === 0;
-    },
-  },
+  computed: {},
   methods: {
     validateKeyCode: function(e) {
       if (
@@ -529,72 +455,49 @@ export default {
       }
       e.preventDefault();
     },
-    formatAmount(type) {
-      if (type === "original")
-        this.currentData.originalPrice =
-          this.currentData.originalPrice !== null
-            ? formatPriceSearchV2(this.currentData.originalPrice + "")
-            : null;
-      if (type === "sell")
-        this.currentData.sellPrice =
-          this.currentData.sellPrice !== null
-            ? formatPriceSearchV2(this.currentData.sellPrice + "")
-            : null;
-    },
-    showImageSelect() {
+    showImageSelect(value) {
+      this.currentUrlImage = value;
       this.$root.$emit("bv::show::modal", "banner-image");
     },
-    removeImageSelect() {
-      this.currentMainImg = null;
-      this.currentData.mainImg = null;
+    removeImageSelect(key) {
+      this.currentUrlImage = null;
+      this.currentData[key] = null;
     },
-    handleCreateAndUpdatePromotion() {
+    handleCreateAndUpdatePost() {
       let {
-        productId,
-        productName,
-        description,
-        originalPrice,
-        salePercent,
-        sellPrice,
-        amount,
-        productStatus,
-        category,
-        mainImg,
-        createdDate,
+        postId,
+        title,
+        content,
+        image_link_detail,
+        image_link_thumbnail,
+        user,
+        date,
       } = { ...this.currentData };
       let payload = {
-        productId,
-        productData: {
-          productName,
-          categoryId: category ? category.value + "" : null,
-          description,
-          originalPrice:
-            originalPrice && Number(originalPrice.replace(",", "")),
-          mainImg,
-          salePercent,
-          sellPrice: sellPrice && Number(sellPrice.replace(",", "")),
-          createdDate,
-          amount,
-          productStatus,
+        postId,
+        postData: {
+          title,
+          userId: user ? user.value : null,
+          content,
+          image_link_detail,
+          image_link_thumbnail,
+          date,
         },
       };
-      if (!this.isUpdate)
-        payload.productData.createdDate = moment(new Date()).format(
-          "YYYY-MM-DDTHH:mm:ss.SSSZ"
-        );
+      if (!this.isUpdate) payload.postData.date = formatTime(new Date());
       this.$store
         .dispatch(
-          this.isUpdate ? UPDATE_PRODUCT : CREATE_PRODUCT,
-          this.isUpdate ? payload : payload.productData
+          this.isUpdate ? UPDATE_POST : CREATE_POST,
+          this.isUpdate ? payload : payload.postData
         )
         .then((res) => {
           if (!res) return;
           let successMsg = `${
             this.isUpdate ? "Cập nhật" : "Tạo"
-          } sản phẩm thành công.`;
+          } bài đăng thành công.`;
           let errorMsg = `${
             this.isUpdate ? "Cập nhật" : "Tạo"
-          } sản phẩm không thành công.`;
+          } bài đăng không thành công.`;
           if (res.status === 200) {
             this.$message({
               message: successMsg,
@@ -602,7 +505,7 @@ export default {
               showClose: true,
             });
             setTimeout(() => {
-              this.$router.push({ path: `/admin/product` });
+              this.$router.push({ path: `/admin/post` });
             }, 500);
           }
           if (res.status !== 200) {
@@ -620,32 +523,30 @@ export default {
       if (this.$v.currentData.$invalid) {
         return;
       }
-      if (!this.currentData.description) {
+      if (!this.currentData.content) {
         this.$message.closeAll();
         this.$message({
-          message: "Mô tả sản phẩm không được để trống",
+          message: "Nội dung bài đăng không được để trống",
           type: "warning",
           showClose: true,
         });
         return;
       }
-      this.handleCreateAndUpdatePromotion();
+      this.handleCreateAndUpdatePost();
     },
     handleReset() {
       this.currentData = this.isUpdate
         ? Object.assign({}, this.saveCurrentData)
-        : Object.assign({}, initProduct);
-      this.currentMainImg = this.currentData.mainImg;
+        : Object.assign({}, initPost);
+      this.currentData.user = this.currentData.user
+        ? {
+            text: this.currentData.user.username,
+            value: this.currentData.user.userId,
+          }
+        : null;
       this.$nextTick(() => {
         this.$v.$reset();
       });
-    },
-    handleFormatCurrentData() {
-      this.currentData.category = this.currentData.categoryId
-        ? this.categoryOptions.filter(
-            (category) => category.value === this.currentData.categoryId
-          )
-        : null;
     },
     validationStatus: function(validation) {
       return typeof validation != "undefined" ? validation.$error : false;

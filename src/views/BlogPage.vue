@@ -6,7 +6,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt="" /></a>
+        <a href="#"><img src="img/logo.png" alt=""/></a>
       </div>
       <div class="humberger__menu__cart">
         <ul>
@@ -111,9 +111,7 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="header__logo">
-              <a href="/"
-                ><img src="@/assets/img/logo.png" alt=""
-              /></a>
+              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -221,21 +219,6 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="breadcrumb__text">
-              <h2>Blog</h2>
-              <div class="breadcrumb__option">
-                <a href="./">Home</a>
-                <span>Blog</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Breadcrumb Section End -->
 
     <!-- Blog Section Begin -->
@@ -317,144 +300,35 @@
           </div>
           <div class="col-lg-8 col-md-7">
             <div class="row">
-              <div class="col-lg-6 col-md-6 col-sm-6">
+              <div
+                v-for="(item, index) in listBlogPaginate"
+                :key="index"
+                class="col-lg-6 col-md-6 col-sm-6"
+                @click="showBlogDetail(item.postId)"
+              >
                 <div class="blog__item">
                   <div class="blog__item__pic">
-                    <img src="img/blog/blog-2.jpg" alt="" />
+                    <img :src="item.image_link_thumbnail" alt="" />
                   </div>
                   <div class="blog__item__text">
                     <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
-                    </ul>
-                    <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="blog__item">
-                  <div class="blog__item__pic">
-                    <img src="img/blog/blog-3.jpg" alt="" />
-                  </div>
-                  <div class="blog__item__text">
-                    <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
-                    </ul>
-                    <h5><a href="#">Visit the clean farm in the US</a></h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="blog__item">
-                  <div class="blog__item__pic">
-                    <img src="img/blog/blog-1.jpg" alt="" />
-                  </div>
-                  <div class="blog__item__text">
-                    <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
-                    </ul>
-                    <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="blog__item">
-                  <div class="blog__item__pic">
-                    <img src="img/blog/blog-4.jpg" alt="" />
-                  </div>
-                  <div class="blog__item__text">
-                    <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
-                    </ul>
-                    <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="blog__item">
-                  <div class="blog__item__pic">
-                    <img src="img/blog/blog-4.jpg" alt="" />
-                  </div>
-                  <div class="blog__item__text">
-                    <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
+                      <li>{{ dateFormat }}</li>
                     </ul>
                     <h5>
-                      <a href="#"
-                        >The Moment You Need To Remove Garlic From The Menu</a
-                      >
+                      <a>{{ item.title }}</a>
                     </h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="blog__item">
-                  <div class="blog__item__pic">
-                    <img src="img/blog/blog-6.jpg" alt="" />
-                  </div>
-                  <div class="blog__item__text">
-                    <ul>
-                      <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                      <li><i class="fa fa-comment-o"></i> 5</li>
-                    </ul>
-                    <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                    <p>
-                      Sed quia non numquam modi tempora indunt ut labore et
-                      dolore magnam aliquam quaerat
-                    </p>
-                    <a href="#" class="blog__btn"
-                      >READ MORE <span class="arrow_right"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="product__pagination blog__pagination">
-                  <a href="#">1</a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                </div>
-              </div>
+            </div>
+            <div class="t-mx-auto t-w-fit">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="listBlog.length"
+                :per-page="pagination.perPage"
+                aria-controls="my-table"
+                @change="onPageChanged"
+              ></b-pagination>
             </div>
           </div>
         </div>
@@ -469,7 +343,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt=""/></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -524,8 +398,8 @@
               <div class="footer__copyright__text">
                 <p>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                  Copyright &copy; 2022
-                  All rights reserved | This template is made with
+                  Copyright &copy; 2022 All rights reserved | This template is
+                  made with
                   <i class="fa fa-heart" aria-hidden="true"></i> by
                   <a href="https://colorlib.com" target="_blank">Colorlib</a>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -544,13 +418,51 @@
 </template>
 
 <script>
-import { handleJQuery } from '../common/utils';
+import { handleJQuery } from "../common/utils";
+import baseMixins from "../components/mixins/base";
+import moment from "moment";
 export default {
-  name: 'BlogPage',
-  created() {
-    handleJQuery()
-  }
-}
+  name: "BlogPage",
+  mixins: [baseMixins],
+  data() {
+    return {
+      listBlog: null,
+      listBlogPaginate: null,
+      dateFormat: null,
+      pagination: {
+        currentPage: 1,
+        perPage: 6,
+        totalRows: 6,
+      },
+    };
+  },
+  mounted() {
+    handleJQuery();
+    this.getListBlog();
+    // console.log(this.$router);
+  },
+  methods: {
+    async getListBlog() {
+      const res = await this.getWithBigInt(`/rest/posts`);
+      if (res && res.data && res.data.data) {
+        this.listBlog = res.data.data;
+        this.pagination.totalRows = res.data.data.length;
+        this.listBlogPaginate = res.data.data.slice(0, this.pagination.perPage);
+        this.dateFormat = moment(res.data.data.date).format("ll");
+        console.log(this.listBlog);
+      }
+    },
+    showBlogDetail(id) {
+      this.$router.push({ path: `/blog-detail/${id}` });
+    },
+    onPageChanged(page) {
+      this.listBlogPaginate = this.listBlog.slice(
+        (page - 1) * this.pagination.perPage,
+        page * this.pagination.perPage
+      );
+    },
+  },
+};
 </script>
 
 <style scoped></style>

@@ -55,7 +55,7 @@ const router = new Router({
       component: () => import("@/views/Checkout"),
     },
     {
-      path: '/blog-detail',
+      path: '/blog-detail/:id',
       name: 'BlogDetail',
       meta: { title: 'BlogDetail', layout: 'userpages' },
       component: () => import("@/views/BlogDetail"),
@@ -118,6 +118,30 @@ const router = new Router({
       name: 'PromotionManagement',
       meta: { title: 'Quản lý khuyến mại', layout: 'default' },
       component: () => import("@/views/admin/Promotion"),
+    },
+    {
+      path: '/admin/post',
+      name: 'PostManagement',
+      meta: { title: 'Quản lý bài đăng', layout: 'default' },
+      component: () => import("@/views/admin/Post"),
+    },
+    {
+      path: '/admin/post/create',
+      name: 'PostCreate',
+      meta: { title: 'Tạo bài đăng', layout: 'default' },
+      component: () => import("@/views/admin/PostCreate"),
+    },
+    {
+      path: '/admin/post/update/:id',
+      name: 'PostUpdate',
+      meta: { title: 'Cập nhật bài đăng', layout: 'default' },
+      component: () => import("@/views/admin/PostCreate"),
+    },
+    {
+      path: '/admin/order',
+      name: 'OrderManagement',
+      meta: { title: 'Quản lý đơn hàng', layout: 'default' },
+      component: () => import("@/views/admin/Order"),
     },
     {
       path: '/error-not-allow',

@@ -25,12 +25,10 @@
     </div>
   </div>
 </template>
-
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import SidebarV2 from "./SidebarV2";
 import "@fortawesome/fontawesome-free/css/all.css";
-
 export default {
   components: {
     VuePerfectScrollbar,
@@ -60,6 +58,26 @@ export default {
           ],
         },
         {
+          title: "Đơn hàng",
+          icon: "fas fa-box-open",
+          child: [
+            {
+              href: "/admin/order",
+              title: "Danh sách đơn hàng",
+            },
+          ],
+        },
+        {
+          title: "Bài đăng",
+          icon: "fas fa-pencil-alt",
+          child: [
+            {
+              href: "/admin/post",
+              title: "Danh sách bài đăng",
+            },
+          ],
+        },
+        {
           title: "Quản trị",
           icon: "fa fa-user",
           child: [
@@ -71,9 +89,7 @@ export default {
         },
       ],
       collapsed: true,
-
       windowWidth: 0,
-
       clickedToggleSidebar: false,
     };
   },
@@ -84,7 +100,6 @@ export default {
     toggleBodyClass(className) {
       const el = document.body;
       this.isOpen = !this.isOpen;
-
       if (this.isOpen) {
         el.classList.add(className);
       } else {
@@ -95,9 +110,7 @@ export default {
       const el = document.body;
       this.sidebarActive = !this.sidebarActive;
       this.clickedToggleSidebar = !this.clickedToggleSidebar;
-
       this.windowWidth = document.documentElement.clientWidth;
-
       if (this.windowWidth > "992") {
         if (this.clickedToggleSidebar) {
           el.classList.add(className);
@@ -109,9 +122,7 @@ export default {
     toggleSidebarHover(add, className) {
       const el = document.body;
       this.sidebarActive = !this.sidebarActive;
-
       this.windowWidth = document.documentElement.clientWidth;
-
       if (this.windowWidth > "992") {
         if (add === "add") {
           el.classList.add(className);
@@ -122,9 +133,7 @@ export default {
     },
     getWindowWidth() {
       const el = document.body;
-
       this.windowWidth = document.documentElement.clientWidth;
-
       if (this.windowWidth < "1350") {
         this.clickedToggleSidebar = true;
         el.classList.add("closed-sidebar", "closed-sidebar-md");
@@ -138,34 +147,26 @@ export default {
     const userInfo = localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo"))
       : null;
-
     if (!userInfo) return;
-
     if (userInfo.role === "[ADMIN]") return;
-
     // userInfo.permissions = userInfo.permissions.replaceAll(' ', '').split(',')
-
     // this.menu.forEach((item) => {
     //   item.child = item.child.filter((child) => userInfo.permissions.includes(child.permission))
     // })
-
     // this.menu = this.menu.filter((item) => item.child.length > 0)
   },
   mounted() {
     this.$nextTick(function() {
       window.addEventListener("resize", this.getWindowWidth);
-
       //Init
       this.getWindowWidth();
     });
   },
-
   beforeDestroy() {
     window.removeEventListener("resize", this.getWindowWidth);
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .logo-header {
   margin-top: 1px;
@@ -174,7 +175,6 @@ export default {
   cursor: pointer;
 }
 </style>
-
 <style lang="scss">
 @import "../../assets/custom-menu-antd.scss";
 .logo-src {
@@ -199,7 +199,6 @@ export default {
   left: calc(300px);
   z-index: 10;
   cursor: pointer;
-
   i {
     color: #01904a;
     font-size: 1.5rem;

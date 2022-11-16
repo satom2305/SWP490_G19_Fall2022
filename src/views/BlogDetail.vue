@@ -9,7 +9,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt="" /></a>
+        <a href="#"><img src="img/logo.png" alt=""/></a>
       </div>
       <div class="humberger__menu__cart">
         <ul>
@@ -114,9 +114,7 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="header__logo">
-              <a href="/"
-                ><img src="@/assets/img/logo.png" alt=""
-              /></a>
+              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -224,25 +222,6 @@
     <!-- Hero Section End -->
 
     <!-- Blog Details Hero Begin -->
-    <section
-      class="blog-details-hero set-bg"
-      data-setbg="img/blog/details/details-hero.jpg"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="blog__details__hero__text">
-              <h2>The Moment You Need To Remove Garlic From The Menu</h2>
-              <ul>
-                <li>By Michael Scofield</li>
-                <li>January 14, 2019</li>
-                <li>8 Comments</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Blog Details Hero End -->
 
     <!-- Blog Details Section Begin -->
@@ -324,34 +303,19 @@
           </div>
           <div class="col-lg-8 col-md-7 order-md-1 order-1">
             <div class="blog__details__text">
-              <img src="img/blog/details/details-pic.jpg" alt="" />
+              <div>
+                <h2 style="font-weight: bold;">{{ blogDetail.title }}</h2>
+                <ul>
+                  <li>By {{ blogDetail.user.username }}</li>
+                  <li>{{ dateFormat }}</li>
+                </ul>
+              </div>
+              <img :src="blogDetail.image_link_detail" alt="" />
               <p>
-                Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam
-                vehicula elementum sed sit amet dui. Curabitur non nulla sit
-                amet nisl tempus convallis quis ac lectus. Mauris blandit
-                aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna
-                justo, lacinia eget consectetur sed, convallis at tellus. Sed
-                porttitor lectus nibh. Donec sollicitudin molestie malesuada.
-                Curabitur non nulla sit amet nisl tempus convallis quis ac
-                lectus. Proin eget tortor risus. Donec rutrum congue leo eget
-                malesuada. Curabitur non nulla sit amet nisl tempus convallis
-                quis ac lectus. Donec sollicitudin molestie malesuada. Nulla
-                quis lorem ut libero malesuada feugiat. Curabitur arcu erat,
-                accumsan id imperdiet et, porttitor at sem.
-              </p>
-              <h3>
-                The corner window forms a place within a place that is a resting
-                point within the large space.
-              </h3>
-              <p>
-                The study area is located at the back with a view of the vast
-                nature. Together with the other buildings, a congruent story has
-                been managed in which the whole has a reinforcing effect on the
-                components. The use of materials seeks connection to the main
-                house, the adjacent stables
+                {{ blogDetail.content }}
               </p>
             </div>
-            <div class="blog__details__content">
+            <!-- <div class="blog__details__content">
               <div class="row">
                 <div class="col-lg-6">
                   <div class="blog__details__author">
@@ -383,7 +347,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -467,7 +431,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt=""/></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -541,18 +505,36 @@
 </template>
 
 <script>
-import { handleJQuery } from '../common/utils'
+import { handleJQuery } from "../common/utils";
+import baseMixins from "../components/mixins/base";
+import moment from "moment";
 export default {
-  name: 'blog-detail',
+  name: "blog-detail",
+  mixins: [baseMixins],
   data() {
     return {
-      currentYear: new Date().getFullYear()
-    }
+      currentYear: new Date().getFullYear(),
+      blogDetail: null,
+      dateFormat: null,
+    };
   },
-  created() {
-    handleJQuery()
-  }
-}
+  mounted() {
+    handleJQuery();
+    this.getDetailBlog();
+    // console.log(this.$router);
+  },
+  methods: {
+    async getDetailBlog() {
+      const id = this.$router.currentRoute.params.id;
+      const res = await this.getWithBigInt(`/rest/posts`, id);
+      if (res && res.data && res.data.data) {
+        this.blogDetail = res.data.data;
+        this.dateFormat = moment(res.data.data.date).format("ll");
+        console.log(this.blogDetail);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped></style>

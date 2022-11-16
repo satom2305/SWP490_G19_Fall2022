@@ -9,7 +9,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
-        <a href="#"><img src="img/logo.png" alt="" /></a>
+        <a href="#"><img src="img/logo.png" alt=""/></a>
       </div>
       <div class="humberger__menu__cart">
         <ul>
@@ -114,9 +114,7 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="header__logo">
-              <a href="/"
-                ><img src="@/assets/img/logo.png" alt=""
-              /></a>
+              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -224,34 +222,19 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="breadcrumb__text">
-              <h2>Checkout</h2>
-              <div class="breadcrumb__option">
-                <a href="./">Home</a>
-                <span>Checkout</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Breadcrumb Section End -->
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
       <div class="container">
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-lg-12">
             <h6>
               <span class="icon_tag_alt"></span> Have a coupon?
               <a href="#">Click here</a> to enter your code
             </h6>
           </div>
-        </div>
+        </div> -->
         <div class="checkout__form">
           <h4>Billing Details</h4>
           <form action="#">
@@ -349,16 +332,18 @@
                   <div class="checkout__order__products">
                     Products <span>Total</span>
                   </div>
-                  <ul>
-                    <li>Vegetable’s Package <span>$75.99</span></li>
-                    <li>Fresh Vegetable <span>$151.99</span></li>
-                    <li>Organic Bananas <span>$53.99</span></li>
+                  <ul v-for="item in listCart" :key="item">
+                    <li>
+                      {{ item.product.productName }} x
+                      {{ item.quantity }}
+                      <span>{{ item.product.sellPrice * item.quantity }}</span>
+                    </li>
                   </ul>
                   <div class="checkout__order__subtotal">
-                    Subtotal <span>$750.99</span>
+                    Subtotal <span>{{ subPrice }}đ</span>
                   </div>
                   <div class="checkout__order__total">
-                    Total <span>$750.99</span>
+                    Total <span>{{ totalPrice }}đ</span>
                   </div>
                   <div class="checkout__input__checkbox">
                     <label for="acc-or">
@@ -402,7 +387,7 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt=""/></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -457,9 +442,8 @@
               <div class="footer__copyright__text">
                 <p>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                  Copyright &copy;
-                  2022
-                  All rights reserved | This template is made with
+                  Copyright &copy; 2022 All rights reserved | This template is
+                  made with
                   <i class="fa fa-heart" aria-hidden="true"></i> by
                   <a href="https://colorlib.com" target="_blank">Colorlib</a>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -478,13 +462,38 @@
 </template>
 
 <script>
-import { handleJQuery } from '../common/utils'
+import { handleJQuery } from "../common/utils";
+import baseMixins from "../components/mixins/base";
 export default {
-  name: 'check-out',
-  created() {
-    handleJQuery()
-  }
-}
+  name: "check-out",
+  mixins: [baseMixins],
+  data() {
+    return {
+      listCart: [],
+      totalPrice: 0,
+      subPrice: 0,
+    };
+  },
+  mounted() {
+    handleJQuery();
+    this.getListCart();
+  },
+  methods: {
+    async getListCart() {
+      const res = await this.getWithBigInt("/rest/carts");
+      if (res && res.data && res.data.data) {
+        this.listCart = res.data.data;
+        this.listCart.forEach((element) => {
+          this.subPrice += element.product.sellPrice * element.quantity;
+        });
+        this.listCart.forEach((element) => {
+          this.totalPrice += element.product.sellPrice * element.quantity;
+        });
+        console.log(this.listCart);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped></style>
