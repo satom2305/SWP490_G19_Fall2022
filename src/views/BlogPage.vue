@@ -312,7 +312,7 @@
                   </div>
                   <div class="blog__item__text">
                     <ul>
-                      <li>{{ dateFormat }}</li>
+                      <li>{{ getDateFormat(index) }}</li>
                     </ul>
                     <h5>
                       <a>{{ item.title }}</a>
@@ -428,7 +428,6 @@ export default {
     return {
       listBlog: null,
       listBlogPaginate: null,
-      dateFormat: null,
       pagination: {
         currentPage: 1,
         perPage: 6,
@@ -448,7 +447,6 @@ export default {
         this.listBlog = res.data.data;
         this.pagination.totalRows = res.data.data.length;
         this.listBlogPaginate = res.data.data.slice(0, this.pagination.perPage);
-        this.dateFormat = moment(res.data.data.date).format("ll");
         console.log(this.listBlog);
       }
     },
@@ -460,6 +458,9 @@ export default {
         (page - 1) * this.pagination.perPage,
         page * this.pagination.perPage
       );
+    },
+    getDateFormat(index) {
+      return moment(this.listBlog[index].date).format("ll");
     },
   },
 };

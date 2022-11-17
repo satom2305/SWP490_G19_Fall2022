@@ -185,6 +185,8 @@
                     placeholder="Chọn"
                     :options="productOptions"
                     :searchable="true"
+                    @select="calculateProductPrice(index)"
+                    @remove="calculateProductPrice(index)"
                   >
                     <template slot="singleLabel" slot-scope="{ option }">
                       {{ option.text }}
@@ -201,7 +203,7 @@
                     type="number"
                     placeholder="Nhập số lượng"
                     :disabled="disabledUpdateOrder"
-                    @input="calculateProductPrice"
+                    @input="calculateProductPrice(index)"
                   >
                   </b-form-input>
                 </b-form-group>
@@ -209,13 +211,7 @@
               <b-col md="2">
                 <b-form-group>
                   <label>Tổng giá:</label>
-                  <div>
-                    {{
-                      item.product && item.quantity
-                        ? getFormatPrice(item.product.sellPrice * item.quantity)
-                        : 0
-                    }}đ
-                  </div>
+                  <div>{{ getFormatPrice(item.productPrice) }}đ</div>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -238,12 +234,12 @@
           <b-col md="4">
             <b-form-group>
               <label class="font-weight-bold mr-2">Tổng giá sản phẩm:</label>
-              <span>{{ getFormatPrice(getTotalProductPrice()) }}đ</span>
+              <span>{{ getFormatPrice(getTotalProductPrice) }}đ</span>
             </b-form-group>
-            <!-- <b-form-group>
-                <label class="font-weight-bold mr-2">Tổng giá đơn hàng:</label>
-                <span>{{ getFormatPrice(currentData.totalPrice) }}đ</span>
-              </b-form-group> -->
+            <b-form-group>
+              <label class="font-weight-bold mr-2">Tổng giá đơn hàng:</label>
+              <span>{{ getFormatPrice(currentData.totalPrice) }}đ</span>
+            </b-form-group>
           </b-col>
         </b-row>
       </div>
@@ -253,9 +249,9 @@
           Huỷ
         </b-button>
         <!-- <b-button variant="outline-secondary" @click.prevent="handleReset">
-            <i class="fas fa-undo"></i>
-            Hoàn tác
-          </b-button> -->
+          <i class="fas fa-undo"></i>
+          Hoàn tác
+        </b-button> -->
         <b-button
           variant="primary"
           @click.prevent="handleSubmit"
@@ -282,7 +278,7 @@
       </div>
       <b-button
         class="mr-2 btn-light2 pull-right"
-        @click="cancelDeleteOrderDetail()"
+        @click.prevent="cancelDeleteOrderDetail()"
       >
         Hủy
       </b-button>
@@ -290,7 +286,7 @@
         variant="primary pull-right"
         class="mr-2"
         type="submit"
-        @click="handleDeleteOrderDetail()"
+        @click.prevent="handleDeleteOrderDetail()"
       >
         Đồng ý
       </b-button>
@@ -317,10 +313,11 @@ import {
   FETCH_PROMOTIONS,
   FETCH_PRODUCTS_AVAILABLE,
   CREATE_ORDER_DETAIL,
-  UPDATE_ORDER_DETAIL,
+  UPDATE_ORDER_DETAIL_BY_ORDER_ID,
   DELETE_ORDER_DETAIL,
   FETCH_ORDER_DETAIL_BY_ORDER_ID,
 } from "@/store/action.type";
+import { CREATE_ORDER_DETAIL_BY_ORDER_ID } from "../../../store/action.type";
 const initOrder = {
   note: null,
   totalPrice: 0,
@@ -343,7 +340,7 @@ const initOrderDetail = {
   product: null,
   productName: null,
   productPrice: 0,
-  quantity: null,
+  quantity: 1,
 };
 export default {
   name: "ModalCreateOrder",
@@ -403,9 +400,6 @@ export default {
     },
   },
   watch: {
-    isUpdate(newValue, oldValue) {
-      // if (newValue) this.setCurrentUpdateDetailData()
-    },
     order() {
       this.setCurrentUpdateData();
       this.fetchOrderDetailById();
@@ -429,19 +423,24 @@ export default {
       this.getProductOptions(this.getProducts);
     }
     this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
-      this.fetchOrderDetailById();
+      if (modalId === "modal-create-order") this.fetchOrderDetailById();
     });
   },
   computed: {
     disabledUpdateOrder() {
-      return (
-        this.currentData &&
-        this.isUpdate &&
-        !(
-          this.currentData.orderStatus &&
-          this.currentData.orderStatus.value === 1
-        )
-      );
+      return false;
+      // return (this.currentData && this.isUpdate && !(this.currentData.orderStatus && this.currentData.orderStatus.value === 1))
+    },
+    getTotalProductPrice() {
+      return this.currentDetailData && this.currentDetailData.length > 0
+        ? this.currentDetailData
+            .map((item) =>
+              item.product && item.quantity
+                ? item.product.sellPrice * item.quantity
+                : 0
+            )
+            .reduce((prev, current) => prev + current, 0)
+        : 0;
     },
   },
   methods: {
@@ -449,14 +448,28 @@ export default {
       let newProduct = Object.assign({}, { ...initOrderDetail });
       this.currentDetailData.push(newProduct);
     },
-    calculateProductPrice() {
-      this.currentDetailData.productPrice =
+    calculateProductPrice(index) {
+      this.$nextTick(() => {
+        this.currentDetailData[index].productPrice =
+          this.currentDetailData[index].product &&
+          this.currentDetailData[index].quantity
+            ? this.currentDetailData[index].product.sellPrice *
+              this.currentDetailData[index].quantity
+            : 0;
+        this.calculateOrderPrice();
+      });
+    },
+    calculateOrderPrice() {
+      this.currentData.totalPrice =
         this.currentDetailData && this.currentDetailData.length > 0
           ? this.currentDetailData
-              .map((item) => item.quantity * item.sellPrice)
+              .map((item) =>
+                item.product && item.quantity
+                  ? item.product.sellPrice * item.quantity
+                  : 0
+              )
               .reduce((prev, current) => prev + current, 0)
           : 0;
-      this.currentData.totalPrice = this.currentDetailData.productPrice;
     },
     setCurrentUpdateData() {
       if (!this.order) return;
@@ -539,17 +552,6 @@ export default {
           };
         });
     },
-    getTotalProductPrice() {
-      return this.currentDetailData && this.currentDetailData.length > 0
-        ? this.currentDetailData
-            .map((item) =>
-              item.quantity && item.product.sellPrice
-                ? item.quantity * item.product.sellPrice
-                : 0
-            )
-            .reduce((prev, current) => prev + current, 0)
-        : 0;
-    },
     getFormatPrice(price) {
       return price ? formatPriceSearchV2(price + "") : 0;
     },
@@ -571,7 +573,7 @@ export default {
       let payload = {
         orderId,
         orderData: {
-          totalPrice: this.getTotalProductPrice(),
+          totalPrice: this.getTotalProductPrice,
           promotionId: promotion ? promotion.value : null,
           note,
           totalPrice: totalPrice && Number((totalPrice + "").replace(",", "")),
@@ -586,31 +588,73 @@ export default {
           wards,
         },
       };
+      let payloadForCreateDetail = this.currentDetailData.map((item) => {
+        return {
+          productId: item.product ? item.product.value + "" : null,
+          productName: item.product ? item.product.text : null,
+          quantity: item.quantity,
+          productPrice:
+            (item.product && item.quantity
+              ? item.product.sellPrice * item.quantity
+              : 0) + "",
+        };
+      });
+      let payloadForUpdateDetail = {
+        orderId: orderId,
+        orderDetailData: this.currentDetailData
+          .filter((detail) => detail && detail.order_detail_id)
+          .map((item) => {
+            return {
+              order_detail_id: item.order_detail_id
+                ? item.order_detail_id + ""
+                : null,
+              productId: item.product ? item.product.value + "" : null,
+              productName: item.product ? item.product.text : null,
+              quantity: item.quantity,
+              productPrice:
+                (item.product && item.quantity
+                  ? item.product.sellPrice * item.quantity
+                  : 0) + "",
+            };
+          }),
+        newOrderDetailData: this.currentDetailData
+          .filter((detail) => detail && !detail.order_detail_id)
+          .map((item) => {
+            return {
+              orderId: orderId,
+              productId: item.product ? item.product.value + "" : null,
+              productName: item.product ? item.product.text : null,
+              quantity: item.quantity,
+              productPrice:
+                (item.product && item.quantity
+                  ? item.product.sellPrice * item.quantity
+                  : 0) + "",
+            };
+          }),
+      };
       let successMsg = `${
         this.isUpdate ? "Cập nhật" : "Tạo"
       } đơn hàng thành công.`;
       let errorMsg = `${
         this.isUpdate ? "Cập nhật" : "Tạo"
       } đơn hàng không thành công.`;
-      let payloadForDetail = {
-        orderDetailId: this.currentDetailData.order_detail_id,
-        orderDetailData: {
-          orderId: orderId + "",
-          productId: this.currentDetailData.product
-            ? this.currentDetailData.product.value + ""
-            : null,
-          productName: this.currentDetailData.product
-            ? this.currentDetailData.product.text
-            : null,
-          quantity: this.currentDetailData.quantity,
-          productPrice: this.currentDetailData.productPrice + "",
-        },
-      };
       if (this.isUpdate) {
-        Promise.all([
-          this.$store.dispatch(UPDATE_ORDER, payload),
-          this.$store.dispatch(UPDATE_ORDER_DETAIL, payloadForDetail),
-        ]).then((res) => {
+        let promiseList = [this.$store.dispatch(UPDATE_ORDER, payload)];
+        if (payloadForUpdateDetail.orderDetailData.length > 0)
+          promiseList.push(
+            this.$store.dispatch(
+              UPDATE_ORDER_DETAIL_BY_ORDER_ID,
+              payloadForUpdateDetail
+            )
+          );
+        if (payloadForUpdateDetail.newOrderDetailData.length > 0)
+          promiseList.push(
+            this.$store.dispatch(
+              CREATE_ORDER_DETAIL_BY_ORDER_ID,
+              payloadForUpdateDetail.newOrderDetailData
+            )
+          );
+        Promise.all(promiseList).then((res) => {
           if (res[0].status === 200 && res[1].status === 200) {
             this.$message({
               message: successMsg,
@@ -624,10 +668,16 @@ export default {
       if (!this.isUpdate) {
         let res = await this.$store.dispatch(CREATE_ORDER, payload.orderData);
         if (res.status === 200 && res.data && res.data.data) {
-          payloadForDetail.orderDetailData.orderId = res.data.data.orderId;
+          let newOrderId = res.data.data.orderId;
+          payloadForCreateDetail = payloadForCreateDetail.map((item) => {
+            return {
+              ...item,
+              orderId: newOrderId,
+            };
+          });
           let resForDetail = await this.$store.dispatch(
-            CREATE_ORDER_DETAIL,
-            payloadForDetail.orderDetailData
+            CREATE_ORDER_DETAIL_BY_ORDER_ID,
+            payloadForCreateDetail
           );
           if (resForDetail.status === 200) {
             this.$message({
@@ -664,9 +714,6 @@ export default {
     validationStatus: function(validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
-    handleShowModalCreateOrder() {
-      this.fetchOrderDetailById();
-    },
     cancelCreateOrder(isFetchOrders) {
       this.$v.$reset();
       this.loadingOrderDetail = true;
@@ -684,6 +731,7 @@ export default {
         this.currentDetailData = this.currentDetailData.filter(
           (item, index) => index !== indexVal
         );
+        this.calculateOrderPrice();
       }
     },
     cancelDeleteOrderDetail() {

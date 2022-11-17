@@ -279,19 +279,19 @@
             >
               <div class="featured__item__pic">
                 <img :src="item.mainImg" />
-                <!-- <ul class="featured__item__pic__hover">
+                <ul class="featured__item__pic__hover">
                   <li>
                     <a href="#">
                       <font-awesome-icon icon="fa fa-shopping-cart" />
                     </a>
                   </li>
-                </ul> -->
+                </ul>
               </div>
               <div class="featured__item__text">
                 <h6>
                   <span>{{ item.productName }}</span>
                 </h6>
-                <h5>{{ item.sellPrice }}</h5>
+                <h5>{{ formatPrice(item.sellPrice) }}đ</h5>
               </div>
             </div>
           </div>
@@ -627,6 +627,7 @@ import VueSlickCarousel from "vue-slick-carousel";
 import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
+import { formatPriceSearchV2 } from "../common/common";
 export default {
   name: "HomePage",
   components: { VueSlickCarousel },
@@ -788,6 +789,10 @@ export default {
         (page - 1) * this.pagination.perPage,
         page * this.pagination.perPage
       );
+    },
+    formatPrice(price) {
+      if (!price) return "";
+      return formatPriceSearchV2(price + "");
     },
   },
 };

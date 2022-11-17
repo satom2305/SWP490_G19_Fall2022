@@ -41,6 +41,8 @@ export const FETCH_ORDER_DETAIL_BY_ID = 'fetchOrderDetailById'
 export const FETCH_ORDER_DETAIL_BY_ORDER_ID = 'fetchOrderDetailByOrderId'
 export const CREATE_ORDER_DETAIL = 'createOrderDetail'
 export const UPDATE_ORDER_DETAIL = 'updateOrderDetail'
+export const CREATE_ORDER_DETAIL_BY_ORDER_ID = 'createOrderDetailByOrderId'
+export const UPDATE_ORDER_DETAIL_BY_ORDER_ID = 'updateOrderDetailByOrderId'
 export const DELETE_ORDER_DETAIL = 'deleteOrderDetail'
 
 export const FETCH_REVIEWS = 'fetchReviews'
