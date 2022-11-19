@@ -63,8 +63,8 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
-        System.out.println(request);
         UserResponse userResponse = userService.create(request);
+        System.out.println(userResponse);
         if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Error", false, "null"));
