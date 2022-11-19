@@ -123,5 +123,20 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public UserResponse createStaff(UserRequest request) {
+        if(!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
+            User user = userRepository.save(User.builder()
+                    .username(request.getUsername())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .email(request.getEmail())
+                    .status(true)
+                    .build());
+            userRepository.setRole(user.getUserId(), 3);
+            return mapper.map(user, UserResponse.class);
+        }
+        return null;
+    }
+
 
 }

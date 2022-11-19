@@ -23,5 +23,6 @@ public interface UserService {
 
     UserResponse changePwd(String username,UserRequest userRequest);
     UserResponse ForgotPwd(String username);
+    UserResponse createStaff(UserRequest request);
 
 }

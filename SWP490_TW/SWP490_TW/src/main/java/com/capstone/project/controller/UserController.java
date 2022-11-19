@@ -22,6 +22,7 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllAccounts() {
+
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Successfully", true, userService.getALL()));
     }
@@ -64,6 +65,18 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
         System.out.println(request);
         UserResponse userResponse = userService.create(request);
+        if (userResponse == null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Error", false, "null"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, userResponse));
+    }
+
+    @PostMapping("/staff")
+    public ResponseEntity<?> createStaff(@RequestBody UserRequest request) {
+        System.out.println(request);
+        UserResponse userResponse = userService.createStaff(request);
         if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Error", false, "null"));
