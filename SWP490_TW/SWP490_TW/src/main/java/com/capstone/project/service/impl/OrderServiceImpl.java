@@ -149,6 +149,10 @@ public class OrderServiceImpl implements OrderService {
     public void delete(Integer id) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new AppException("Order not found", 404));
+        List<OrderDetail> list = detailRepository.findByOrder(order);
+        for (OrderDetail c: list) {
+            detailRepository.delete(c);
+        }
         orderRepository.delete(order);
     }
 }

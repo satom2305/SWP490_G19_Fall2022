@@ -14,5 +14,5 @@ public class UserResponse {
     private String username;
     private String password;
     private String email;
-    private int statusId;
+    private Boolean status;
 }

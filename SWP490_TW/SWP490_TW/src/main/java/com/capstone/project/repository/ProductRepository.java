@@ -28,4 +28,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Transactional
     List<Product> findLastSixProducts();
 
+    @Query(value = "SELECT p FROM Product p WHERE p.productName LIKE %:productName%")
+    List<Product> searchListProductByName(@Param("productName") String productName);
+
+    @Query("Select p from Product p where p.amount > 0 AND p.productStatus = 1 ORDER BY p.sellPrice ASC")
+    List<Product> findByOrderBySellPriceAsc();
+
+    @Query("Select p from Product p where p.amount > 0 AND p.productStatus = 1 ORDER BY p.sellPrice desc ")
+    List<Product> findProductAvailableDES();
+
 }

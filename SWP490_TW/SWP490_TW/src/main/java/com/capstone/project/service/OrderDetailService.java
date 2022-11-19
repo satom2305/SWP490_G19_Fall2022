@@ -1,7 +1,6 @@
 package com.capstone.project.service;
 
 import com.capstone.project.request.OrderDetailRequest;
-import com.capstone.project.request.OrderRequest;
 import com.capstone.project.response.OrderDetailResponse;
 
 import java.util.List;
@@ -14,4 +13,6 @@ public interface OrderDetailService {
     void delete(Integer id);
     List<OrderDetailResponse> getByOrderId(Integer id);
     List<OrderDetailResponse> updateOrderDetailByOrderId(Integer id,List<OrderDetailRequest> requests);
+
+    List<?> createListOrderDetail(List<OrderDetailRequest> requests);
 }

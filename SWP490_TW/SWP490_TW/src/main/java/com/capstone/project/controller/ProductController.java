@@ -38,9 +38,31 @@ public class ProductController {
         );
     }
 
+    @GetMapping("/searchProductByName/{productName}")
+    public ResponseEntity<?> searchProductByName(@PathVariable("productName") String productName) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, productService.searchProductByName(productName))
+        );
+    }
+
+    @GetMapping("/sort/asc")
+    public ResponseEntity<?> sortProductASC() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, productService.getAllProductAvailableASC())
+        );
+    }
+
+    @GetMapping("/sort/desc")
+    public ResponseEntity<?> sortProductDESC() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, productService.getAllProductAvailableDES())
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
+
                 new ResponseObject("ok", "Successfully", true, productService.findById(id)));
     }
 

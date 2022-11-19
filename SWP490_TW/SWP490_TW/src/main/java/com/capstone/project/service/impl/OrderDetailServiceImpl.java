@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,27 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .quantity(detailRequest.getQuantity())
                 .build());
         return mapper.map(orderDetail, OrderDetailResponse.class);
+    }
+
+    @Override
+    public List<?> createListOrderDetail(List<OrderDetailRequest> requests) {
+        List<OrderDetailRequest> list = requests;
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetailRequest c: requests) {
+            Order order = orderRepository.findById(c.getOrderId())
+                    .orElseThrow(() -> new AppException("Order not found", 404));
+            Product product = productRepository.findById(c.getProductId())
+                    .orElseThrow(() -> new AppException("Product not found", 404));
+            OrderDetail orderDetail = detailRepository.save(OrderDetail.builder()
+                    .order(order)
+                    .product(product)
+                    .productName(product.getProductName())
+                    .productPrice(product.getOriginalPrice())
+                    .quantity(c.getQuantity())
+                    .build());
+            orderDetails.add(orderDetail);
+        }
+        return orderDetails;
     }
 
     @Override
@@ -98,6 +120,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .map(orderDetail -> mapper.map(orderDetail, OrderDetailResponse.class))
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public void delete(Integer id) {

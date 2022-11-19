@@ -9,14 +9,12 @@ import com.capstone.project.repository.ProductImgRepository;
 import com.capstone.project.repository.ProductRepository;
 import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.ProductResponse;
-import com.capstone.project.service.CategoryService;
 import com.capstone.project.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -114,6 +112,32 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getLastSixProducts() {
         return productRepository.findLastSixProducts()
+                .stream()
+                .map(product -> mapper.map(product, ProductResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductResponse> searchProductByName(String productName) {
+        System.out.println(productName);
+        return productRepository.searchListProductByName(productName)
+                .stream()
+                .map(product -> mapper.map(product, ProductResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductResponse> getAllProductAvailableASC() {
+        return productRepository.findByOrderBySellPriceAsc()
+                .stream()
+                .map(product -> mapper.map(product, ProductResponse.class))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<ProductResponse> getAllProductAvailableDES() {
+        return productRepository.findProductAvailableDES()
                 .stream()
                 .map(product -> mapper.map(product, ProductResponse.class))
                 .collect(Collectors.toList());

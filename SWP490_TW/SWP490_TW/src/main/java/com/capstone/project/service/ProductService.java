@@ -19,4 +19,9 @@ public interface ProductService {
 
     ProductResponse disableProduct(Integer id);
     List<ProductResponse> getLastSixProducts();
+
+    List<ProductResponse> searchProductByName(String productName);
+
+    List<ProductResponse> getAllProductAvailableASC();
+    List<ProductResponse> getAllProductAvailableDES();
 }

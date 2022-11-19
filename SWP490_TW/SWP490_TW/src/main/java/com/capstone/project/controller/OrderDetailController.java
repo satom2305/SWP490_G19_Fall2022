@@ -40,6 +40,11 @@ public class OrderDetailController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Successfully", true, detailService.createOrderDetail(detailRequest)));
     }
+    @PostMapping("/listOrderDetail")
+    public ResponseEntity<?> createListOrderDetail(@RequestBody List<OrderDetailRequest> detailRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, detailService.createListOrderDetail(detailRequest)));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrderDetail(@PathVariable("id") Integer id, @RequestBody OrderDetailRequest detailRequest) {
