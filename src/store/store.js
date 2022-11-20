@@ -7,6 +7,7 @@ import product from "./product.module";
 import promotion from "./promotion.module";
 import post from "./post.module";
 import order from "./order.module";
+import reviews from "./reviews.module"
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     promotion,
     post,
     order,
+    reviews,
   }
 });

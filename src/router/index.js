@@ -19,6 +19,12 @@ const router = new Router({
       component: () => import("@/views/Register"),
     },
     {
+      path: '/reset-password',
+      name: 'ResetPassword',
+      component: () => import("@/views/ResetPassword"),
+      meta: { layout: 'userpages', loginPage: true, nonRequiresAuth: true, title: 'Quên mật khẩu' },
+    },
+    {
       path: '/',
       name: 'HomePage',
       meta: { title: 'Tree World', layout: 'userpages' },
@@ -155,10 +161,11 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     localStorage.setItem('savedPath', to.fullPath)
   }
-  const publicPages = ['/login', '/config-api'];
+  const publicPages = ['/login', '/config-api', '/register'];
   const authRequired = !publicPages.includes(to.path);
-  const isAuthenticated = !!StorageService.get("Token");
   const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'
+  const isGuest = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[GUEST]'
+  const isAuthenticated = !!StorageService.get("Token") || isGuest;
   if (to.path.includes('/admin') && isAuthenticated && !isAdmin) {
     next('/error-not-allow')
   }

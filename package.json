@@ -48,6 +48,7 @@
     "vue-perfect-scrollbar": "^0.2.1",
     "vue-router": "^3.0.1",
     "vue-select": "^3.13.2",
+    "vue-simple-alert": "^1.1.1",
     "vue-simple-context-menu": "^3.4.1",
     "vue-slick-carousel": "^1.0.6",
     "vue-zoomer": "^0.3.10",

@@ -49,8 +49,11 @@ import 'ant-design-vue/lib/steps/style/css';
 import 'ant-design-vue/lib/tree-select/style/css';
 import 'ant-design-vue/lib/skeleton/style/css';
 import 'ant-design-vue/lib/comment/style/css';
-import { Menu, Icon, Select, Spin, Table, Row, Col, Input, Button, Pagination, Steps, TreeSelect, Skeleton, Comment } from 'ant-design-vue';
-Vue.use(Menu);
+import 'ant-design-vue/lib/avatar/style/css';
+import 'ant-design-vue/lib/form/style/css';
+import 'ant-design-vue/lib/list/style/css';
+import 'ant-design-vue/lib/dropdown/style/css';
+import { Menu, Icon, Select, Spin, Table, Row, Col, Input, Button, Pagination, Steps, TreeSelect, Skeleton, Comment, Avatar, Form, List, Dropdown } from 'ant-design-vue';
 Vue.use(Icon);
 Vue.use(Select);
 Vue.use(Spin);
@@ -100,6 +103,9 @@ Vue.use(Loading, {
   zIndex: 999,
   loader: 'dots'
 });
+
+import VueSimpleAlert from "vue-simple-alert";
+Vue.use(VueSimpleAlert);
 
 library.add(fas);
 Vue.component('font-awesome-icon', FontAwesomeIcon)

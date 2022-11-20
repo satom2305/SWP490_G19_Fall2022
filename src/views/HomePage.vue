@@ -85,22 +85,7 @@
               </div>
             </div>
             <div class="col-lg-6 col-md-6">
-              <div class="header__top__right">
-                <!--              <div class="header__top__right__social">-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
-                <!--              </div>-->
-                <div class="header__top__right__language">
-                  <a href="/admin">Management</a>
-                </div>
-                <div class="header__top__right__auth">
-                  <a href="/login">
-                    <font-awesome-icon icon="fa fa-user" /> Login
-                  </a>
-                </div>
-              </div>
+              <UserHeader />
             </div>
           </div>
         </div>
@@ -628,9 +613,10 @@ import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
+import UserHeader from '../Layout/Components/UserHeader'
 export default {
   name: "HomePage",
-  components: { VueSlickCarousel },
+  components: { VueSlickCarousel, UserHeader},
   mixins: [baseMixins],
   data() {
     return {

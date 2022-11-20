@@ -318,110 +318,79 @@
           <div class="col-lg-12">
             <div class="product__details__tab">
               <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
+                <li class="nav-item" @click="navigateToNav('description')">
                   <a
-                    class="nav-link active"
+                  :class="['nav-link', {'active': currentNav === 'description'}]"
                     data-toggle="tab"
                     href="#tabs-1"
                     role="tab"
                     aria-selected="true"
-                    >Description</a
+                    >Mô tả</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item"  @click="navigateToNav('reviews')">
                   <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#tabs-2"
-                    role="tab"
-                    aria-selected="false"
-                    >Information</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
+                  :class="['nav-link', {'active': currentNav === 'reviews'}]"
                     data-toggle="tab"
                     href="#tabs-3"
                     role="tab"
                     aria-selected="false"
-                    >Reviews <span>(1)</span></a
+                    >Đánh giá <span>({{ getTotalReview }})</span></a
                   >
                 </li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                  <div class="product__details__tab__desc">
-                    <h6>Products Infomation</h6>
-                    <p>
-                      Vestibulum ac diam sit amet quam vehicula elementum sed
-                      sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-                      Proin eget tortor risus. Vivamus suscipit tortor eget
-                      felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Donec rutrum congue
-                      leo eget malesuada. Vivamus suscipit tortor eget felis
-                      porttitor volutpat. Curabitur arcu erat, accumsan id
-                      imperdiet et, porttitor at sem. Praesent sapien massa,
-                      convallis a pellentesque nec, egestas non nisi. Vestibulum
-                      ac diam sit amet quam vehicula elementum sed sit amet dui.
-                      Vestibulum ante ipsum primis in faucibus orci luctus et
-                      ultrices posuere cubilia Curae; Donec velit neque, auctor
-                      sit amet aliquam vel, ullamcorper sit amet ligula. Proin
-                      eget tortor risus.
-                    </p>
-                    <p>
-                      Praesent sapien massa, convallis a pellentesque nec,
-                      egestas non nisi. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit. Mauris blandit aliquet elit, eget
-                      tincidunt nibh pulvinar a. Cras ultricies ligula sed magna
-                      dictum porta. Cras ultricies ligula sed magna dictum
-                      porta. Sed porttitor lectus nibh. Mauris blandit aliquet
-                      elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam
-                      sit amet quam vehicula elementum sed sit amet dui. Sed
-                      porttitor lectus nibh. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Proin eget tortor
-                      risus.
-                    </p>
-                  </div>
+                <div :class="['tab-pane', {'active': currentNav === 'description'}]" id="tabs-1" role="tabpanel">
+                  Sản phẩm cây cối.
                 </div>
-                <div class="tab-pane" id="tabs-2" role="tabpanel">
-                  <div class="product__details__tab__desc">
-                    <h6>Products Infomation</h6>
-                    <p>
-                      Vestibulum ac diam sit amet quam vehicula elementum sed
-                      sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-                      Proin eget tortor risus. Vivamus suscipit tortor eget
-                      felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Donec rutrum congue
-                      leo eget malesuada. Vivamus suscipit tortor eget felis
-                      porttitor volutpat. Curabitur arcu erat, accumsan id
-                      imperdiet et, porttitor at sem. Praesent sapien massa,
-                      convallis a pellentesque nec, egestas non nisi. Vestibulum
-                      ac diam sit amet quam vehicula elementum sed sit amet dui.
-                      Vestibulum ante ipsum primis in faucibus orci luctus et
-                      ultrices posuere cubilia Curae; Donec velit neque, auctor
-                      sit amet aliquam vel, ullamcorper sit amet ligula. Proin
-                      eget tortor risus.
-                    </p>
-                    <p>
-                      Praesent sapien massa, convallis a pellentesque nec,
-                      egestas non nisi. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit. Mauris blandit aliquet elit, eget
-                      tincidunt nibh pulvinar a. Cras ultricies ligula sed magna
-                      dictum porta. Cras ultricies ligula sed magna dictum
-                      porta. Sed porttitor lectus nibh. Mauris blandit aliquet
-                      elit, eget tincidunt nibh pulvinar a.
-                    </p>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tabs-3" role="tabpanel">
-                  <div class="product__details__tab__desc">
-                    <h6>Đánh giá của khách hàng</h6>
+                <div :class="['tab-pane', {'active': currentNav === 'reviews'}]" id="tabs-3" role="tabpanel">
+                  <div class="">
+                    <a-list
+                      v-if="productReviews.length"
+                      :data-source="productReviews"
+                      :header="`${productReviews.length} đánh giá`"
+                      item-layout="horizontal"
+                    >
+                      <template #renderItem="item">
+                        <a-list-item>
+                          <a-comment
+                            v-if="!item.toggleUpdate"
+                            :author="item.userId.username"
+                            :avatar="'https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146'"
+                            :content="item.reviewDetail"
+                            :datetime="getDate(item)"
+                          />
+                          <!-- <a-form-item v-if="item.toggleUpdate">
+                            <a-input :rows="8" v-model="item.reviewDetail" />
+                          </a-form-item> -->
+                          <a-form v-if="item.toggleUpdate" style="width: 80%">
+                            <a-form-item>
+                              <a-textarea :rows="4" v-model="item.reviewDetail"/>
+                            </a-form-item>
+                          </a-form>
+                          <div v-if="item.userId && userInfo && item.userId.userId === userInfo.userId">
+                            <div class="p-2">
+                              <a href="javascript:void(0)" type="button" v-b-tooltip.hover title="Cập nhật"
+                                @click.prevent="toggleUpdate(item)">
+                                <i v-if="!item.toggleUpdate" class="fas fa-edit text-success" style="font-size: 1.1rem"></i>
+                                <i v-if="item.toggleUpdate" class="fas fa-check text-success" style="font-size: 1.1rem"></i>
+                              </a>
+                            </div>
+                            <div class="p-2" v-if="item.toggleUpdate">
+                              <a href="javascript:void(0)" type="button" v-b-tooltip.hover title="Huỷ"
+                                @click.prevent="cancelUpdate(item)">
+                                <i class="fas fa-times text-danger" style="font-size: 1.1rem"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </a-list-item>
+                      </template>
+                    </a-list>
                     <div>
                       <a-comment>
                         <template #avatar>
                           <a-avatar
-                            src="../assets/static/avatar.png"
+                            src="https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146"
                             alt="avatar"
                           />
                         </template>
@@ -430,7 +399,7 @@
                             <a-textarea :rows="4" v-model="newReview" />
                           </a-form-item>
                           <a-form-item>
-                            <a-button type="primary" @click="createReview">
+                            <a-button type="" @click="createReview" style="background-color: #01904a; color: white">
                               Đánh giá
                             </a-button>
                           </a-form-item>
@@ -641,8 +610,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
+import moment from 'moment-timezone';
 export default {
   name: "ShopDetail",
   mixins: [baseMixins],
@@ -652,13 +623,25 @@ export default {
       productDetail: null,
       listImg: [],
       quantity: 1,
+      currentProductId: null,
+      currentUserId: null,
+      currentNav: 'reviews',
+      newReview: null,
+      productReviews: [],
+      userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
     };
   },
   mounted() {
     handleJQuery();
-    // const id = this.$router.push
     this.getDetailProduct();
-    // console.log(this.$router);
+    this.currentProductId = Number(this.$route.params.id)
+    this.fetchReviews()
+  },
+  computed: {
+    ...mapGetters(["getReviews"]),
+    getTotalReview() {
+      return this.productReviews ? this.productReviews.length : 0
+    }
   },
   methods: {
     async getDetailProduct() {
@@ -680,6 +663,88 @@ export default {
     proceedToCheckout() {
       this.$router.push({ path: `/shopping-cart` });
     },
+    navigateToNav(navSection) {
+      this.currentNav = navSection
+    },
+    getDate(item) {
+      return item && item.date && moment(new Date(item.date)).format('HH:mm DD/MM/YYYY')
+    },
+    toggleUpdate(review) {
+      review.toggleUpdate = !review.toggleUpdate
+      if (!review.toggleUpdate) this.updateReview(review)
+    },
+    cancelUpdate(review) {
+      if (review.toggleUpdate) review.toggleUpdate = false
+      review.reviewDetail = review.currentReview
+    },
+    async fetchReviews() {
+      let res = await this.$store.dispatch(FETCH_REVIEWS)
+      if (res.status === 200 && res.data.data) {
+        this.getReviewsByProduct(res.data.data)
+      }
+    },
+    getReviewsByProduct(reviews) {
+      this.productReviews = reviews.filter(item => item.productId && item.productId.productId === this.currentProductId)
+      if (this.productReviews && this.productReviews.length > 0) {
+        this.productReviews = this.productReviews.map(review => {
+          return {
+            ...review,
+            toggleUpdate: false,
+            currentReview: review.reviewDetail
+          }
+        })
+      }
+    },
+    async createReview() {
+      let payload = {
+        userId: this.userInfo ? this.userInfo.userId + '' : null,
+        productId: this.currentProductId,
+        reviewDetail: this.newReview,
+        date: moment(new Date()).format('YYYY-MM-DD'),
+      }
+      let res = await this.$store.dispatch(CREATE_REVIEW, payload)
+      if (res.status === 200) {
+        this.newReview = null
+        this.$message.closeAll()
+        this.$message({
+          message: 'Thêm đánh giá thành công',
+					type: "success",
+					showClose: true,
+        })
+        this.fetchReviews()
+      }
+    },
+    async updateReview(review) {
+      if (!review.reviewDetail || review.reviewDetail.trim() === '') {
+        review.toggleUpdate = true
+        this.$message.closeAll()
+        this.$message({
+          message: 'Nội dung đánh giá không được để trống',
+					type: "warning",
+					showClose: true,
+        })
+        return
+      }
+      let payload = {
+        reviewId: review.review_id,
+        reviewData: {
+          userId: review.userId ? review.userId.userId : null,
+          productId: review.productId ? review.productId.productId : null,
+          reviewDetail: review.reviewDetail,
+          date: moment(new Date(review.date)).format('YYYY-MM-DD'),
+        }
+      }
+      let res = await this.$store.dispatch(UPDATE_REVIEW, payload)
+      if (res.status === 200) {
+        this.$message.closeAll()
+        this.$message({
+          message: 'Cập nhật đánh giá thành công',
+					type: "success",
+					showClose: true,
+        })
+        this.fetchReviews()
+      }
+    }
   },
 };
 </script>

@@ -1,101 +1,277 @@
 <template>
-  <div class="bg-gradient-primary">
-    <div class="container">
-      <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-          <!-- Nested Row within Card Body -->
-          <div class="row">
-            <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-            <div class="col-lg-7">
-              <div class="p-5">
-                <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+  <b-form @submit="register">
+    <div class="h-100 bg-animation">
+      <div class="d-flex h-100 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box">
+          <div class="h5 modal-title text-center">
+            <div>
+              <img src="@/assets/static/images/logo.png" class="brand-img" width="100" />
+            </div>
+            <h4 class="mt-2">
+              <span style="font-weight: 500">HỆ THỐNG QUẢN LÝ TREE WORLD</span>
+            </h4>
+          </div>
+          <div class="modal-dialog w-100 mx-auto">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h4 class="mt-2 text-center">
+                  <span v-if="step !== 1" class="back-button" @click="back">
+                    <font-awesome-icon class="back-icon" icon="arrow-left" />
+                  </span>
+                  <span style="font-weight: 500">Đăng ký tài khoản</span>
+                </h4>
+                <div v-if="step === 1">
+                  <b-form-group id="exampleInputGroup1" label-for="exampleInput1">
+                    <b-form-input id="exampleInput1" v-model="$v.form.username.$model" type="text" required
+                      placeholder="Tên đăng nhập" :class="{ 'is-invalid': validationStatus($v.form.username) }">
+                    </b-form-input>
+                    <div v-if="!$v.form.username.required" class="invalid-feedback">
+                      Tên đăng nhập không được để trống.
+                    </div>
+                  </b-form-group>
+                  <b-form-group id="exampleInputGroup2" label-for="exampleInput2">
+                    <b-form-input id="exampleInput2" v-model="$v.form.password.$model" type="password" required
+                      placeholder="Mật khẩu" :class="{ 'is-invalid': validationStatus($v.form.password) }">
+                    </b-form-input>
+                    <div v-if="!$v.form.password.required" class="invalid-feedback">
+                      Mật khẩu không được để trống.
+                    </div>
+                  </b-form-group>
+                  <b-form-group id="exampleInputGroup3" label-for="exampleInput3">
+                    <b-form-input id="exampleInput3" v-model="form.rePassword" type="password" required
+                      placeholder="Nhập lại mật khẩu" :class="{
+                        'is-invalid': $v.form.password.required && (!form.rePassword || form.rePassword.trim() === '')
+                          || $v.form.password.required && form.rePassword && form.rePassword.trim() !== form.password.trim()
+                      }">
+                    </b-form-input>
+                    <div v-if="$v.form.password.required && (!form.rePassword || form.rePassword.trim() === '')"
+                      class="invalid-feedback">
+                      Mật khẩu nhập lại không được để trống.
+                    </div>
+                    <div
+                      v-if="$v.form.password.required && form.rePassword && form.rePassword.trim() !== form.password.trim()"
+                      class="invalid-feedback">
+                      Mật khẩu nhập lại không trùng khớp.
+                    </div>
+                  </b-form-group>
+                  <b-form-group id="exampleInputGroup4" label-for="exampleInput4">
+                    <b-form-input id="exampleInput4" v-model="$v.form.email.$model" type="email" required
+                      placeholder="Nhập email" :class="{ 'is-invalid': validationStatus($v.form.email) }">
+                    </b-form-input>
+                    <div v-if="!$v.form.email.required" class="invalid-feedback">
+                      Địa chỉ email không được để trống.
+                    </div>
+                    <div v-if="!$v.form.email.validEmail" class="invalid-feedback">
+                      Địa chỉ email không hợp lệ.
+                    </div>
+                  </b-form-group>
                 </div>
-                <form class="user">
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input
-                        type="text"
-                        class="form-control form-control-user"
-                        id="exampleFirstName"
-                        placeholder="First Name"
-                      />
-                    </div>
-                    <div class="col-sm-6">
-                      <input
-                        type="text"
-                        class="form-control form-control-user"
-                        id="exampleLastName"
-                        placeholder="Last Name"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control form-control-user"
-                      id="exampleInputEmail"
-                      placeholder="Email Address"
-                    />
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input
-                        type="password"
-                        class="form-control form-control-user"
-                        id="exampleInputPassword"
-                        placeholder="Password"
-                      />
-                    </div>
-                    <div class="col-sm-6">
-                      <input
-                        type="password"
-                        class="form-control form-control-user"
-                        id="exampleRepeatPassword"
-                        placeholder="Repeat Password"
-                      />
-                    </div>
-                  </div>
-                  <a
-                    href="/register"
-                    class="btn btn-primary btn-user btn-block"
-                  >
-                    Register Account
-                  </a>
-                  <hr />
-                </form>
-                <hr />
-                <div class="text-center">
-                  <a class="small" href="forgot-password"
-                    >Forgot Password?</a
-                  >
+              </div>
+              <div class="modal-footer clearfix justify-content-center flex-column">
+                <div class="w-100">
+                  <b-button type="submit" size="lg" class="button-login" block style="height: 40px"
+                    @click.prevent="submit" :disabled="loadingButton">{{ step !== 1 ? 'Tiếp tục' : 'Đăng ký' }}
+                  </b-button>
                 </div>
-                <div class="text-center">
-                  <a href="/login"
-                    ><a class="small"
-                      >Already have an account? Login!</a
-                    ></a
-                  >
+                <div class="w-100 p-2 text-center">
+                  <div @click="navigateToLogin" class="text-success" style="cursor: pointer">Đã có tài khoản? Đăng nhập
+                    tại đây</div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="text-center opacity-8 mt-3">
+            Copyright &copy; Tree World {{ new Date().getFullYear() }}
+          </div>
         </div>
+
+        <!-- <div class="right-content"></div> -->
       </div>
     </div>
-  </div>
+  </b-form>
 </template>
-
+  
 <script>
-import { handleJQuery } from '../common/utils'
+import {
+  getAuthenticatedUser
+} from "../common/utils";
+import axios from "axios";
+import StorageService from "../common/storage.service";
+import router from "../router/index";
+import { EventBus } from "@/common/event-bus";
+import Configuration from "@/configuration";
+import baseMixins from "@/components/mixins/base";
+import { required, helpers } from "vuelidate/lib/validators";
+import { REGISTER } from '../store/action.type';
+const API_ENDPOINT = Configuration.value("baseURL");
+const validEmail = helpers.regex('validEmail', /^\S+@\S+\.\S+$/)
+const initForm = {
+  username: null,
+  password: null,
+  rePassword: null,
+  email: null,
+}
 export default {
-  name: 'register',
-  created() {
-    handleJQuery()
+  data() {
+    return {
+      form: Object.assign({}, {...initForm}),
+      loadingButton: false,
+      requestId: null,
+      timer: 60000,
+      durationOTP: 180,
+      isFinishTimer: false,
+      isFinishTimerOTP: false,
+      needRegisterSmartOtp: false,
+      step: 1,
+    };
+  },
+  components: {},
+  mixins: [baseMixins],
+  validations: {
+    form: {
+      username: {
+        required,
+      },
+      password: {
+        required,
+      },
+      email: {
+        required,
+        validEmail,
+      },
+    },
+  },
+  mounted() {
+    
+  },
+  methods: {
+    handleCountdownProgress(data) {
+      if (data.seconds !== 1) return;
+      setTimeout(() => {
+        this.isFinishTimer = true;
+      }, 1000);
+    },
+    validationStatus: function (validation) {
+      return typeof validation != "undefined" ? validation.$error : false;
+    },
+    back() {
+      this.step = this.needRegisterSmartOtp ? this.step - 1 : this.step - 2;
+      this.timer = 60000;
+      this.durationOTP = 180;
+      this.isFinishTimerOTP = false;
+      this.isFinishTimer = false;
+    },
+    submit() {
+      switch (this.step) {
+        case 1:
+          this.register()
+          break;
+        default:
+          break;
+      }
+    },
+    async handleAfterRegister(response) {
+      console.log(response)
+      let res = await this.$store.dispatch("login", {
+        username: this.form.username,
+        password: this.form.password,
+      })
+      if (res && res.status === 200) {
+        this.loadingButton = false;
+        StorageService.save("Token", res.data.token);
+        StorageService.save("userInfo", JSON.stringify(res.data));
+        await getAuthenticatedUser(res.data);
+        this.$message.closeAll();
+        const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'
+        // const savedPath = localStorage.getItem('savedPath');
+        router.push(isAdmin ? '/admin' : "/")
+          .catch((e) => {
+            this.$message({
+              message: 'Đã có lỗi xảy ra',
+              type: "error",
+              showClose: true,
+            });
+          });
+      }
+    },
+    async register() {
+      this.$v.$reset();
+      this.$v.$touch();
+      if (this.$v.form.$invalid) {
+        return;
+      }
+      this.loadingButton = true;
+      EventBus.$emit("send-progress", true);
+      let {email, username, password} = {...this.form}
+      let response = await this.$store.dispatch(REGISTER, {
+        email, username, password
+      })
+      if (response) {
+        EventBus.$emit("close-progress", true);
+        this.loadingButton = false;
+      }
+      if (response && response.status === 200) {
+        this.handleAfterRegister(response)
+      } else {
+        this.$message({
+          message: "Có lỗi xảy ra",
+          type: "warning",
+          showClose: true,
+        });
+      }
+    },
+    navigateToLogin() {
+      router.push({ path: '/login' })
+    },
+  },
+};
+</script>
+  
+  
+<style lang="scss" scoped>
+.button-login {
+  color: #fff;
+  background-color: #069255;
+  border-color: #069255;
+}
+@media only screen and (max-width: 1024px) {
+  .right-content {
+    display: none;
+  }
+  .brand-img {
+    width: 100px;
   }
 }
-</script>
-
-<style lang="css" scoped>
-@import '../assets/css/sb-admin-2.css'
+@media only screen and (max-width: 1366px) {
+  .brand-img {
+    width: 100px;
+  }
+  .modal-dialog {
+    margin: 0 auto;
+  }
+  .app-login-box h4 {
+    margin-bottom: 5px;
+  }
+  .input-otp {
+    height: 80px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .brand-img {
+    width: 100px;
+  }
+}
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 18px;
+}
+.back-icon {
+  font-weight: normal;
+  color: #069255;
+  cursor: pointer;
+}
+.input-otp {
+  height: 100px;
+}
 </style>

@@ -1,12 +1,6 @@
 <template>
-  <b-modal
-    size="xl"
-    hide-footer
-    id="modal-create-order"
-    :title="currentTitleModal"
-    :no-close-on-backdrop="true"
-    @hide="cancelCreateOrder(false)"
-  >
+  <b-modal size="xl" hide-footer id="modal-create-order" :title="currentTitleModal" :no-close-on-backdrop="true"
+    @hide="cancelCreateOrder(false)">
     <b-card id="update-order" class="main-card search-wrapper mb-20">
       <div class="mb-4">
         <div class="mb-2 font-weight-bold">Thông tin đơn hàng</div>
@@ -14,16 +8,8 @@
           <b-col md="4">
             <b-form-group>
               <label>Mã khuyến mại:</label>
-              <multiselect
-                v-model="currentData.promotion"
-                track-by="text"
-                label="text"
-                :show-labels="false"
-                :disabled="disabledUpdateOrder"
-                placeholder="Chọn"
-                :options="promotionOptions"
-                :searchable="true"
-              >
+              <multiselect v-model="currentData.promotion" track-by="text" label="text" :show-labels="false"
+                :disabled="disabledUpdateOrder" placeholder="Chọn" :options="promotionOptions" :searchable="true">
                 <template slot="singleLabel" slot-scope="{ option }">
                   {{ option.text }}
                 </template>
@@ -33,29 +19,18 @@
           <b-col md="4">
             <b-form-group>
               <label>Trạng thái <span class="text-danger">*</span>:</label>
-              <multiselect
-                v-model="$v.currentData.orderStatus.$model"
-                track-by="text"
-                label="text"
-                :show-labels="false"
-                :disabled="disabledUpdateOrder"
-                placeholder="Chọn"
-                :options="orderStatusOptions"
-                :searchable="true"
-                :class="{
+              <multiselect v-model="$v.currentData.orderStatus.$model" track-by="text" label="text" :show-labels="false"
+                :disabled="disabledUpdateOrder" placeholder="Chọn" :options="orderStatusOptions"
+                :searchable="true" :class="{
                   'is-invalid-option': validationStatus(
                     $v.currentData.orderStatus
                   ),
-                }"
-              >
+                }">
                 <template slot="singleLabel" slot-scope="{ option }">
                   {{ option.text }}
                 </template>
               </multiselect>
-              <div
-                v-if="!$v.currentData.orderStatus.required"
-                class="invalid-feedback"
-              >
+              <div v-if="!$v.currentData.orderStatus.required" class="invalid-feedback">
                 Trạng thái không được để trống.
               </div>
             </b-form-group>
@@ -63,21 +38,15 @@
           <b-col md="4">
             <b-form-group>
               <label>Số điện thoại <span class="text-danger">*</span>:</label>
-              <b-form-input
-                id="input-phonenumber"
-                type="number"
-                v-model="$v.currentData.phoneNumber.$model"
-                placeholder="Nhập số điện thoại"
-                :class="{
+              <b-form-input id="input-phonenumber" type="number" v-model="$v.currentData.phoneNumber.$model"
+                placeholder="Nhập số điện thoại" :class="{
                   'is-invalid': validationStatus($v.currentData.phoneNumber),
-                }"
-                :disabled="disabledUpdateOrder"
-              ></b-form-input>
-              <div
-                v-if="!$v.currentData.phoneNumber.required"
-                class="invalid-feedback"
-              >
+                }" :disabled="disabledUpdateOrder"></b-form-input>
+              <div v-if="!$v.currentData.phoneNumber.required" class="invalid-feedback">
                 Số điện thoại không được để trống.
+              </div>
+              <div v-if="!$v.currentData.phoneNumber.validPhoneNumber" class="invalid-feedback">
+                Số điện thoại không hợp lệ.
               </div>
             </b-form-group>
           </b-col>
@@ -86,20 +55,11 @@
           <b-col md="4">
             <b-form-group>
               <label>Địa chỉ <span class="text-danger">*</span>:</label>
-              <b-form-input
-                id="input-price"
-                type="text"
-                v-model.trim="$v.currentData.address.$model"
-                placeholder="Nhập địa chỉ"
-                :class="{
+              <b-form-input id="input-price" type="text" v-model.trim="$v.currentData.address.$model"
+                placeholder="Nhập địa chỉ" :class="{
                   'is-invalid': validationStatus($v.currentData.address),
-                }"
-                :disabled="disabledUpdateOrder"
-              ></b-form-input>
-              <div
-                v-if="!$v.currentData.address.required"
-                class="invalid-feedback"
-              >
+                }" :disabled="disabledUpdateOrder"></b-form-input>
+              <div v-if="!$v.currentData.address.required" class="invalid-feedback">
                 Địa chỉ không được để trống.
               </div>
             </b-form-group>
@@ -108,48 +68,45 @@
         <b-row>
           <b-col md="4">
             <b-form-group>
-              <label>Phường/xã/huyện:</label>
-              <b-form-input
-                id="input-district"
-                type="text"
-                v-model.trim="currentData.district"
-                placeholder="Nhập tên"
-                :disabled="disabledUpdateOrder"
-              ></b-form-input>
+              <label>Phường/xã/huyện <span class="text-danger">*</span>:</label>
+              <b-form-input id="input-district" type="text" v-model.trim="$v.currentData.district.$model"
+                placeholder="Nhập tên" :class="{
+                  'is-invalid': validationStatus($v.currentData.district),
+                }" :disabled="disabledUpdateOrder"></b-form-input>
+              <div v-if="!$v.currentData.district.required" class="invalid-feedback">
+                Phường/xã/huyện không được để trống.
+              </div>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group>
-              <label>Quận/Thị trấn:</label>
-              <b-form-input
-                id="input-ward"
-                type="text"
-                v-model.trim="currentData.wards"
-                placeholder="Nhập tên"
-                :disabled="disabledUpdateOrder"
-              ></b-form-input>
+              <label>Quận/Thị trấn <span class="text-danger">*</span>:</label>
+              <b-form-input id="input-wards" type="text" v-model.trim="$v.currentData.wards.$model"
+                placeholder="Nhập tên" :class="{
+                  'is-invalid': validationStatus($v.currentData.wards),
+                }" :disabled="disabledUpdateOrder"></b-form-input>
+              <div v-if="!$v.currentData.wards.required" class="invalid-feedback">
+                Quận/Thị trấn không được để trống.
+              </div>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group>
-              <label>Thành phố:</label>
-              <b-form-input
-                id="input-city"
-                type="text"
-                v-model.trim="currentData.city"
-                placeholder="Nhập tên"
-                :disabled="disabledUpdateOrder"
-              ></b-form-input>
+              <label>Thành phố <span class="text-danger">*</span>:</label>
+              <b-form-input id="input-city" type="text" v-model.trim="$v.currentData.city.$model"
+                placeholder="Nhập tên" :class="{
+                  'is-invalid': validationStatus($v.currentData.city),
+                }" :disabled="disabledUpdateOrder"></b-form-input>
+              <div v-if="!$v.currentData.city.required" class="invalid-feedback">
+                Thành phố không được để trống.
+              </div>
             </b-form-group>
           </b-col>
         </b-row>
         <div class="w-100">
           <b-form-group>
             <label>Ghi chú đơn hàng:</label>
-            <b-form-textarea
-              v-model="currentData.note"
-              :disabled="disabledUpdateOrder"
-            >
+            <b-form-textarea v-model="currentData.note" :disabled="disabledUpdateOrder">
             </b-form-textarea>
           </b-form-group>
         </div>
@@ -157,12 +114,8 @@
       <div class="w-100 mb-4" v-if="currentDetailData">
         <div class="d-flex align-items-center mb-2">
           <span class="font-weight-bold">Danh sách sản phẩm</span>
-          <b-button
-            class="ml-3"
-            variant="outline-success"
-            @click.prevent="addNewProductForDetail"
-            :disabled="disabledUpdateOrder"
-          >
+          <b-button class="ml-3" variant="outline-success" @click.prevent="addNewProductForDetail"
+            :disabled="disabledUpdateOrder">
             <i class="fas fa-plus"></i>
             Thêm
           </b-button>
@@ -176,15 +129,8 @@
               <b-col md="4">
                 <b-form-group>
                   <label>Sản phẩm:</label>
-                  <multiselect
-                    v-model="item.product"
-                    track-by="text"
-                    label="text"
-                    :show-labels="false"
-                    :disabled="disabledUpdateOrder"
-                    placeholder="Chọn"
-                    :options="productOptions"
-                    :searchable="true"
+                  <multiselect v-model="item.product" track-by="text" label="text" :show-labels="false"
+                    :disabled="disabledUpdateOrder" placeholder="Chọn" :options="productOptions" :searchable="true"
                     @select="calculateProductPrice(index)"
                     @remove="calculateProductPrice(index)"
                   >
@@ -197,30 +143,21 @@
               <b-col md="2">
                 <b-form-group>
                   <label>Số lượng:</label>
-                  <b-form-input
-                    id="input-product-quantity"
-                    v-model="item.quantity"
-                    type="number"
-                    placeholder="Nhập số lượng"
-                    :disabled="disabledUpdateOrder"
-                    @input="calculateProductPrice(index)"
-                  >
+                  <b-form-input id="input-product-quantity" v-model="item.quantity" type="number"
+                    placeholder="Nhập số lượng" :disabled="disabledUpdateOrder" @input="calculateProductPrice(index)">
                   </b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="2">
                 <b-form-group>
                   <label>Tổng giá:</label>
-                  <div>{{ getFormatPrice(item.productPrice) }}đ</div>
+                  <div>{{getFormatPrice(item.productPrice) }}đ</div>
                 </b-form-group>
               </b-col>
               <b-col md="2">
-                <b-button
-                  class="mt-4"
-                  variant="danger"
+                <b-button class="mt-4" variant="danger"
                   @click.prevent="openModalDeleteOrderDetail(item, index)"
-                  :disabled="disabledUpdateOrder"
-                >
+                  :disabled="disabledUpdateOrder">
                   <i class="fas fa-trash"></i>
                   Xoá
                 </b-button>
@@ -252,52 +189,33 @@
           <i class="fas fa-undo"></i>
           Hoàn tác
         </b-button> -->
-        <b-button
-          variant="primary"
-          @click.prevent="handleSubmit"
-          :disabled="disabledUpdateOrder"
-        >
+        <b-button variant="primary" @click.prevent="handleSubmit" :disabled="disabledUpdateOrder">
           <i class="fas fa-check"></i>
           Đồng ý
         </b-button>
       </div>
     </b-card>
 
-    <b-modal
-      hide-footer
-      id="delete-order-detail"
-      :title="'Xác nhận xoá sản phẩm khỏi đơn hàng'"
-      :no-close-on-backdrop="true"
-    >
+    <b-modal hide-footer id="delete-order-detail" :title="'Xác nhận xoá sản phẩm khỏi đơn hàng'" :no-close-on-backdrop="true">
       <div class="pb-3">
-        Bạn có muốn xoá sản phẩm
-        <span class="font-weight-bold" v-if="currentSelectDetail">
-          {{ currentSelectDetail.productName }}</span
-        >
-        khỏi đơn hàng không ?
+        Bạn có muốn xoá sản phẩm <span class="font-weight-bold" v-if="currentSelectDetail">
+        {{ currentSelectDetail.productName }}</span> khỏi đơn hàng không ?
       </div>
-      <b-button
-        class="mr-2 btn-light2 pull-right"
-        @click.prevent="cancelDeleteOrderDetail()"
-      >
+      <b-button class="mr-2 btn-light2 pull-right" @click.prevent="cancelDeleteOrderDetail()">
         Hủy
       </b-button>
-      <b-button
-        variant="primary pull-right"
-        class="mr-2"
-        type="submit"
-        @click.prevent="handleDeleteOrderDetail()"
-      >
+      <b-button variant="primary pull-right" class="mr-2" type="submit" @click.prevent="handleDeleteOrderDetail()">
         Đồng ý
       </b-button>
     </b-modal>
+
   </b-modal>
 </template>
-
+  
 <script>
 import PageTitle from "@/Layout/Components/PageTitle";
 import baseMixins from "@/components/mixins/base";
-import { required } from "vuelidate/lib/validators";
+import { required, helpers } from "vuelidate/lib/validators";
 import { formatPriceSearchV2 } from "@/common/common";
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
@@ -315,9 +233,9 @@ import {
   CREATE_ORDER_DETAIL,
   UPDATE_ORDER_DETAIL_BY_ORDER_ID,
   DELETE_ORDER_DETAIL,
-  FETCH_ORDER_DETAIL_BY_ORDER_ID,
+  FETCH_ORDER_DETAIL_BY_ORDER_ID
 } from "@/store/action.type";
-import { CREATE_ORDER_DETAIL_BY_ORDER_ID } from "../../../store/action.type";
+import { CREATE_ORDER_DETAIL_BY_ORDER_ID } from '../../../store/action.type';
 const initOrder = {
   note: null,
   totalPrice: 0,
@@ -332,7 +250,7 @@ const initOrder = {
   orderId: null,
   promotion: null,
   orderStatus: { id: 1, statusName: "Chờ xác nhận" },
-  user: null,
+  user: null
 };
 const initOrderDetail = {
   order_detail_id: null,
@@ -340,8 +258,9 @@ const initOrderDetail = {
   product: null,
   productName: null,
   productPrice: 0,
-  quantity: 1,
-};
+  quantity: 1
+}
+const validPhoneNumber = helpers.regex('validPhoneNumber', /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/)
 export default {
   name: "ModalCreateOrder",
   components: { PageTitle, DatePicker },
@@ -349,7 +268,7 @@ export default {
     currentTitleModal: String,
     order: {
       type: Object,
-      default: null,
+      default: null
     },
     orderDetail: Array,
     isUpdate: Boolean,
@@ -363,9 +282,9 @@ export default {
         : null,
       loadingHeader: true,
       orderStatusOptions: [
-        { value: 1, text: "Chờ xác nhận" },
-        { value: 2, text: "Đã xác nhận" },
-        { value: 3, text: "Đã huỷ" },
+        { value: 1, text: 'Chờ xác nhận' },
+        { value: 2, text: 'Đã xác nhận' },
+        { value: 3, text: 'Đã huỷ' },
       ],
       promotionOptions: [],
       productOptions: [],
@@ -388,130 +307,116 @@ export default {
       address: {
         required,
       },
-      phoneNumber: {
+      city: {
         required,
       },
+      district: {
+        required,
+      },
+      wards: {
+        required,
+      },
+      phoneNumber: {
+        required,
+        validPhoneNumber,
+      }
     },
   },
   computed: {
     ...mapGetters(["getPromotions", "getProducts"]),
     saveCurrentData() {
-      return this.order;
+      return this.order
     },
   },
   watch: {
     order() {
-      this.setCurrentUpdateData();
-      this.fetchOrderDetailById();
-    },
+      this.setCurrentUpdateData()
+      this.fetchOrderDetailById()
+    }
   },
   mounted() {
     if (!this.getPromotions || this.getPromotions.length === 0) {
-      this.$store.dispatch(FETCH_PROMOTIONS).then((res) => {
-        if (res && res.status === 200 && res.data)
-          this.getPromotionOptions(res.data.data);
-      });
+      this.$store.dispatch(FETCH_PROMOTIONS).then(res => {
+        if (res && res.status === 200 && res.data) this.getPromotionOptions(res.data.data)
+      })
     } else {
-      this.getPromotionOptions(this.getPromotions);
+      this.getPromotionOptions(this.getPromotions)
     }
     if (!this.getProducts || this.getProducts.length === 0) {
-      this.$store.dispatch(FETCH_PRODUCTS_AVAILABLE).then((res) => {
-        if (res && res.status === 200 && res.data)
-          this.getProductOptions(res.data.data);
-      });
+      this.$store.dispatch(FETCH_PRODUCTS_AVAILABLE).then(res => {
+        if (res && res.status === 200 && res.data) this.getProductOptions(res.data.data)
+      })
     } else {
-      this.getProductOptions(this.getProducts);
+      this.getProductOptions(this.getProducts)
     }
-    this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
-      if (modalId === "modal-create-order") this.fetchOrderDetailById();
-    });
+    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+      if(modalId === 'modal-create-order') this.fetchOrderDetailById()
+    })
   },
   computed: {
     disabledUpdateOrder() {
-      return false;
+      return false
       // return (this.currentData && this.isUpdate && !(this.currentData.orderStatus && this.currentData.orderStatus.value === 1))
     },
     getTotalProductPrice() {
       return this.currentDetailData && this.currentDetailData.length > 0
-        ? this.currentDetailData
-            .map((item) =>
-              item.product && item.quantity
-                ? item.product.sellPrice * item.quantity
-                : 0
-            )
-            .reduce((prev, current) => prev + current, 0)
-        : 0;
+        ? this.currentDetailData.map(item => item.product && item.quantity ? item.product.sellPrice * item.quantity : 0).reduce((prev, current) => prev + current, 0)
+        : 0
     },
   },
   methods: {
+    checkInvalidProduct() {
+      if (this.currentDetailData && this.currentDetailData.length > 0) {
+        let incorrectDetail = this.currentDetailData.filter(item => !item.product || item.quantity < 0 || !item.quantity)
+        return (incorrectDetail && incorrectDetail.length > 0)
+      }
+      return false
+    },
     addNewProductForDetail() {
-      let newProduct = Object.assign({}, { ...initOrderDetail });
-      this.currentDetailData.push(newProduct);
+      let newProduct = Object.assign({}, { ...initOrderDetail })
+      this.currentDetailData.push(newProduct)
     },
     calculateProductPrice(index) {
       this.$nextTick(() => {
-        this.currentDetailData[index].productPrice =
-          this.currentDetailData[index].product &&
-          this.currentDetailData[index].quantity
-            ? this.currentDetailData[index].product.sellPrice *
-              this.currentDetailData[index].quantity
-            : 0;
-        this.calculateOrderPrice();
-      });
+        this.currentDetailData[index].productPrice = this.currentDetailData[index].product && this.currentDetailData[index].quantity
+          ? this.currentDetailData[index].product.sellPrice * this.currentDetailData[index].quantity
+          : 0
+        this.calculateOrderPrice()
+      })
+      
     },
     calculateOrderPrice() {
-      this.currentData.totalPrice =
-        this.currentDetailData && this.currentDetailData.length > 0
-          ? this.currentDetailData
-              .map((item) =>
-                item.product && item.quantity
-                  ? item.product.sellPrice * item.quantity
-                  : 0
-              )
-              .reduce((prev, current) => prev + current, 0)
-          : 0;
+      this.currentData.totalPrice = this.currentDetailData && this.currentDetailData.length > 0
+        ? this.currentDetailData.map(item => item.product && item.quantity ? item.product.sellPrice * item.quantity : 0).reduce((prev, current) => prev + current, 0)
+        : 0
     },
     setCurrentUpdateData() {
-      if (!this.order) return;
-      let { promotion, user, orderStatus } = { ...this.order };
+      if (!this.order) return
+      let { promotion, user, orderStatus } = { ...this.order }
       this.currentData = {
         ...this.order,
-        promotion: promotion
-          ? { text: promotion.salePercent + "%", value: promotion.promotionId }
-          : null,
-        orderStatus: orderStatus
-          ? { text: orderStatus.statusName, value: orderStatus.id }
-          : null,
+        promotion: promotion ? { text: promotion.salePercent + '%', value: promotion.promotionId } : null,
+        orderStatus: orderStatus ? { text: orderStatus.statusName, value: orderStatus.id } : null,
         user: user ? { text: user.username, value: user.userId } : null,
-      };
+      }
     },
     setCurrentUpdateDetailData() {
-      this.currentDetailData = this.currentDetailData.map((item) => {
+      this.currentDetailData = this.currentDetailData.map(item => {
         return {
           ...item,
-          product: item.product
-            ? {
-                text: item.product.productName,
-                value: item.product.productId,
-                img: item.product.mainImg,
-                sellPrice: item.product.sellPrice,
-              }
-            : null,
-        };
-      });
+          product: item.product ? { text: item.product.productName, value: item.product.productId, img: item.product.mainImg, sellPrice: item.product.sellPrice, } : null,
+        }
+      })
     },
     async fetchOrderDetailById() {
-      if (!this.order || !this.order.orderId) return;
-      let response = await this.$store.dispatch(
-        FETCH_ORDER_DETAIL_BY_ORDER_ID,
-        this.order.orderId
-      );
+      if (!this.order || !this.order.orderId) return
+      let response = await this.$store.dispatch(FETCH_ORDER_DETAIL_BY_ORDER_ID, this.order.orderId);
       if (response && response.data && response.data.success) {
-        this.currentDetailData = [...response.data.data];
-        this.setCurrentUpdateDetailData();
+        this.currentDetailData = [...response.data.data]
+        this.setCurrentUpdateDetailData()
         setTimeout(() => {
-          if (this.loadingOrderDetail) this.loadingOrderDetail = false;
-        }, 300);
+          if (this.loadingOrderDetail) this.loadingOrderDetail = false 
+        }, 300)
       } else {
         this.$message({
           message: "Lấy chi tiết đơn hàng không thành công.",
@@ -520,42 +425,36 @@ export default {
         });
       }
     },
-    validateKeyCode: function(e) {
-      if (
-        (e.key < 48 || e.key > 57 || e.charCode === 13) &&
-        e.charCode !== 45 &&
-        e.charCode !== 32
-      ) {
-        return true;
+    validateKeyCode: function (e) {
+      if ((e.key < 48 || e.key > 57 || e.charCode === 13) && e.charCode !== 45 && e.charCode !== 32) {
+        return true
       }
-      e.preventDefault();
+      e.preventDefault()
     },
     getPromotionOptions(promotions) {
-      this.promotionOptions = promotions
-        .filter((item) => item.amount > 0)
-        .map((item) => {
-          return {
-            text: item.salePercent ? item.salePercent + "%" : "",
-            value: item.promotionId,
-          };
-        });
+      this.promotionOptions = promotions.filter(item => item.amount > 0).map(item => {
+        return {
+          text: item.salePercent ? item.salePercent + '%' : '',
+          value: item.promotionId
+        }
+      })
     },
     getProductOptions(products) {
-      this.productOptions = products
-        .filter((item) => item.amount > 0)
-        .map((item) => {
-          return {
-            text: item.productName,
-            value: item.productId,
-            img: item.mainImg,
-            sellPrice: item.sellPrice,
-          };
-        });
+      this.productOptions = products.filter(item => item.amount > 0).map(item => {
+        return {
+          text: item.productName,
+          value: item.productId,
+          img: item.mainImg,
+          sellPrice: item.sellPrice,
+        }
+      })
     },
     getFormatPrice(price) {
-      return price ? formatPriceSearchV2(price + "") : 0;
+      return price ? formatPriceSearchV2(price + '') : 0
     },
     async handleCreateAndUpdateOrder() {
+      let successMsg = `${this.isUpdate ? 'Cập nhật' : 'Tạo'} đơn hàng thành công.`
+      let errorMsg = `${this.isUpdate ? 'Cập nhật' : 'Tạo'} đơn hàng không thành công.`
       let {
         totalPrice,
         note,
@@ -568,7 +467,7 @@ export default {
         orderStatus,
         promotion,
         user,
-        orderId,
+        orderId
       } = { ...this.currentData };
       let payload = {
         orderId,
@@ -576,116 +475,79 @@ export default {
           totalPrice: this.getTotalProductPrice,
           promotionId: promotion ? promotion.value : null,
           note,
-          totalPrice: totalPrice && Number((totalPrice + "").replace(",", "")),
+          totalPrice: totalPrice && Number((totalPrice + '').replace(',', '')),
           orderStatusId: orderStatus ? orderStatus.value : null,
-          date: this.isUpdate
-            ? date
-            : moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+          date: this.isUpdate ? date : moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
           phoneNumber: phoneNumber && Number(phoneNumber),
-          address,
-          city,
-          district,
-          wards,
+          address, city, district, wards,
         },
       };
-      let payloadForCreateDetail = this.currentDetailData.map((item) => {
+      let payloadForCreateDetail = this.currentDetailData.map(item => {
         return {
-          productId: item.product ? item.product.value + "" : null,
+          productId: item.product ? item.product.value + '' : null,
           productName: item.product ? item.product.text : null,
           quantity: item.quantity,
-          productPrice:
-            (item.product && item.quantity
-              ? item.product.sellPrice * item.quantity
-              : 0) + "",
-        };
-      });
+          productPrice: (item.product && item.quantity ? item.product.sellPrice * item.quantity : 0) + '',
+        }
+      })
       let payloadForUpdateDetail = {
         orderId: orderId,
         orderDetailData: this.currentDetailData
-          .filter((detail) => detail && detail.order_detail_id)
-          .map((item) => {
+          .filter(detail => detail && detail.order_detail_id)
+          .map(item => {
             return {
-              order_detail_id: item.order_detail_id
-                ? item.order_detail_id + ""
-                : null,
-              productId: item.product ? item.product.value + "" : null,
+              order_detail_id: item.order_detail_id ? item.order_detail_id + '' : null,
+              productId: item.product ? item.product.value + '' : null,
               productName: item.product ? item.product.text : null,
               quantity: item.quantity,
-              productPrice:
-                (item.product && item.quantity
-                  ? item.product.sellPrice * item.quantity
-                  : 0) + "",
-            };
+              productPrice: (item.product && item.quantity ? item.product.sellPrice * item.quantity : 0) + '',
+            }
           }),
         newOrderDetailData: this.currentDetailData
-          .filter((detail) => detail && !detail.order_detail_id)
-          .map((item) => {
+          .filter(detail => detail && !detail.order_detail_id)
+          .map(item => {
             return {
               orderId: orderId,
-              productId: item.product ? item.product.value + "" : null,
+              productId: item.product ? item.product.value + '' : null,
               productName: item.product ? item.product.text : null,
               quantity: item.quantity,
-              productPrice:
-                (item.product && item.quantity
-                  ? item.product.sellPrice * item.quantity
-                  : 0) + "",
-            };
-          }),
-      };
-      let successMsg = `${
-        this.isUpdate ? "Cập nhật" : "Tạo"
-      } đơn hàng thành công.`;
-      let errorMsg = `${
-        this.isUpdate ? "Cập nhật" : "Tạo"
-      } đơn hàng không thành công.`;
+              productPrice: (item.product && item.quantity ? item.product.sellPrice * item.quantity : 0) + '',
+            }
+          })
+      }
       if (this.isUpdate) {
-        let promiseList = [this.$store.dispatch(UPDATE_ORDER, payload)];
-        if (payloadForUpdateDetail.orderDetailData.length > 0)
-          promiseList.push(
-            this.$store.dispatch(
-              UPDATE_ORDER_DETAIL_BY_ORDER_ID,
-              payloadForUpdateDetail
-            )
-          );
-        if (payloadForUpdateDetail.newOrderDetailData.length > 0)
-          promiseList.push(
-            this.$store.dispatch(
-              CREATE_ORDER_DETAIL_BY_ORDER_ID,
-              payloadForUpdateDetail.newOrderDetailData
-            )
-          );
-        Promise.all(promiseList).then((res) => {
+        let promiseList = [this.$store.dispatch(UPDATE_ORDER, payload)]
+        if (payloadForUpdateDetail.orderDetailData.length > 0) promiseList.push(this.$store.dispatch(UPDATE_ORDER_DETAIL_BY_ORDER_ID, payloadForUpdateDetail))
+        if (payloadForUpdateDetail.newOrderDetailData.length > 0) promiseList.push(this.$store.dispatch(CREATE_ORDER_DETAIL_BY_ORDER_ID, payloadForUpdateDetail.newOrderDetailData))
+        Promise.all(promiseList).then(res => {
           if (res[0].status === 200 && res[1].status === 200) {
             this.$message({
               message: successMsg,
               type: "success",
               showClose: true,
             });
-            this.cancelCreateOrder(true);
+            this.cancelCreateOrder(true)
           }
-        });
+        })
       }
       if (!this.isUpdate) {
-        let res = await this.$store.dispatch(CREATE_ORDER, payload.orderData);
+        let res = await this.$store.dispatch(CREATE_ORDER, payload.orderData)
         if (res.status === 200 && res.data && res.data.data) {
-          let newOrderId = res.data.data.orderId;
-          payloadForCreateDetail = payloadForCreateDetail.map((item) => {
+          let newOrderId = res.data.data.orderId
+          payloadForCreateDetail = payloadForCreateDetail.map(item => {
             return {
               ...item,
-              orderId: newOrderId,
-            };
-          });
-          let resForDetail = await this.$store.dispatch(
-            CREATE_ORDER_DETAIL_BY_ORDER_ID,
-            payloadForCreateDetail
-          );
+              orderId: newOrderId
+            }
+          })
+          let resForDetail = await this.$store.dispatch(CREATE_ORDER_DETAIL_BY_ORDER_ID, payloadForCreateDetail)
           if (resForDetail.status === 200) {
             this.$message({
               message: successMsg,
               type: "success",
               showClose: true,
             });
-            this.cancelCreateOrder(true);
+            this.cancelCreateOrder(true)
           }
         }
       }
@@ -695,6 +557,16 @@ export default {
       this.$v.$touch();
       if (this.$v.currentData.$invalid) {
         return;
+      }
+      let checkInvalidProduct = this.checkInvalidProduct()
+      if (checkInvalidProduct) {
+        this.$message.closeAll()
+        this.$message({
+          message: "Bạn cần điền đầy đủ thông tin sản phẩm.",
+          type: "warning",
+          showClose: true,
+        })
+        return
       }
       this.handleCreateAndUpdateOrder();
     },
@@ -711,27 +583,26 @@ export default {
       //   this.$v.$reset();
       // });
     },
-    validationStatus: function(validation) {
+    validationStatus: function (validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
     cancelCreateOrder(isFetchOrders) {
-      this.$v.$reset();
-      this.loadingOrderDetail = true;
-      this.currentData = Object.assign({}, { ...initOrder });
-      this.currentDetailData = [];
-      this.$emit("cancelCreateOrder", isFetchOrders);
+      this.$v.$reset()
+      this.loadingOrderDetail = true
+      this.currentData = Object.assign({}, {...initOrder})
+      this.currentDetailData = []
+      this.$emit('cancelCreateOrder', isFetchOrders)
       this.$root.$emit("bv::hide::modal", "modal-create-order");
     },
     openModalDeleteOrderDetail(orderDetail, indexVal) {
       if (orderDetail && orderDetail.order_detail_id) {
-        this.currentDetailId = orderDetail.order_detail_id;
-        this.currentSelectDetail = orderDetail;
+        this.currentDetailId = orderDetail.order_detail_id
+        this.currentSelectDetail = orderDetail
         this.$root.$emit("bv::show::modal", "delete-order-detail");
-      } else {
-        this.currentDetailData = this.currentDetailData.filter(
-          (item, index) => index !== indexVal
-        );
-        this.calculateOrderPrice();
+      }
+      else {
+        this.currentDetailData = this.currentDetailData.filter((item, index) => index !== indexVal)
+        this.calculateOrderPrice()
       }
     },
     cancelDeleteOrderDetail() {
@@ -739,18 +610,13 @@ export default {
     },
     async handleDeleteOrderDetail() {
       if (this.currentDetailId) {
-        let res = await this.$store.dispatch(
-          DELETE_ORDER_DETAIL,
-          this.currentDetailId
-        );
+        let res = await this.$store.dispatch(DELETE_ORDER_DETAIL, this.currentDetailId)
         if (res.status === 200) {
-          this.cancelDeleteOrderDetail();
-          this.currentDetailData = this.currentDetailData.filter(
-            (item) => item.order_detail_id !== this.currentDetailId
-          );
-          this.currentDetailId = null;
-          this.currentSelectDetail = null;
-          this.$message.closeAll();
+          this.cancelDeleteOrderDetail()
+          this.currentDetailData = this.currentDetailData.filter(item => item.order_detail_id !== this.currentDetailId)
+          this.currentDetailId = null
+          this.currentSelectDetail = null
+          this.$message.closeAll()
           this.$message({
             message: "Xoá sản phẩm khỏi đơn hàng thành công.",
             type: "success",
@@ -758,7 +624,7 @@ export default {
           });
         }
       }
-    },
+    }
   },
 };
 </script>
@@ -811,7 +677,7 @@ export default {
   }
 }
 </style>
-
+  
 <style lang="scss">
 #update-order {
   .was-validated .form-control:invalid,

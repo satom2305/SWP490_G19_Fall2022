@@ -55,12 +55,6 @@ const actions = {
       resolve(response)
     })
   },
-  [CHANGE_PASSWORD](context, payload) {
-    return new Promise(async resolve => {
-      let response = await baseMixins.methods.put(`}/rest/users/changePwd/${payload.userName}`, payload.data)
-      resolve(response)
-    })
-  },
 }
 
 export default {

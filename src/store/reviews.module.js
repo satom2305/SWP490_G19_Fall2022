@@ -33,7 +33,7 @@ const actions = {
   },
   [CREATE_REVIEW](context, payload) {
     return new Promise(async resolve => {
-      let response = await baseMixins.methods.post(`/rest/reviews`, payload)
+      let response = await baseMixins.methods.post(`/rest/reviews/createReview`, payload)
       resolve(response)
     })
   },

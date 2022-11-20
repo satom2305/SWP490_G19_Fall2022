@@ -25,7 +25,7 @@
 
 <script>
 import Progress from "@/components/Progress";
-import Header from "../Components/Header";
+import Header from "../Components/admin/Header.vue";
 import Sidebar from "../Components/Sidebar";
 import Footer from "../Components/Footer";
 

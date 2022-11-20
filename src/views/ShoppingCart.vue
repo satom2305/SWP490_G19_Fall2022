@@ -267,7 +267,7 @@
                       <h5>{{ item.product.productName }}</h5>
                     </td>
                     <td class="shoping__cart__price">
-                      {{ item.product.sellPrice }}đ
+                      {{ formatPrice(item.product.sellPrice) }}đ
                     </td>
                     <td class="shoping__cart__quantity">
                       <div class="quantity">
@@ -277,7 +277,7 @@
                       </div>
                     </td>
                     <td class="shoping__cart__total">
-                      {{ item.product.sellPrice * item.quantity }}đ
+                      {{ formatPrice(item.product.sellPrice * item.quantity) }}đ
                     </td>
                     <td class="shoping__cart__item__close">
                       <span class="icon_close"></span>
@@ -314,10 +314,10 @@
                 <h5>Cart Total</h5>
                 <ul>
                   <li>
-                    Subtotal <span>{{ this.subPrice }}đ</span>
+                    Subtotal <span>{{ formatPrice(this.subPrice) }}đ</span>
                   </li>
                   <li>
-                    Total <span>{{ this.totalPrice }}đ</span>
+                    Total <span>{{ formatPrice(this.totalPrice) }}đ</span>
                   </li>
                 </ul>
                 <div
@@ -421,6 +421,7 @@
 <script>
 import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
+import { formatPriceSearchV2 } from "../common/common";
 export default {
   name: "ShoppingCart",
   mixins: [baseMixins],
@@ -432,6 +433,7 @@ export default {
     };
   },
   mounted() {
+    handleJQuery();
     this.getListCart();
   },
   methods: {
@@ -452,9 +454,10 @@ export default {
     proceedToCheckout() {
       this.$router.push({ path: `/check-out` });
     },
-  },
-  created() {
-    handleJQuery();
+    formatPrice(price) {
+      if (!price) return "";
+      return formatPriceSearchV2(price + "");
+    },
   },
 };
 </script>

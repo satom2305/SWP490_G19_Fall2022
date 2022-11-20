@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import SearchBox from "./Header/SearchBox";
-import UserArea from "./Header/HeaderUserArea";
+import SearchBox from "../Header/SearchBox";
+import UserArea from "../Header/HeaderUserArea";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
