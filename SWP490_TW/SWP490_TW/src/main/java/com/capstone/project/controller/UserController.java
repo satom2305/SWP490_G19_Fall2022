@@ -75,7 +75,6 @@ public class UserController {
 
     @PostMapping("/staff")
     public ResponseEntity<?> createStaff(@RequestBody UserRequest request) {
-        System.out.println(request);
         UserResponse userResponse = userService.createStaff(request);
         if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
