@@ -161,7 +161,7 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     localStorage.setItem('savedPath', to.fullPath)
   }
-  const publicPages = ['/login', '/config-api', '/register'];
+  const publicPages = ['/login', '/config-api', '/register', '/reset-password'];
   const authRequired = !publicPages.includes(to.path);
   const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'
   const isGuest = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[GUEST]'

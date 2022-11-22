@@ -69,93 +69,7 @@
     </div>
     <!--    Humberger End-->
     <!--    Header Section Begin-->
-    <header class="header">
-      <div class="header__top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-md-6">
-              <div class="header__top__left">
-                <ul>
-                  <li>
-                    <font-awesome-icon icon="fa fa-envelope" />
-                    hello@colorlib.com
-                  </li>
-                  <li>Free Shipping for all Order of $99</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-              <UserHeader />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="header__logo">
-              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <nav class="header__menu">
-              <ul>
-                <li class="active">
-                  <a href="/">Home</a>
-                </li>
-                <li>
-                  <a href="/shop-product">Shop </a>
-                </li>
-                <li>
-                  <a href="#">Pages</a>
-                  <ul class="header__menu__dropdown">
-                    <li>
-                      <a href="/shop-detail">Shop Details</a>
-                    </li>
-                    <li>
-                      <a href="/shopping-cart">Shopping Carts</a>
-                    </li>
-                    <li>
-                      <a href="/check-out">Check Out</a>
-                    </li>
-                    <li>
-                      <a href="/blog-detail">Blog Details</a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="/contact">Contact </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div class="col-lg-3">
-            <div class="header__cart">
-              <ul>
-                <li>
-                  <a href="#">
-                    <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <font-awesome-icon icon="fa fa-shopping-bag" />
-                    <span>3</span>
-                  </a>
-                </li>
-              </ul>
-              <div class="header__cart__price">item: <span>$150.00</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="humberger__open">
-          <font-awesome-icon icon="fa fa-bars" />
-        </div>
-      </div>
-    </header>
+    <UserHeader />
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
@@ -283,11 +197,11 @@
         </div>
         <div class="t-mx-auto t-w-fit">
           <b-pagination
-            v-model="currentPage"
+            v-model="pagination.currentProductPage"
             :total-rows="listProduct.length"
             :per-page="pagination.perPage"
             aria-controls="my-table"
-            @change="onPageChanged"
+            @change="onProductPageChanged"
           ></b-pagination>
         </div>
       </div>
@@ -517,11 +431,11 @@
         </div>
         <div class="t-mx-auto t-w-fit">
           <b-pagination
-            v-model="currentPage"
+            v-model="pagination.currentPostPage"
             :total-rows="listPost.length"
             :per-page="pagination.perPage"
             aria-controls="my-table"
-            @change="onPageChanged"
+            @change="onPostPageChanged"
           ></b-pagination>
         </div>
       </div>
@@ -613,10 +527,10 @@ import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
-import UserHeader from '../Layout/Components/UserHeader'
+import UserHeader from "../Layout/Components/UserHeader";
 export default {
   name: "HomePage",
-  components: { VueSlickCarousel, UserHeader},
+  components: { VueSlickCarousel, UserHeader },
   mixins: [baseMixins],
   data() {
     return {
@@ -627,7 +541,8 @@ export default {
       listPost: [],
       listPostPaginate: [],
       pagination: {
-        currentPage: 1,
+        currentPostPage: 1,
+        currentProductPage: 1,
         perPage: 3,
         totalRows: 6,
       },
@@ -764,13 +679,15 @@ export default {
     showBlogDetail(id) {
       this.$router.push({ path: `/blog-detail/${id}` });
     },
-    onPageChanged(page) {
-      console.log(page);
+    onProductPageChanged(page) {
       this.pagination.currentPage = page;
       this.productListPaginate = this.listProduct.slice(
         (page - 1) * this.pagination.perPage,
         page * this.pagination.perPage
       );
+    },
+    onPostPageChanged(page) {
+      this.pagination.currentPostPage = page;
       this.listPostPaginate = this.listPost.slice(
         (page - 1) * this.pagination.perPage,
         page * this.pagination.perPage

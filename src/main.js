@@ -67,6 +67,11 @@ Vue.use(Steps);
 Vue.use(TreeSelect);
 Vue.use(Skeleton);
 Vue.use(Comment);
+Vue.use(Menu)
+Vue.use(Avatar)
+Vue.use(Form)
+Vue.use(List)
+Vue.use(Dropdown)
 
 import ToggleButton from 'vue-js-toggle-button'
 Vue.use(ToggleButton)

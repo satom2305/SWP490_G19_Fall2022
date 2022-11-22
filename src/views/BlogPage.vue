@@ -67,102 +67,7 @@
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
-    <header class="header">
-      <div class="header__top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-md-6">
-              <div class="header__top__left">
-                <ul>
-                  <li>
-                    <font-awesome-icon icon="fa fa-envelope" />
-                    hello@colorlib.com
-                  </li>
-                  <li>Free Shipping for all Order of $99</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-              <div class="header__top__right">
-                <!--              <div class="header__top__right__social">-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
-                <!--              </div>-->
-                <div class="header__top__right__language">
-                  <img src="img/language.png" alt="" />
-                  <div>English</div>
-                  <span class="arrow_carrot-down"></span>
-                  <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                  </ul>
-                </div>
-                <div class="header__top__right__auth">
-                  <a href="#"><font-awesome-icon icon="fa fa-user" /> Login</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="header__logo">
-              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <nav class="header__menu">
-              <ul>
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/shop-product">Shop </a></li>
-                <li>
-                  <a href="#">Pages</a>
-                  <ul class="header__menu__dropdown">
-                    <li>
-                      <a href="/shop-detail">Shop Details</a>
-                    </li>
-                    <li>
-                      <a href="/shopping-cart">Shopping Carts</a>
-                    </li>
-                    <li><a href="/check-out">Check Out</a></li>
-                    <li>
-                      <a href="/blog-detail">Blog Details</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/contact">Contact </a></li>
-              </ul>
-            </nav>
-          </div>
-          <div class="col-lg-3">
-            <div class="header__cart">
-              <ul>
-                <li>
-                  <a href="#"
-                    ><font-awesome-icon icon="fa fa-heart" /> <span>1</span></a
-                  >
-                </li>
-                <li>
-                  <a href="#"
-                    ><font-awesome-icon icon="fa fa-shopping-bag" />
-                    <span>3</span></a
-                  >
-                </li>
-              </ul>
-              <div class="header__cart__price">item: <span>$150.00</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="humberger__open">
-          <font-awesome-icon icon="fa fa-bars" />
-        </div>
-      </div>
-    </header>
+    <UserHeader />
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
@@ -421,8 +326,10 @@
 import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import moment from "moment";
+import UserHeader from "../Layout/Components/UserHeader";
 export default {
   name: "BlogPage",
+  components: { UserHeader },
   mixins: [baseMixins],
   data() {
     return {

@@ -69,102 +69,7 @@
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
-    <header class="header">
-      <div class="header__top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-md-6">
-              <div class="header__top__left">
-                <ul>
-                  <li>
-                    <font-awesome-icon icon="fa fa-envelope" />
-                    hello@colorlib.com
-                  </li>
-                  <li>Free Shipping for all Order of $99</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-              <div class="header__top__right">
-                <!--              <div class="header__top__right__social">-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-                <!--                <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
-                <!--              </div>-->
-                <div class="header__top__right__language">
-                  <img src="img/language.png" alt="" />
-                  <div>English</div>
-                  <span class="arrow_carrot-down"></span>
-                  <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                  </ul>
-                </div>
-                <div class="header__top__right__auth">
-                  <a href="#"><font-awesome-icon icon="fa fa-user" /> Login</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="header__logo">
-              <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <nav class="header__menu">
-              <ul>
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/shop-product">Shop </a></li>
-                <li>
-                  <a href="#">Pages</a>
-                  <ul class="header__menu__dropdown">
-                    <li>
-                      <a href="/shop-detail">Shop Details</a>
-                    </li>
-                    <li>
-                      <a href="/shopping-cart">Shopping Carts</a>
-                    </li>
-                    <li><a href="/check-out">Check Out</a></li>
-                    <li>
-                      <a href="/blog-detail">Blog Details</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/contact">Contact </a></li>
-              </ul>
-            </nav>
-          </div>
-          <div class="col-lg-3">
-            <div class="header__cart">
-              <ul>
-                <li>
-                  <a href="#"
-                    ><font-awesome-icon icon="fa fa-heart" /> <span>1</span></a
-                  >
-                </li>
-                <li>
-                  <a href="#"
-                    ><font-awesome-icon icon="fa fa-shopping-bag" />
-                    <span>3</span></a
-                  >
-                </li>
-              </ul>
-              <div class="header__cart__price">item: <span>$150.00</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="humberger__open">
-          <font-awesome-icon icon="fa fa-bars" />
-        </div>
-      </div>
-    </header>
+    <UserHeader />
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
@@ -231,7 +136,9 @@
               <div class="breadcrumb__option">
                 <!-- <a href="./">Home</a>
                 <a href="./">Vegetables</a> -->
-                <span>{{ this.productDetail.productName }}</span>
+                <span v-if="productDetail">{{
+                  productDetail.productName
+                }}</span>
               </div>
             </div>
           </div>
@@ -248,6 +155,7 @@
             <div class="product__details__pic">
               <div class="product__details__pic__item">
                 <img
+                  v-if="productDetail"
                   class="product__details__pic__item--large"
                   :src="productDetail.mainImg"
                   alt=""
@@ -281,7 +189,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6">
+          <div class="col-lg-6 col-md-6" v-if="productDetail">
             <div class="product__details__text">
               <h3>{{ productDetail.productName }}</h3>
               <div class="product__details__rating">
@@ -320,7 +228,10 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" @click="navigateToNav('description')">
                   <a
-                  :class="['nav-link', {'active': currentNav === 'description'}]"
+                    :class="[
+                      'nav-link',
+                      { active: currentNav === 'description' },
+                    ]"
                     data-toggle="tab"
                     href="#tabs-1"
                     role="tab"
@@ -328,9 +239,9 @@
                     >Mô tả</a
                   >
                 </li>
-                <li class="nav-item"  @click="navigateToNav('reviews')">
+                <li class="nav-item" @click="navigateToNav('reviews')">
                   <a
-                  :class="['nav-link', {'active': currentNav === 'reviews'}]"
+                    :class="['nav-link', { active: currentNav === 'reviews' }]"
                     data-toggle="tab"
                     href="#tabs-3"
                     role="tab"
@@ -340,10 +251,21 @@
                 </li>
               </ul>
               <div class="tab-content">
-                <div :class="['tab-pane', {'active': currentNav === 'description'}]" id="tabs-1" role="tabpanel">
+                <div
+                  :class="[
+                    'tab-pane',
+                    { active: currentNav === 'description' },
+                  ]"
+                  id="tabs-1"
+                  role="tabpanel"
+                >
                   Sản phẩm cây cối.
                 </div>
-                <div :class="['tab-pane', {'active': currentNav === 'reviews'}]" id="tabs-3" role="tabpanel">
+                <div
+                  :class="['tab-pane', { active: currentNav === 'reviews' }]"
+                  id="tabs-3"
+                  role="tabpanel"
+                >
                   <div class="">
                     <a-list
                       v-if="productReviews.length"
@@ -356,7 +278,9 @@
                           <a-comment
                             v-if="!item.toggleUpdate"
                             :author="item.userId.username"
-                            :avatar="'https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146'"
+                            :avatar="
+                              'https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146'
+                            "
                             :content="item.reviewDetail"
                             :datetime="getDate(item)"
                           />
@@ -365,21 +289,51 @@
                           </a-form-item> -->
                           <a-form v-if="item.toggleUpdate" style="width: 80%">
                             <a-form-item>
-                              <a-textarea :rows="4" v-model="item.reviewDetail"/>
+                              <a-textarea
+                                :rows="4"
+                                v-model="item.reviewDetail"
+                              />
                             </a-form-item>
                           </a-form>
-                          <div v-if="item.userId && userInfo && item.userId.userId === userInfo.userId">
+                          <div
+                            v-if="
+                              item.userId &&
+                                userInfo &&
+                                item.userId.userId === userInfo.userId
+                            "
+                          >
                             <div class="p-2">
-                              <a href="javascript:void(0)" type="button" v-b-tooltip.hover title="Cập nhật"
-                                @click.prevent="toggleUpdate(item)">
-                                <i v-if="!item.toggleUpdate" class="fas fa-edit text-success" style="font-size: 1.1rem"></i>
-                                <i v-if="item.toggleUpdate" class="fas fa-check text-success" style="font-size: 1.1rem"></i>
+                              <a
+                                href="javascript:void(0)"
+                                type="button"
+                                v-b-tooltip.hover
+                                title="Cập nhật"
+                                @click.prevent="toggleUpdate(item)"
+                              >
+                                <i
+                                  v-if="!item.toggleUpdate"
+                                  class="fas fa-edit text-success"
+                                  style="font-size: 1.1rem"
+                                ></i>
+                                <i
+                                  v-if="item.toggleUpdate"
+                                  class="fas fa-check text-success"
+                                  style="font-size: 1.1rem"
+                                ></i>
                               </a>
                             </div>
                             <div class="p-2" v-if="item.toggleUpdate">
-                              <a href="javascript:void(0)" type="button" v-b-tooltip.hover title="Huỷ"
-                                @click.prevent="cancelUpdate(item)">
-                                <i class="fas fa-times text-danger" style="font-size: 1.1rem"></i>
+                              <a
+                                href="javascript:void(0)"
+                                type="button"
+                                v-b-tooltip.hover
+                                title="Huỷ"
+                                @click.prevent="cancelUpdate(item)"
+                              >
+                                <i
+                                  class="fas fa-times text-danger"
+                                  style="font-size: 1.1rem"
+                                ></i>
                               </a>
                             </div>
                           </div>
@@ -399,7 +353,11 @@
                             <a-textarea :rows="4" v-model="newReview" />
                           </a-form-item>
                           <a-form-item>
-                            <a-button type="" @click="createReview" style="background-color: #01904a; color: white">
+                            <a-button
+                              type=""
+                              @click="createReview"
+                              style="background-color: #01904a; color: white"
+                            >
                               Đánh giá
                             </a-button>
                           </a-form-item>
@@ -610,12 +568,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 import { handleJQuery } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
+import UserHeader from "../Layout/Components/UserHeader";
+import {
+  FETCH_REVIEWS,
+  UPDATE_REVIEW,
+  CREATE_REVIEW,
+} from "@/store/action.type";
 export default {
   name: "ShopDetail",
+  components: { UserHeader },
   mixins: [baseMixins],
   props: {},
   data() {
@@ -625,32 +590,32 @@ export default {
       quantity: 1,
       currentProductId: null,
       currentUserId: null,
-      currentNav: 'reviews',
+      currentNav: "reviews",
       newReview: null,
       productReviews: [],
-      userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+      userInfo: localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo"))
+        : null,
     };
   },
   mounted() {
     handleJQuery();
     this.getDetailProduct();
-    this.currentProductId = Number(this.$route.params.id)
-    this.fetchReviews()
+    this.currentProductId = Number(this.$route.params.id);
+    this.fetchReviews();
   },
   computed: {
     ...mapGetters(["getReviews"]),
     getTotalReview() {
-      return this.productReviews ? this.productReviews.length : 0
-    }
+      return this.productReviews ? this.productReviews.length : 0;
+    },
   },
   methods: {
     async getDetailProduct() {
       const id = this.$router.currentRoute.params.id;
-      // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt(`/rest/products`, id);
       if (res && res.data && res.data.data) {
         this.productDetail = res.data.data;
-        console.log(this.productDetail);
       }
     },
     addtoCart() {
@@ -664,66 +629,73 @@ export default {
       this.$router.push({ path: `/shopping-cart` });
     },
     navigateToNav(navSection) {
-      this.currentNav = navSection
+      this.currentNav = navSection;
     },
     getDate(item) {
-      return item && item.date && moment(new Date(item.date)).format('HH:mm DD/MM/YYYY')
+      return (
+        item &&
+        item.date &&
+        moment(new Date(item.date)).format("HH:mm DD/MM/YYYY")
+      );
     },
     toggleUpdate(review) {
-      review.toggleUpdate = !review.toggleUpdate
-      if (!review.toggleUpdate) this.updateReview(review)
+      review.toggleUpdate = !review.toggleUpdate;
+      if (!review.toggleUpdate) this.updateReview(review);
     },
     cancelUpdate(review) {
-      if (review.toggleUpdate) review.toggleUpdate = false
-      review.reviewDetail = review.currentReview
+      if (review.toggleUpdate) review.toggleUpdate = false;
+      review.reviewDetail = review.currentReview;
     },
     async fetchReviews() {
-      let res = await this.$store.dispatch(FETCH_REVIEWS)
+      let res = await this.$store.dispatch(FETCH_REVIEWS);
       if (res.status === 200 && res.data.data) {
-        this.getReviewsByProduct(res.data.data)
+        this.getReviewsByProduct(res.data.data);
       }
     },
     getReviewsByProduct(reviews) {
-      this.productReviews = reviews.filter(item => item.productId && item.productId.productId === this.currentProductId)
+      this.productReviews = reviews.filter(
+        (item) =>
+          item.productId && item.productId.productId === this.currentProductId
+      );
       if (this.productReviews && this.productReviews.length > 0) {
-        this.productReviews = this.productReviews.map(review => {
+        this.productReviews = this.productReviews.map((review) => {
           return {
             ...review,
             toggleUpdate: false,
-            currentReview: review.reviewDetail
-          }
-        })
+            currentReview: review.reviewDetail,
+          };
+        });
       }
     },
     async createReview() {
       let payload = {
-        userId: this.userInfo ? this.userInfo.userId + '' : null,
+        userId: this.userInfo ? this.userInfo.userId + "" : null,
         productId: this.currentProductId,
         reviewDetail: this.newReview,
-        date: moment(new Date()).format('YYYY-MM-DD'),
-      }
-      let res = await this.$store.dispatch(CREATE_REVIEW, payload)
+        date: moment(new Date()).format("YYYY-MM-DD"),
+      };
+      let res = await this.$store.dispatch(CREATE_REVIEW, payload);
       if (res.status === 200) {
-        this.newReview = null
-        this.$message.closeAll()
+        this.newReview = null;
+        this.$message.closeAll();
         this.$message({
-          message: 'Thêm đánh giá thành công',
-					type: "success",
-					showClose: true,
-        })
-        this.fetchReviews()
+          message: "Thêm đánh giá thành công",
+          type: "success",
+          showClose: true,
+        });
+        this.fetchReviews();
       }
     },
     async updateReview(review) {
-      if (!review.reviewDetail || review.reviewDetail.trim() === '') {
-        review.toggleUpdate = true
-        this.$message.closeAll()
+      if (!review.reviewDetail || review.reviewDetail.trim() === "") {
+        review.toggleUpdate = true;
+        this.$message.closeAll();
         this.$message({
-          message: 'Nội dung đánh giá không được để trống',
-					type: "warning",
-					showClose: true,
-        })
-        return
+          message: "Nội dung đánh giá không được để trống",
+          type: "warning",
+          showClose: true,
+        });
+        return;
       }
       let payload = {
         reviewId: review.review_id,
@@ -731,20 +703,20 @@ export default {
           userId: review.userId ? review.userId.userId : null,
           productId: review.productId ? review.productId.productId : null,
           reviewDetail: review.reviewDetail,
-          date: moment(new Date(review.date)).format('YYYY-MM-DD'),
-        }
-      }
-      let res = await this.$store.dispatch(UPDATE_REVIEW, payload)
+          date: moment(new Date(review.date)).format("YYYY-MM-DD"),
+        },
+      };
+      let res = await this.$store.dispatch(UPDATE_REVIEW, payload);
       if (res.status === 200) {
-        this.$message.closeAll()
+        this.$message.closeAll();
         this.$message({
-          message: 'Cập nhật đánh giá thành công',
-					type: "success",
-					showClose: true,
-        })
-        this.fetchReviews()
+          message: "Cập nhật đánh giá thành công",
+          type: "success",
+          showClose: true,
+        });
+        this.fetchReviews();
       }
-    }
+    },
   },
 };
 </script>
