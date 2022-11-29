@@ -304,3 +304,16 @@ export const handleJQuery = () => {
     }
   })
 }
+
+export const verifyAccountRole = () => {
+  let userInfo = localStorage.getItem('userInfo')
+  if (userInfo && userInfo !== '') {
+    let role = JSON.parse(userInfo).role
+    if (role.includes('ADMIN') || role.includes('USER') || role.includes('STAFF')) {
+      // request.headers["Authorization"] = 'Bearer ' + StorageService.get('Token')
+      return true
+    }
+  }
+
+  return false
+};

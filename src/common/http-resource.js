@@ -1,5 +1,5 @@
 import axios from "axios";
-import { performLogout } from "./utils";
+import { performLogout, verifyAccountRole } from "./utils";
 import StorageService from "../common/storage.service"
 import { EventBus } from "./event-bus";
 const isHandlerEnable = (config = {}) => {
@@ -16,7 +16,7 @@ const instance = axios.create({
 
 const requestHandler = request => {
   EventBus.$emit("send-progress", true)
-  request.headers["Authorization"] =  StorageService.get('Token')
+  if (verifyAccountRole) request.headers["Authorization"] = 'Bearer ' + StorageService.get('Token')
   if (isHandlerEnable(request)) {
     // console.log("Request Interceptor", request);
   }

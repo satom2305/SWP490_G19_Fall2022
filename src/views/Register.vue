@@ -8,7 +8,7 @@
               <img src="@/assets/static/images/logo.png" class="brand-img" width="100" />
             </div>
             <h4 class="mt-2">
-              <span style="font-weight: 500">HỆ THỐNG QUẢN LÝ TREE WORLD</span>
+              <span style="font-weight: 500">TREE WORLD</span>
             </h4>
           </div>
           <div class="modal-dialog w-100 mx-auto">
@@ -171,7 +171,6 @@ export default {
       }
     },
     async handleAfterRegister(response) {
-      console.log(response)
       let res = await this.$store.dispatch("login", {
         username: this.form.username,
         password: this.form.password,

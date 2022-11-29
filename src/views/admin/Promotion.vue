@@ -288,7 +288,7 @@ export default {
         },
         {
           key: "promotionCode",
-          label: "ID khuyến mại",
+          label: "Mã khuyến mại",
           visible: true,
           thStyle: { width: "8%" },
           thClass: "text-left align-middle",
@@ -455,7 +455,6 @@ export default {
         ? this.$store.dispatch(UPDATE_PROMOTION, payloadForUpdate)
         : this.$store.dispatch(CREATE_PROMOTION, payload));
       if (res) this.$message.closeAll();
-      console.log(res);
       if (res.status === 200 && res.data.data && res.data.data !== "null") {
         this.$message({
           message: successMsg,

@@ -16,15 +16,6 @@
           </div>
           <div class="col-lg-6 col-md-6">
             <div class="header__top__right">
-              <div class="header__top__right__language">
-                <img src="img/language.png" alt="" />
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                  <li><a href="#">Spanis</a></li>
-                  <li><a href="#">English</a></li>
-                </ul>
-              </div>
               <div class="header__top__right__auth">
                 <div class="d-flex align-items-center">
                   <template v-if="userInfo && userInfo.role === '[ADMIN]'">
@@ -63,6 +54,9 @@
                     </a-dropdown>
                   </template>
                   <template v-else>
+                    <a href="/register" class="mr-2">
+                      <font-awesome-icon icon="fa fa-user" /> Register
+                    </a>
                     <a href="/login">
                       <font-awesome-icon icon="fa fa-user" /> Login
                     </a>
@@ -92,6 +86,12 @@
                     class="invalid-feedback"
                   >
                     Mật khẩu không được để trống.
+                  </div>
+                  <div
+                    v-if="!$v.form.password.minLength"
+                    class="invalid-feedback"
+                  >
+                    Mật khẩu không được ít hơn 6 kí tự.
                   </div>
                 </b-form-group>
                 <b-form-group id="exampleInputGroup3" label-for="exampleInput3">
@@ -173,10 +173,7 @@
                 <a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
                   <li>
-                    <a href="/shop-detail">Shop Details</a>
-                  </li>
-                  <li>
-                    <a href="/shopping-cart">Shopping Carts</a>
+                    <a href="/cart">Shopping Carts</a>
                   </li>
                   <li>
                     <a href="/check-out">Check Out</a>
@@ -204,7 +201,7 @@
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/cart">
                   <font-awesome-icon icon="fa fa-shopping-bag" />
                   <span>3</span>
                 </a>
@@ -226,7 +223,7 @@ import router from "@/router/index";
 import { EventBus } from "@/common/event-bus";
 import Configuration from "@/configuration";
 import baseMixins from "@/components/mixins/base";
-import { required, helpers } from "vuelidate/lib/validators";
+import { required, helpers, minLength } from "vuelidate/lib/validators";
 import { CHANGE_PASSWORD } from "@/store/action.type";
 
 const API_ENDPOINT = Configuration.value("baseURL");
@@ -251,6 +248,7 @@ export default {
     form: {
       password: {
         required,
+        minLength: minLength(6),
       },
     },
   },

@@ -129,7 +129,7 @@
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
       <div class="container">
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-lg-12 text-center">
             <div class="breadcrumb__text">
               <h2>Shopping Cart</h2>
@@ -139,7 +139,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
     <!-- Breadcrumb Section End -->
@@ -150,7 +150,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="shoping__cart__table">
-              <table>
+              <table v-if="listCart && listCart.length > 0">
                 <thead>
                   <tr>
                     <th class="shoping__product">Products</th>
@@ -160,7 +160,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody v-for="item in listCart" :key="item">
+                <tbody v-for="(item, index) in listCart" :key="index">
                   <tr>
                     <td class="shoping__cart__item">
                       <img
@@ -177,62 +177,96 @@
                     <td class="shoping__cart__quantity">
                       <div class="quantity">
                         <div class="pro-qty">
-                          <input type="text" :value="item.quantity" />
+                          <input
+                            v-if="toggleUpdateCart"
+                            type="number"
+                            v-model="item.quantity"
+                            @input="onChangeQuantity($event.target.value, item)"
+                          />
+                          <div class="h-100 my-2" v-else>
+                            {{ item.quantity }}
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td class="shoping__cart__total">
                       {{ formatPrice(item.product.sellPrice * item.quantity) }}đ
                     </td>
-                    <td class="shoping__cart__item__close">
-                      <span class="icon_close"></span>
+                    <td
+                      class="shoping__cart__item__close"
+                      v-if="toggleUpdateCart"
+                    >
+                      <span
+                        class="icon_close"
+                        @click="openModalConfirmDeleteCart(item)"
+                        >x</span
+                      >
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div
+                class="d-flex justify-content-center flex-column align-items-center"
+                v-else
+              >
+                <div>
+                  <i
+                    class="fa-solid fa-bag-shopping"
+                    style="color: #b6b6b6; font-size: 2rem;"
+                  ></i>
+                </div>
+                <div class="custom-empty-content my-2">Giỏ hàng trống</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
             <div class="shoping__cart__btns">
-              <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-              <a href="#" class="primary-btn cart-btn cart-btn-right"
-                ><span class="icon_loading"></span> Upadate Cart</a
+              <a href="/" class="primary-btn cart-btn mx-0"
+                >Tiếp tục mua hàng</a
               >
+              <button
+                v-if="listCart && listCart.length > 0"
+                class="primary-btn cart-btn cart-btn-right"
+                style="border: none; cursor: pointer"
+                @click="confirmUpdateCart"
+              >
+                <span v-if="!toggleUpdateCart">Cập nhật</span>
+                <span v-if="toggleUpdateCart">Xác nhận</span>
+              </button>
             </div>
           </div>
-          <div>
-            <div class="col-lg-6">
-              <div class="shoping__continue">
-                <div class="shoping__discount">
-                  <h5>Discount Codes</h5>
-                  <form action="#">
-                    <input type="text" placeholder="Enter your coupon code" />
-                    <button type="submit" class="site-btn">APPLY COUPON</button>
-                  </form>
-                </div>
+          <div class="col-lg-6">
+            <!-- <div class="shoping__continue">
+              <div class="shoping__discount">
+                <h5>Discount Codes</h5>
+                <form action="#">
+                  <input type="text" placeholder="Enter your coupon code" />
+                  <button type="submit" class="site-btn">APPLY COUPON</button>
+                </form>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="shoping__checkout">
-                <h5>Cart Total</h5>
-                <ul>
-                  <li>
-                    Subtotal <span>{{ formatPrice(this.subPrice) }}đ</span>
-                  </li>
-                  <li>
-                    Total <span>{{ formatPrice(this.totalPrice) }}đ</span>
-                  </li>
-                </ul>
-                <div
-                  style="cursor: pointer;"
-                  @click="proceedToCheckout()"
-                  class="primary-btn"
-                >
-                  PROCEED TO CHECKOUT
-                </div>
-              </div>
+            </div> -->
+          </div>
+          <div class="col-lg-6">
+            <div class="shoping__checkout">
+              <h5>Chi tiết đơn hàng</h5>
+              <ul>
+                <li>
+                  Giá <span>{{ formatPrice(this.subPrice) }}đ</span>
+                </li>
+                <li>
+                  Tổng giá <span>{{ formatPrice(this.totalPrice) }}đ</span>
+                </li>
+              </ul>
+              <button
+                style="cursor: pointer; border: none;"
+                @click="proceedToCheckout()"
+                class="primary-btn w-100"
+                v-if="listCart && listCart.length > 0"
+              >
+                Tiến hành thanh toán
+              </button>
             </div>
           </div>
         </div>
@@ -317,6 +351,37 @@
         </div>
       </div>
     </footer>
+    <b-modal
+      hide-footer
+      id="modal-delete-cart"
+      :title="'Xác nhận xoá sản phẩm khỏi giỏ hàng'"
+      :no-close-on-backdrop="true"
+    >
+      <div class="pb-3">
+        Bạn có muốn xoá sản phẩm
+        <span
+          class="font-weight-bold"
+          v-if="currentCart && currentCart.product"
+        >
+          {{ currentCart.product.productName }}</span
+        >
+        khỏi giỏ hàng không ?
+      </div>
+      <b-button
+        class="mr-2 btn-light2 pull-right"
+        @click="closeModalConfirmDeleteCart()"
+      >
+        Hủy
+      </b-button>
+      <b-button
+        variant="primary pull-right"
+        class="mr-2"
+        type="submit"
+        @click="deleteCart()"
+      >
+        Đồng ý
+      </b-button>
+    </b-modal>
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
@@ -330,43 +395,86 @@ import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
 export default {
   name: "ShoppingCart",
-  components: { UserHeader },
   mixins: [baseMixins],
+  components: { UserHeader },
   data() {
     return {
       listCart: [],
-      totalPrice: 0,
-      subPrice: 0,
+      toggleUpdateCart: false,
+      currentCart: null,
     };
   },
   mounted() {
     handleJQuery();
     this.getListCart();
   },
+  computed: {
+    totalPrice() {
+      return this.listCart && this.listCart.length > 0
+        ? this.listCart
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
+        : 0;
+    },
+    subPrice() {
+      return this.listCart && this.listCart.length > 0
+        ? this.listCart
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
+        : 0;
+    },
+  },
   methods: {
     async getListCart() {
       const res = await this.getWithBigInt("/rest/carts");
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
-        this.listCart.forEach((element) => {
-          this.subPrice += element.product.sellPrice * element.quantity;
-        });
-        //chua coupon
-        this.listCart.forEach((element) => {
-          this.totalPrice += element.product.sellPrice * element.quantity;
-        });
-        console.log(this.listCart);
       }
     },
+    async deleteCart() {
+      if (!this.currentCart || !this.currentCart.cartId) return;
+      const res = await this.delete(`/rest/carts/${this.currentCart.cartId}`);
+      if (res && res.status === 200) {
+        this.$message.closeAll();
+        this.$message({
+          message: "Xoá sản phẩm khỏi giỏ hàng thành công.",
+          type: "success",
+          showClose: true,
+        });
+        this.closeModalConfirmDeleteCart();
+        this.getListCart();
+      }
+    },
+    onChangeQuantity(quantity, cart) {
+      cart.quantity = quantity;
+      this.$nextTick(() => {});
+    },
+    openModalConfirmDeleteCart(cart) {
+      this.currentCart = { ...cart };
+      this.$root.$emit("bv::show::modal", "modal-delete-cart");
+    },
+    closeModalConfirmDeleteCart(cart) {
+      this.currentCart = null;
+      this.$root.$emit("bv::hide::modal", "modal-delete-cart");
+    },
     proceedToCheckout() {
-      this.$router.push({ path: `/check-out` });
+      this.$router.push({ path: `/checkout` });
     },
     formatPrice(price) {
-      if (!price) return "";
+      if (!price) return 0;
       return formatPriceSearchV2(price + "");
+    },
+    confirmUpdateCart() {
+      this.toggleUpdateCart = !this.toggleUpdateCart;
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.custom-empty-content {
+  color: #b6b6b6;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+</style>

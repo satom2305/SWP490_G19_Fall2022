@@ -132,154 +132,174 @@
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
       <div class="container">
-        <!-- <div class="row">
-          <div class="col-lg-12">
-            <h6>
-              <span class="icon_tag_alt"></span> Have a coupon?
-              <a href="#">Click here</a> to enter your code
-            </h6>
-          </div>
-        </div> -->
         <div class="checkout__form">
-          <h4>Billing Details</h4>
-          <form action="#">
-            <div class="row">
-              <div class="col-lg-8 col-md-6">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="checkout__input">
-                      <p>Fist Name<span>*</span></p>
-                      <input type="text" />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="checkout__input">
-                      <p>Last Name<span>*</span></p>
-                      <input type="text" />
-                    </div>
-                  </div>
-                </div>
-                <div class="checkout__input">
-                  <p>Country<span>*</span></p>
-                  <input type="text" />
-                </div>
-                <div class="checkout__input">
-                  <p>Address<span>*</span></p>
-                  <input
-                    type="text"
-                    placeholder="Street Address"
-                    class="checkout__input__add"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Apartment, suite, unite ect (optinal)"
-                  />
-                </div>
-                <div class="checkout__input">
-                  <p>Town/City<span>*</span></p>
-                  <input type="text" />
-                </div>
-                <div class="checkout__input">
-                  <p>Country/State<span>*</span></p>
-                  <input type="text" />
-                </div>
-                <div class="checkout__input">
-                  <p>Postcode / ZIP<span>*</span></p>
-                  <input type="text" />
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="checkout__input">
-                      <p>Phone<span>*</span></p>
-                      <input type="text" />
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="checkout__input">
-                      <p>Email<span>*</span></p>
-                      <input type="text" />
-                    </div>
-                  </div>
-                </div>
-                <div class="checkout__input__checkbox">
-                  <label for="acc">
-                    Create an account?
-                    <input type="checkbox" id="acc" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <p>
-                  Create an account by entering the information below. If you
-                  are a returning customer please login at the top of the page
-                </p>
-                <div class="checkout__input">
-                  <p>Account Password<span>*</span></p>
-                  <input type="text" />
-                </div>
-                <div class="checkout__input__checkbox">
-                  <label for="diff-acc">
-                    Ship to a different address?
-                    <input type="checkbox" id="diff-acc" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="checkout__input">
-                  <p>Order notes<span>*</span></p>
-                  <input
-                    type="text"
-                    placeholder="Notes about your order, e.g. special notes for delivery."
-                  />
+          <h4>Thông tin đơn hàng</h4>
+          <div class="row">
+            <div class="col-lg-8 col-md-6">
+              <div
+                class="checkout__input"
+                :class="{
+                  'invalid-input': validationStatus($v.currentData.address),
+                }"
+              >
+                <p>Địa chỉ<span>*</span></p>
+                <input
+                  type="text"
+                  placeholder="Nhập địa chỉ"
+                  v-model.trim="$v.currentData.address.$model"
+                  :class="{
+                    'is-invalid': validationStatus($v.currentData.address),
+                  }"
+                />
+                <div
+                  v-if="!$v.currentData.address.required"
+                  class="invalid-feedback"
+                >
+                  Địa chỉ không được để trống.
                 </div>
               </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="checkout__order">
-                  <h4>Your Order</h4>
-                  <div class="checkout__order__products">
-                    Products <span>Total</span>
-                  </div>
-                  <ul v-for="item in listCart" :key="item">
-                    <li>
-                      {{ item.product.productName }} x
-                      {{ item.quantity }}
-                      <span>{{ item.product.sellPrice * item.quantity }}</span>
-                    </li>
-                  </ul>
-                  <div class="checkout__order__subtotal">
-                    Subtotal <span>{{ subPrice }}đ</span>
-                  </div>
-                  <div class="checkout__order__total">
-                    Total <span>{{ totalPrice }}đ</span>
-                  </div>
-                  <div class="checkout__input__checkbox">
-                    <label for="acc-or">
-                      Create an account?
-                      <input type="checkbox" id="acc-or" />
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adip elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                  <div class="checkout__input__checkbox">
-                    <label for="payment">
-                      Check Payment
-                      <input type="checkbox" id="payment" />
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="checkout__input__checkbox">
-                    <label for="paypal">
-                      Paypal
-                      <input type="checkbox" id="paypal" />
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <button type="submit" class="site-btn">PLACE ORDER</button>
+              <div
+                class="checkout__input"
+                :class="{
+                  'invalid-input': validationStatus($v.currentData.city),
+                }"
+              >
+                <p>Thành phố<span>*</span></p>
+                <input
+                  type="text"
+                  placeholder="Nhập tên thành phố"
+                  v-model.trim="$v.currentData.city.$model"
+                  :class="{
+                    'is-invalid': validationStatus($v.currentData.city),
+                  }"
+                />
+                <div
+                  v-if="!$v.currentData.city.required"
+                  class="invalid-feedback"
+                >
+                  Thành phố không được để trống.
                 </div>
+              </div>
+              <div
+                class="checkout__input"
+                :class="{
+                  'invalid-input': validationStatus($v.currentData.district),
+                }"
+              >
+                <p>Phường/xã/huyện<span>*</span></p>
+                <input
+                  type="text"
+                  placeholder="Nhập tên"
+                  v-model.trim="$v.currentData.district.$model"
+                  :class="{
+                    'is-invalid': validationStatus($v.currentData.district),
+                  }"
+                />
+                <div
+                  v-if="!$v.currentData.district.required"
+                  class="invalid-feedback"
+                >
+                  Phường/xã/huyện không được để trống.
+                </div>
+              </div>
+              <div
+                class="checkout__input"
+                :class="{
+                  'invalid-input': validationStatus($v.currentData.wards),
+                }"
+              >
+                <p>Quận/Thị trấn<span>*</span></p>
+                <input
+                  type="text"
+                  placeholder="Nhập tên"
+                  v-model.trim="$v.currentData.wards.$model"
+                  :class="{
+                    'is-invalid': validationStatus($v.currentData.wards),
+                  }"
+                />
+                <div
+                  v-if="!$v.currentData.wards.required"
+                  class="invalid-feedback"
+                >
+                  Quận/Thị trấn không được để trống.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div
+                    class="checkout__input"
+                    :class="{
+                      'invalid-input': validationStatus(
+                        $v.currentData.phoneNumber
+                      ),
+                    }"
+                  >
+                    <p>Số điện thoại<span>*</span></p>
+                    <input
+                      type="number"
+                      placeholder="Nhập số điện thoại"
+                      v-model="$v.currentData.phoneNumber.$model"
+                      :class="{
+                        'is-invalid': validationStatus(
+                          $v.currentData.phoneNumber
+                        ),
+                      }"
+                    />
+                    <div
+                      v-if="!$v.currentData.phoneNumber.required"
+                      class="invalid-feedback"
+                    >
+                      Số điện thoại không được để trống.
+                    </div>
+                    <div
+                      v-if="!$v.currentData.phoneNumber.validPhoneNumber"
+                      class="invalid-feedback"
+                    >
+                      Số điện thoại không hợp lệ.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="checkout__input">
+                <p>Ghi chú</p>
+                <input
+                  type="text"
+                  v-model="currentData.note"
+                  placeholder="Nhập ghi chú của bạn cho shop hoặc đơn vị vận chuyển."
+                />
               </div>
             </div>
-          </form>
+            <div class="col-lg-4 col-md-6">
+              <div class="checkout__order">
+                <h4>Đơn hàng của bạn</h4>
+                <div class="checkout__order__products">
+                  Sản phẩm <span>Giá</span>
+                </div>
+                <ul v-for="(item, index) in listCart" :key="index">
+                  <li>
+                    {{ item.product.productName }} x
+                    {{ item.quantity }}
+                    <span>{{
+                      formatPrice(item.product.sellPrice * item.quantity)
+                    }}</span>
+                  </li>
+                </ul>
+                <div class="checkout__order__subtotal">
+                  Giá <span>{{ formatPrice(subPrice) }}đ</span>
+                </div>
+                <div class="checkout__order__total">
+                  Tổng giá đơn hàng <span>{{ formatPrice(totalPrice) }}đ</span>
+                </div>
+                <button
+                  class="site-btn"
+                  @click="handleSubmit"
+                  style="cursor:pointer"
+                >
+                  PLACE ORDER
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -369,38 +389,193 @@
 <script>
 import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
+import { formatPriceSearchV2 } from "@/common/common";
+import {
+  CREATE_ORDER,
+  CREATE_ORDER_DETAIL,
+  CREATE_ORDER_DETAIL_BY_ORDER_ID,
+} from "@/store/action.type";
+import { required, helpers } from "vuelidate/lib/validators";
 import UserHeader from "../Layout/Components/UserHeader";
+import moment from "moment";
+
+const DEFAULT_PROMOTION_ID = 3;
+const ORDER_STATUS_ID = 1;
+const initOrder = {
+  totalPrice: 0,
+  note: null,
+  orderStatusId: ORDER_STATUS_ID,
+  date: null,
+  promotionId: DEFAULT_PROMOTION_ID,
+  address: null,
+  city: null,
+  district: null,
+  wards: null,
+  phoneNumber: 0,
+};
+const initOrderDetail = {
+  order_detail_id: null,
+  order: null,
+  product: null,
+  productName: null,
+  productPrice: 0,
+  quantity: 1,
+};
+const validPhoneNumber = helpers.regex(
+  "validPhoneNumber",
+  /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+);
+
 export default {
   name: "check-out",
-  components: { UserHeader },
   mixins: [baseMixins],
+  components: { UserHeader },
   data() {
     return {
       listCart: [],
-      totalPrice: 0,
-      subPrice: 0,
+      currentData: Object.assign({}, initOrder),
     };
+  },
+  validations: {
+    currentData: {
+      address: {
+        required,
+      },
+      city: {
+        required,
+      },
+      district: {
+        required,
+      },
+      wards: {
+        required,
+      },
+      phoneNumber: {
+        required,
+        validPhoneNumber,
+      },
+    },
   },
   mounted() {
     handleJQuery();
     this.getListCart();
   },
+  computed: {
+    totalPrice() {
+      return this.listCart && this.listCart.length > 0
+        ? this.listCart
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
+        : 0;
+    },
+    subPrice() {
+      return this.listCart && this.listCart.length > 0
+        ? this.listCart
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
+        : 0;
+    },
+  },
   methods: {
+    formatPrice(price) {
+      if (!price) return 0;
+      return formatPriceSearchV2(price + "");
+    },
     async getListCart() {
       const res = await this.getWithBigInt("/rest/carts");
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
-        this.listCart.forEach((element) => {
-          this.subPrice += element.product.sellPrice * element.quantity;
-        });
-        this.listCart.forEach((element) => {
-          this.totalPrice += element.product.sellPrice * element.quantity;
-        });
-        console.log(this.listCart);
       }
+    },
+    async handleCreateOrder() {
+      let successMsg = `Tạo đơn hàng thành công.`;
+      let errorMsg = `Tạo đơn hàng không thành công.`;
+      let {
+        note,
+        address,
+        city,
+        district,
+        wards,
+        phoneNumber,
+        orderStatusId,
+        promotionId,
+      } = { ...this.currentData };
+      let payload = {
+        totalPrice: this.totalPrice,
+        promotionId,
+        note: note ? note.trim() : null,
+        orderStatusId,
+        date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+        phoneNumber: phoneNumber && Number(phoneNumber),
+        address,
+        city,
+        district,
+        wards,
+      };
+      let payloadForCreateDetail = this.listCart.map((item) => {
+        return {
+          productId: item.product ? item.product.productId + "" : null,
+          productName: item.product ? item.product.productName : null,
+          quantity: item.quantity,
+          productPrice:
+            (item.product && item.quantity
+              ? item.product.sellPrice * item.quantity
+              : 0) + "",
+        };
+      });
+
+      let res = await this.$store.dispatch(CREATE_ORDER, payload);
+      if (res.status === 200 && res.data && res.data.data) {
+        let newOrderId = res.data.data.orderId;
+        payloadForCreateDetail = payloadForCreateDetail.map((item) => {
+          return {
+            ...item,
+            orderId: newOrderId,
+          };
+        });
+        let resForDetail = await this.$store.dispatch(
+          CREATE_ORDER_DETAIL_BY_ORDER_ID,
+          payloadForCreateDetail
+        );
+        if (resForDetail.status === 200) {
+          this.$message({
+            message: successMsg,
+            type: "success",
+            showClose: true,
+          });
+        }
+      }
+    },
+    handleSubmit() {
+      this.$v.$reset();
+      this.$v.$touch();
+      if (this.$v.currentData.$invalid) {
+        return;
+      }
+      this.handleCreateOrder();
+    },
+    validationStatus: function(validation) {
+      return typeof validation != "undefined" ? validation.$error : false;
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.is-invalid {
+  border-color: #dc3545;
+  /* box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); */
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #ff7851;
+}
+
+.invalid-input .invalid-feedback {
+  display: block !important;
+}
+</style>

@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS, FETCH_PRODUCTS_AVAILABLE, FETCH_PRODUCT_BY_ID, CREATE_PRODUCT, UPDATE_PRODUCT, DISABLE_PRODUCT } from "./action.type";
+import { FETCH_PRODUCTS, FETCH_PRODUCTS_AVAILABLE, FETCH_PRODUCT_BY_ID, CREATE_PRODUCT, UPDATE_PRODUCT, DISABLE_PRODUCT, FETCH_PRODUCTS_BY_NAME } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
   products: []
@@ -37,6 +37,12 @@ const actions = {
   [FETCH_PRODUCT_BY_ID](context, productId) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.getWithBigInt('/rest/products', productId)
+      resolve(response)
+    })
+  },
+  [FETCH_PRODUCTS_BY_NAME](context, name) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/products/searchProductByName/${name}`)
       resolve(response)
     })
   },

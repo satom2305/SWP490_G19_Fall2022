@@ -235,8 +235,8 @@
             <div class="latest-product__text">
               <h4>Latest Products</h4>
               <div
-                v-for="item in topProduct"
-                :key="item"
+                v-for="(item, index) in topProduct"
+                :key="index"
                 class="latest-product__slider owl-carousel"
               >
                 <div class="latest-prdouct__slider__item">
@@ -648,7 +648,6 @@ export default {
           0,
           this.pagination.perPage
         );
-        console.log(this.listProduct);
       }
     },
     async getTopProduct() {
@@ -662,8 +661,8 @@ export default {
       const res = await this.getWithBigInt("/rest/categories");
       if (res && res.data && res.data.data) {
         this.listCategory = res.data.data;
-        console.log(this.listCategory);
       }
+      console.log(this.listCategory);
     },
     async getListPost() {
       const res = await this.getWithBigInt("/rest/posts");
