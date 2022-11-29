@@ -8,7 +8,7 @@
     "npm": "6.14.15"
   },
   "scripts": {
-    "start": "vue-cli-service serve --mode development --port=3000 --host localhost",
+    "serve": "vue-cli-service serve --mode development --port=3000 --host localhost",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
