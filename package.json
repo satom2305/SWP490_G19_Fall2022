@@ -8,10 +8,9 @@
     "npm": "6.14.15"
   },
   "scripts": {
-    "serve": "vue-cli-service serve --mode development --port=3000 --host localhost",
+    "start": "vue-cli-service serve --mode development --port=3000 --host localhost",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "vue-cli-service start"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^1.1.5",
