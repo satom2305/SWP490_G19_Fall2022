@@ -257,7 +257,7 @@
             <div class="latest-product__text">
               <h4>Sản phẩm bán chạy</h4>
               <div
-                v-for="(item, index) in listProduct.slice(3, 9)"
+                v-for="(item, index) in rateProduct"
                 :key="index"
                 class="latest-product__slider owl-carousel"
               >
@@ -279,7 +279,7 @@
             <div class="latest-product__text">
               <h4>Đánh giá cao</h4>
               <div
-                v-for="(item, index) in topProduct.reverse()"
+                v-for="(item, index) in reviewProduct"
                 :key="index"
                 class="latest-product__slider owl-carousel"
               >
@@ -453,6 +453,8 @@ export default {
       productListPaginate: [],
       listCategory: [],
       listPost: [],
+      rateProduct: [],
+      reviewProduct: [],
       listPostPaginate: [],
       pagination: {
         currentPostPage: 1,
@@ -563,6 +565,7 @@ export default {
           0,
           this.pagination.perPage
         );
+        this.rateProduct = res.data.data.slice(3, 9);
       }
     },
     async getTopProduct() {
@@ -570,6 +573,7 @@ export default {
       const res = await this.getWithBigInt("/rest/products/lastSixProducts");
       if (res && res.data && res.data.data) {
         this.topProduct = res.data.data;
+        this.reviewProduct = res.data.data.reverse();
       }
     },
     async getListCategory() {
@@ -577,7 +581,6 @@ export default {
       if (res && res.data && res.data.data) {
         this.listCategory = res.data.data;
       }
-      console.log(this.listCategory);
     },
     async getListPost() {
       const res = await this.getWithBigInt("/rest/posts");
