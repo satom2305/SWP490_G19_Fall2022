@@ -164,27 +164,30 @@
           <nav class="header__menu">
             <ul>
               <li class="active">
-                <a href="/">Trang chủ</a>
+                <a href="/">Home</a>
               </li>
               <li>
-                <a href="/shop-product">Sản phẩm</a>
+                <a href="/shop-product">Shop </a>
               </li>
               <li>
-                <a href="#">Chức năng</a>
+                <a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
                   <li>
-                    <a href="/cart">Giỏ hàng</a>
+                    <a href="/cart">Shopping Carts</a>
                   </li>
                   <li>
-                    <a href="/cart">Đơn hàng của tôi</a>
+                    <a href="/check-out">Check Out</a>
                   </li>
                   <li>
-                    <a href="/contact">Liên hệ </a>
+                    <a href="/blog-detail">Blog Details</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="/blog">Tin tức</a>
+                <a href="/blog">Blog</a>
+              </li>
+              <li>
+                <a href="/contact">Contact </a>
               </li>
             </ul>
           </nav>
