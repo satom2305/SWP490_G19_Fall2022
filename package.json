@@ -8,9 +8,10 @@
     "npm": "6.14.15"
   },
   "scripts": {
-    "start": "vue-cli-service serve --mode development",
+    "serve": "vue-cli-service serve --mode development --port=3000 --host localhost",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^1.1.5",
@@ -28,6 +29,7 @@
     "dompurify": "^2.3.10",
     "element-ui": "^2.15.2",
     "es6-promise": "^4.2.6",
+    "express": "^4.18.2",
     "increase-memory-limit": "^1.0.6",
     "jquery": "^3.6.1",
     "json-bigint": "^1.0.0",
@@ -39,6 +41,7 @@
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
     "qrcode.vue": "1.7.0",
+    "serve-static": "^1.15.0",
     "v-money": "^0.8.1",
     "vee-validate": "^3.4.3",
     "vue": "^2.6.12",
