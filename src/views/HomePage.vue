@@ -233,7 +233,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
-              <h4>Latest Products</h4>
+              <h4>Sản phẩm mới</h4>
               <div
                 v-for="(item, index) in topProduct"
                 :key="index"
@@ -245,8 +245,8 @@
                       <img :src="item.mainImg" alt="" />
                     </div>
                     <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
+                      <h6>{{ item.productName }}</h6>
+                      <span>{{ formatPrice(item.sellPrice) }}đ</span>
                     </div>
                   </a>
                 </div>
@@ -255,63 +255,20 @@
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
-              <h4>Top Rated Products</h4>
-              <div class="latest-product__slider owl-carousel">
+              <h4>Sản phẩm bán chạy</h4>
+              <div
+                v-for="(item, index) in listProduct.slice(3, 9)"
+                :key="index"
+                class="latest-product__slider owl-carousel"
+              >
                 <div class="latest-prdouct__slider__item">
                   <a href="#" class="latest-product__item">
                     <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
+                      <img :src="item.mainImg" alt="" />
                     </div>
                     <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
+                      <h6>{{ item.productName }}</h6>
+                      <span>{{ formatPrice(item.sellPrice) }}đ</span>
                     </div>
                   </a>
                 </div>
@@ -320,63 +277,20 @@
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
-              <h4>Review Products</h4>
-              <div class="latest-product__slider owl-carousel">
+              <h4>Đánh giá cao</h4>
+              <div
+                v-for="(item, index) in topProduct.reverse()"
+                :key="index"
+                class="latest-product__slider owl-carousel"
+              >
                 <div class="latest-prdouct__slider__item">
                   <a href="#" class="latest-product__item">
                     <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
+                      <img :src="item.mainImg" alt="" />
                     </div>
                     <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-1.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-2.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
-                    </div>
-                  </a>
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img src="img/latest-product/lp-3.jpg" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>Crab Pool Security</h6>
-                      <span>$30.00</span>
+                      <h6>{{ item.productName }}</h6>
+                      <span>{{ formatPrice(item.sellPrice) }}đ</span>
                     </div>
                   </a>
                 </div>
@@ -523,7 +437,7 @@
 
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
-import { handleJQuery } from "@/common/utils";
+import { handleJQuery, botChatAI } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
@@ -631,6 +545,7 @@ export default {
   },
   mounted() {
     handleJQuery();
+    botChatAI();
     // handlebotfe();
     this.getListProduct();
     this.getListCategory();
