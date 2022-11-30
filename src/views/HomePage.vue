@@ -523,7 +523,7 @@
 
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
-import { handleJQuery } from "@/common/utils";
+import { handleJQuery, botChatAI } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
@@ -631,7 +631,7 @@ export default {
   },
   mounted() {
     handleJQuery();
-    // handlebotfe();
+    botChatAI();
     this.getListProduct();
     this.getListCategory();
     this.getListPost();

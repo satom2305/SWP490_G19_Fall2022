@@ -224,7 +224,40 @@ export const strForSearch = (str) => {
       .replace(/đ/g, "d")
     : str;
 };
+export const botChatAI =()=>{
+  !(function () {
+  let e = document.createElement("script"),
+    t = document.head || document.getElementsByTagName("head")[0];
+    sessionStorage.clear();
+  (e.src =
+    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
 
+    // Replace 1.x.x with the version that you want
+    (e.async = !0),
+    (e.onload = () => {
+      window.WebChat.default(
+        {
+          selector: "#webchat",
+  customData: {"language": "en"}, // arbitrary custom data. Stay minimal as this will be added to the socket
+  socketUrl: "http://172.23.25.96:5005/",
+  socketPath: "/socket.io/",
+  title: "Tree World",
+  inputTextFieldHint: "Mời nhập câu hỏi",
+  embedded: false,
+  showFullScreenButton: true,
+  showMessageDate: false,
+  hideWhenNotConnected: false,
+  displayUnreadCount: true,
+  mainColor: "#7fad39",
+
+  params: {"storage": "session"} // can be set to "local"  or "session". details in storage section.
+        },
+        null
+      );
+    }),
+    t.insertBefore(e, t.firstChild);
+})();
+}
 export const handleJQuery = () => {
   const jQuery = document.createElement('script')
   jQuery.setAttribute(
