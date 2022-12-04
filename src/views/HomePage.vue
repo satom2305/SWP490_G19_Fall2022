@@ -1,72 +1,6 @@
 <template>
   <div>
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-      <div class="humberger__menu__logo">
-        <a href="/"><img src="img/logo.png" alt=""/></a>
-      </div>
-      <div class="humberger__menu__cart">
-        <ul>
-          <li>
-            <a href="#">
-              <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <font-awesome-icon icon="fa fa-shopping-bag" /> <span>3</span>
-            </a>
-          </li>
-        </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
-      </div>
-      <!--      <div class="humberger__menu__widget">-->
-      <!--        <div class="header__top__right__language">-->
-      <!--          <img src="img/language.png" alt="" />-->
-      <!--          <div>English</div>-->
-      <!--          <span class="arrow_carrot-down"></span>-->
-      <!--          <ul>-->
-      <!--            <li><a href="#">Spanis</a></li>-->
-      <!--            <li><a href="#">English</a></li>-->
-      <!--          </ul>-->
-      <!--        </div>-->
-      <!--        <div class="header__top__right__auth">-->
-      <!--          <a href="#"><font-awesome-icon icon="fa fa-user" /> Login</a>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <nav class="humberger__menu__nav mobile-menu">
-        <ul>
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="./shop-grid">Shop</a></li>
-          <li>
-            <a href="#">Pages</a>
-            <ul class="header__menu__dropdown">
-              <li><a href="./shop-detail">Shop Details</a></li>
-              <li><a href="./shoping-cart">Shoping Cart</a></li>
-              <li><a href="./checkout">Check Out</a></li>
-              <li><a href="./blog-details">Blog Details</a></li>
-            </ul>
-          </li>
-          <li><a href="./blog">Blog</a></li>
-          <li><a href="./contact">Contact</a></li>
-        </ul>
-      </nav>
-      <div id="mobile-menu-wrap"></div>
-      <!--    <div class="header__top__right__social">-->
-      <!--      <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-      <!--      <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-      <!--      <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
-      <!--      <a href="#"><font-awesome-icon icon="fa fa-pinterest-p"/></a>-->
-      <!--    </div>-->
-      <div class="humberger__menu__contact">
-        <ul>
-          <li>
-            <font-awesome-icon icon="fa fa-envelope" /> hello@colorlib.com
-          </li>
-          <li>Free Shipping for all Order of $99</li>
-        </ul>
-      </div>
-    </div>
+    <Humberger/>
     <!--    Humberger End-->
     <!--    Header Section Begin-->
     <UserHeader />
@@ -96,22 +30,22 @@
           <div class="col-lg-9">
             <div class="hero__search">
               <div class="hero__search__form">
-                <form action="#">
-                  <div class="hero__search__categories">
-                    All Categories
-                    <span class="arrow_carrot-down"></span>
-                  </div>
-                  <input type="text" placeholder="What do yo u need?" />
-                  <button type="submit" class="site-btn">SEARCH</button>
-                </form>
+                <div class="hero__search__categories">
+                  Tìm kiếm sản phẩm
+                  <span class="arrow_carrot-down"></span>
+                </div>
+                <input type="text" placeholder="Bạn muốn tìm sản phẩm nào?" v-model="searchValue" />
+                <button :disabled="(!searchValue || searchValue.trim() === '')" @click="navigateToSearch(`/search`)" class="site-btn">
+                  TÌM KIẾM
+                </button>
               </div>
               <div class="hero__search__phone">
                 <div class="hero__search__phone__icon">
                   <font-awesome-icon icon="fa fa-phone" />
                 </div>
                 <div class="hero__search__phone__text">
-                  <h5>+65 11.188.888</h5>
-                  <span>support 24/7 time</span>
+                  <h5>+84384137197</h5>
+                  <span>Hỗ trợ 24/7</span>
                 </div>
               </div>
             </div>
@@ -125,7 +59,7 @@
                   Hãy ngắm nhìn thiên nhiên <br />để thấy tâm hồn chính mình
                 </h2>
                 <p>Vận chuyển tận tình</p>
-                <a href="#" class="primary-btn">SHOP NOW</a>
+                <a href="#" class="primary-btn">Mua ngay</a>
               </div>
             </div>
           </div>
@@ -357,81 +291,7 @@
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="footer__about">
-              <div class="footer__about__logo">
-                <a href="/"><img src="img/logo.png" alt=""/></a>
-              </div>
-              <ul>
-                <li>Address: 60-49 Road 11378 New York</li>
-                <li>Phone: +65 11.188.888</li>
-                <li>Email: hello@colorlib.com</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-            <div class="footer__widget">
-              <h6>Useful Links</h6>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">About Our Shop</a></li>
-                <li><a href="#">Secure Shopping</a></li>
-                <li><a href="#">Delivery infomation</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Our Sitemap</a></li>
-              </ul>
-              <ul>
-                <li><a href="#">Who We Are</a></li>
-                <li><a href="#">Our Services</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Innovation</a></li>
-                <li><a href="#">Testimonials</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-12">
-            <div class="footer__widget">
-              <h6>Join Our Newsletter Now</h6>
-              <p>
-                Get E-mail updates about our latest shop and special offers.
-              </p>
-              <form action="#">
-                <input type="text" placeholder="Enter your mail" />
-                <button type="submit" class="site-btn">Subscribe</button>
-              </form>
-              <!--            <div class="footer__widget__social">-->
-              <!--              <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
-              <!--              <a href="#"><font-awesome-icon icon="fa fa-instagram"/></a>-->
-              <!--              <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
-              <!--              <a href="#"><font-awesome-icon icon="fa fa-pinterest"/></a>-->
-              <!--            </div>-->
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="footer__copyright">
-              <div class="footer__copyright__text">
-                <p>
-                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                  Copyright &copy; All rights reserved | This template is made
-                  with
-                  <font-awesome-icon icon="fa fa-heart" aria-hidden="true" /> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-              </div>
-              <div class="footer__copyright__payment">
-                <img src="img/payment-item.png" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <UserFooter/>
   </div>
 </template>
 
@@ -442,12 +302,16 @@ import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
+import UserFooter from "../Layout/Components/UserFooter.vue";
+import Humberger from "../Layout/Components/Humberger.vue";
+import router from "../router/index";
 export default {
   name: "HomePage",
-  components: { VueSlickCarousel, UserHeader },
+  components: { VueSlickCarousel, UserHeader,UserFooter,Humberger },
   mixins: [baseMixins],
   data() {
     return {
+      searchValue: null,
       listProduct: [],
       topProduct: [],
       productListPaginate: [],
@@ -555,6 +419,14 @@ export default {
     this.getTopProduct();
   },
   methods: {
+    navigateToSearch(url) {
+      router.push({
+        path: url,
+        query: {
+          searchValue: this.searchValue
+        }
+      })
+    },
     async getListProduct() {
       // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt("/rest/products/listProduct");

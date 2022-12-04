@@ -394,7 +394,7 @@ import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
 export default {
-  name: "ShoppingCart",
+  name: "MyOrder",
   mixins: [baseMixins],
   components: { UserHeader },
   data() {

@@ -193,79 +193,41 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <!-- <b-col md="4">
-									<b-form-group>
-										<label>Thời gian bắt đầu sản phẩm <span class="text-danger">*</span>:</label>
-										<div :class="{
-											'invalid-date':
-												(currentData.toDate &&
-													currentData.fromDate >= currentData.toDate) ||
-												validationStatus($v.currentData.fromDate),
-										}">
-											<date-picker :disabled-date="disabledBeforeToday" class="w-100" :input-class="[
-												'form-control',
-												{
-													'is-invalid':
-														validationStatus($v.currentData.fromDate) ||
-														(currentData.fromDate &&
-															currentData.fromDate >= currentData.toDate),
-												},
-											]" v-model.trim="$v.currentData.fromDate.$model" type="datetime" format="DD/MM/YYYY HH:mm"
-												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdateDisabledProduct" />
-											<div class="invalid-date-feedback">
-												<span v-if="!$v.currentData.fromDate.required">
-													Thời gian bắt đầu sản phẩm không được để trống.
-												</span>
-												<span v-if="
-													currentData.fromDate &&
-													currentData.toDate &&
-													currentData.fromDate >= currentData.toDate
-												">
-													Thời gian bắt đầu sản phẩm cần nhỏ hơn thời gian hết
-													sản phẩm.
-												</span>
-											</div>
-										</div>
-									</b-form-group>
-								</b-col> -->
-                <!-- <b-col md="4">
-									<b-form-group>
-										<label>Thời gian hết sản phẩm <span class="text-danger">*</span>:</label>
-										<div :class="{
-											'invalid-date':
-												(currentData.toDate &&
-													currentData.fromDate >= currentData.toDate) ||
-												validationStatus($v.currentData.toDate),
-										}">
-											<date-picker :disabled-date="disabledBeforeToday" class="w-100" :input-class="[
-												'form-control',
-												{
-													'is-invalid':
-														validationStatus($v.currentData.toDate) ||
-														(currentData.toDate &&
-															currentData.fromDate >= currentData.toDate),
-												},
-											]" v-model.trim="$v.currentData.toDate.$model" type="datetime" format="DD/MM/YYYY HH:mm"
-												placeholder="Chọn ngày" :showSecond="false" :disabled="disabledUpdateDisabledProduct" />
-											<div class="invalid-date-feedback">
-												<span v-if="!$v.currentData.fromDate.required">
-													Thời gian bắt đầu sản phẩm không được để trống.
-												</span>
-												<span v-if="
-													currentData.fromDate &&
-													currentData.toDate &&
-													currentData.fromDate >= currentData.toDate
-												">
-													Thời gian hết sản phẩm cần lớn hơn thời gian bắt đầu
-													sản phẩm.
-												</span>
-											</div>
-										</div>
-									</b-form-group>
-								</b-col> -->
               </b-row>
 
               <b-row>
+                <b-col md="4">
+                  <b-form-group>
+                    <label
+                      >Trạng thái <span class="text-danger">*</span>:</label
+                    >
+                    <multiselect
+                      v-model="$v.currentData.productStatus.$model"
+                      track-by="text"
+                      label="text"
+                      :show-labels="false"
+                      placeholder="Chọn"
+                      :options="productStatusOption"
+                      :searchable="true"
+                      :allowEmpty="false"
+                      :class="{
+                        'is-invalid-option': validationStatus(
+                          $v.currentData.productStatus
+                        ),
+                      }"
+                    >
+                      <template slot="singleLabel" slot-scope="{ option }">
+                        {{ option.text }}
+                      </template>
+                    </multiselect>
+                    <div
+                      v-if="!$v.currentData.productStatus.required"
+                      class="invalid-feedback"
+                    >
+                      Trạng thái không được để trống.
+                    </div>
+                  </b-form-group>
+                </b-col>
                 <b-col md="4">
                   <b-form-group>
                     <label
@@ -409,7 +371,7 @@ const initProduct = {
   mainImg: null,
   amount: 0,
   createdDate: null,
-  productStatus: 1,
+  productStatus: {text: "Hoạt động", value: 1},
 };
 export default {
   name: "CreatePromotion",
@@ -429,6 +391,10 @@ export default {
       currentProductDetail: null,
       currentMainImg: null,
       categoryOptions: [],
+      productStatusOption: [
+        {text: "Hoạt động", value: 1},
+        {text: "Không hoạt động", value: 2}
+      ]
     };
   },
   mixins: [baseMixins],
@@ -450,6 +416,9 @@ export default {
         required,
       },
       description: {
+        required,
+      },
+      productStatus: {
         required,
       },
     },
@@ -504,6 +473,8 @@ export default {
                 value: this.currentData.category.categoryId,
               }
             : null;
+          this.currentData.productStatus = this.productStatusOption.filter(item => item.value === this.currentData.productStatus)[0]
+          this.saveCurrentData.productStatus = this.productStatusOption.filter(item => item.value === this.saveCurrentData.productStatus)[0]
           this.formatAmount("sell");
           this.formatAmount("original");
         }
@@ -575,7 +546,7 @@ export default {
           sellPrice: sellPrice && Number(sellPrice.replace(",", "")),
           createdDate,
           amount,
-          productStatus,
+          productStatus: productStatus.value,
         },
       };
       if (!this.isUpdate)

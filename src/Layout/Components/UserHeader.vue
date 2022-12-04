@@ -8,9 +8,9 @@
               <ul>
                 <li>
                   <font-awesome-icon icon="fa fa-envelope" />
-                  hello@colorlib.com
+                  treeworld@gmail.com
                 </li>
-                <li>Free Shipping for all Order of $99</li>
+                <li>Giao hàng tận nơi</li>
               </ul>
             </div>
           </div>
@@ -157,7 +157,7 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="header__logo">
-            <a href="/"><img src="@/assets/img/logo.png" alt=""/></a>
+            <a href="/"><img src="@/assets/static/images/logo.png" alt=""/></a>
           </div>
         </div>
         <div class="col-lg-6">
@@ -176,7 +176,7 @@
                     <a href="/cart">Giỏ hàng</a>
                   </li>
                   <li>
-                    <a href="/cart">Đơn hàng của tôi</a>
+                    <a href="/my-order">Đơn hàng của tôi</a>
                   </li>
                   <li>
                     <a href="/contact">Liên hệ </a>
@@ -192,19 +192,19 @@
         <div class="col-lg-3">
           <div class="header__cart">
             <ul>
-              <li>
-                <a href="#">
-                  <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
-                </a>
-              </li>
+                <!-- <li>
+                  <a href="#">
+                    <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
+                  </a>
+                </li> -->
               <li>
                 <a href="/cart">
                   <font-awesome-icon icon="fa fa-shopping-bag" />
-                  <span>3</span>
+                  <!-- <span>3</span> -->
                 </a>
               </li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+            <!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->
           </div>
         </div>
       </div>

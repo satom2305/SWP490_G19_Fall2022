@@ -54,7 +54,7 @@
                   <i class="fas fa-edit" style="font-size: 1.1rem"></i>
                 </a>
               </div>
-              <div class="px-3">
+              <div class="px-3" v-if="(row.item.productStatus === 1)">
                 <a href="javascript:void(0)" type="button" v-b-tooltip.hover title="Khoá sản phẩm"
                   @click.prevent="openModalDisableProduct(row.item)">
                   <i class="fas fa-times" style="font-size: 1.1rem; color: red"></i>
@@ -110,7 +110,6 @@ const initDataFilter = {
   page: 1,
   limit: 10
 };
-
 export default {
   name: "ProductManagement",
   data() {
@@ -189,7 +188,6 @@ export default {
           if (this.loadingHeader) this.loadingHeader = !this.loadingHeader
         }, 200)
       }
-
       if (response && response.data) this.$store.commit("setProducts", response.data.data);
     },
     navigateToUpdateProduct(product) {
@@ -238,6 +236,4 @@ export default {
 </script>
     
 <style scoped>
-
 </style>
-    

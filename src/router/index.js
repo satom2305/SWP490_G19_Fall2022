@@ -32,6 +32,12 @@ const router = new Router({
       component: () => import("@/views/HomePage"),
     },
     {
+      path: '/search',
+      name: 'ProductSearch',
+      meta: { title: 'Search Product', layout: 'userpages' },
+      component: () => import("@/views/ProductSearch"),
+    },
+    {
       path: '/tree-world',
       name: 'HomePage',
       meta: { title: 'Tree World', layout: 'userpages' },
@@ -54,6 +60,12 @@ const router = new Router({
       name: 'ShoppingCart',
       meta: { title: 'Shopping Cart', layout: 'userpages' },
       component: () => import("@/views/ShoppingCart"),
+    },
+    {
+      path: '/my-order',
+      name: 'MyOrder',
+      meta: { title: 'My Order', layout: 'userpages' },
+      component: () => import("@/views/MyOrder"),
     },
     {
       path: '/checkout',
@@ -162,8 +174,8 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     localStorage.setItem('savedPath', to.fullPath)
   }
-  const publicPages = ['/', '/login', '/config-api', '/register', '/reset-password', '/shop-detail']
-  const publicNestedPages = ['/shop-detail']
+  const publicPages = ['/', '/login', '/config-api', '/register', '/reset-password', '/shop-detail', '/search']
+  const publicNestedPages = ['/shop-detail', '/search']
 
   const authRequired = !publicPages.includes(to.path) && (publicNestedPages.filter(path => to.path.includes(path)).length === 0)
   const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'
