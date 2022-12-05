@@ -44,6 +44,12 @@ public class ProductController {
                 new ResponseObject("ok", "Successfully", true, productService.searchProductByName(productName))
         );
     }
+    @GetMapping("/searchAvaProductByName/{productName}")
+    public ResponseEntity<?> searchAvaProductByName(@PathVariable("productName") String productName) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, productService.searchProductByName(productName))
+        );
+    }
 
     @GetMapping("/sort/asc")
     public ResponseEntity<?> sortProductASC() {
@@ -63,19 +69,19 @@ public class ProductController {
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
 
-                new ResponseObject("ok", "Successfully", true, productService.findById(id)));
+                new ResponseObject("ok", "Successfully", true, productService.findProductById(id)));
     }
 
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody ProductRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, productService.create(request)));
+                new ResponseObject("ok", "Successfully", true, productService.createProduct(request)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody ProductRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, productService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, productService.updateProduct(id, request)));
     }
 
     @PutMapping("/disable/{id}")

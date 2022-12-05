@@ -29,13 +29,13 @@ public class PromotionController {
                     new ResponseObject("ok", "Promotion is exist", false, "null"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, promotionService.create(request)));
+                new ResponseObject("ok", "Successfully", true, promotionService.createPromotion(request)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody PromotionRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, promotionService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, promotionService.updatePromotion(id, request)));
     }
 
     @GetMapping("/{code}")
@@ -53,7 +53,7 @@ public class PromotionController {
     public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
         boolean checkPromotionExist = promotionService.getPromotionById(id);
         if (checkPromotionExist == true) {
-            promotionService.delete(id);
+            promotionService.deletePromotion(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete Promotion ok", true, "null"));
         }

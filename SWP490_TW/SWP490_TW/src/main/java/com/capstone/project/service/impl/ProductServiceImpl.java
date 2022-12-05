@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse findById(Integer id) {
+    public ProductResponse findProductById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException("Product not found", 404));
         List<ProductImg> imgs = productImgRepository.findByProduct(product);
@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse create(ProductRequest request) {
+    public ProductResponse createProduct(ProductRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new AppException("Category not found", 404));
         Product product = productRepository.save(Product.builder()
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse update(Integer id, ProductRequest request) {
+    public ProductResponse updateProduct(Integer id, ProductRequest request) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException("Product not found", 404));
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -96,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
         product.setAmount(request.getAmount());
         product.setCreatedDate(request.getCreatedDate());
         product.setProductStatus(request.getProductStatus());
+        product.setMainImg(request.getMainImg());
         productRepository.save(product);
         return mapper.map(product, ProductResponse.class);
     }
@@ -121,6 +122,15 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponse> searchProductByName(String productName) {
         System.out.println(productName);
         return productRepository.searchListProductByName(productName)
+                .stream()
+                .map(product -> mapper.map(product, ProductResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductResponse> searchAvaProductByName(String productName) {
+        System.out.println(productName);
+        return productRepository.searchListAvaProductByName(productName)
                 .stream()
                 .map(product -> mapper.map(product, ProductResponse.class))
                 .collect(Collectors.toList());

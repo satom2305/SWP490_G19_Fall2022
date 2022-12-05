@@ -7,14 +7,14 @@ import com.capstone.project.response.CategoryResponse;
 import java.util.List;
 
 public interface CategoryService {
-    List<CategoryResponse> findAll();
+    List<CategoryResponse> findAllCategory();
 
-    CategoryResponse create(CategoryRequest request);
+    CategoryResponse createCategory(CategoryRequest request);
 
-    CategoryResponse update(Integer id, CategoryRequest request);
+    CategoryResponse updateCategory(Integer id, CategoryRequest request);
 
-    CategoryResponse findById(Integer id);
+    CategoryResponse findCategoryById(Integer id);
 
-    void delete(Integer id);
+    void deleteCategory(Integer id);
 
 }

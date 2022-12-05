@@ -114,7 +114,7 @@ public class OrderServiceTest {
         Integer id = 2;
 
         Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));
-        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findById(orderRequest.getOrderId()));
+        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findOrderById(orderRequest.getOrderId()));
         Assert.assertEquals("Order not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }
@@ -136,7 +136,7 @@ public class OrderServiceTest {
         Integer id = 2;
 
         Mockito.when(orderRepository.findById(id)).thenThrow(new AppException("Order not found", 404));
-        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findById(orderRequest.getOrderId()));
+        AppException ex = Assert.assertThrows(AppException.class, () -> orderService.findOrderById(orderRequest.getOrderId()));
         Assert.assertEquals("Order not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }

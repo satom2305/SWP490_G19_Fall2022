@@ -88,7 +88,7 @@ public class ProductServiceTest {
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
         Mockito.when(categoryRepository.findById(productRequest.getCategoryId())).thenReturn(Optional.ofNullable(category));
         category = new Category(1, "test category");
-        ProductResponse productResponse = productService.update(id, productRequest);
+        ProductResponse productResponse = productService.updateProduct(id, productRequest);
 
         Assert.assertEquals("Test product", productResponse.getProductName());
 
@@ -102,7 +102,7 @@ public class ProductServiceTest {
         ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
         Integer id = 1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.ofNullable(product));
-        ProductResponse productResponse = productService.findById(productRequest.getProductId());
+        ProductResponse productResponse = productService.findProductById(productRequest.getProductId());
         Assert.assertEquals("Test product", productResponse.getProductName());
     }
 
@@ -113,7 +113,7 @@ public class ProductServiceTest {
         Integer id = 2;
         Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findById(2));
+        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findProductById(2));
 
         Assert.assertEquals("Product not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());

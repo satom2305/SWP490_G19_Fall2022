@@ -55,7 +55,7 @@ public class PromotionServiceTest {
         Mockito.when(promotionRepository.save(promotion)).thenReturn(promotion);
 
         //execute
-        Exception ex = Assert.assertThrows(Exception.class, () -> promotionService.create(promotionRequest));
+        Exception ex = Assert.assertThrows(Exception.class, () -> promotionService.createPromotion(promotionRequest));
 
         //verify
         Assert.assertEquals("source cannot be null", ex.getMessage());
@@ -69,7 +69,7 @@ public class PromotionServiceTest {
         Integer id = 1;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenReturn(Optional.ofNullable(promotion));
 
-        PromotionResponse promotionResponse = promotionService.update(id, promotionRequest);
+        PromotionResponse promotionResponse = promotionService.updatePromotion(id, promotionRequest);
         Assert.assertEquals("String", promotionResponse.getPromotionCode());
     }
 
@@ -81,7 +81,7 @@ public class PromotionServiceTest {
         Integer id = 2;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenThrow(new AppException("Promotion not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.update(id, promotionRequest));
+        AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.updatePromotion(id, promotionRequest));
 
         Assert.assertEquals("Promotion not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
@@ -93,7 +93,7 @@ public class PromotionServiceTest {
         PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
         Integer id = 1;
         Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenThrow(new AppException("Promotion not found", 404));
-        PromotionResponse promotionResponse = promotionService.update(id, promotionRequest);
+        PromotionResponse promotionResponse = promotionService.updatePromotion(id, promotionRequest);
         Assert.assertEquals("String", promotionResponse.getPromotionCode());
     }
 

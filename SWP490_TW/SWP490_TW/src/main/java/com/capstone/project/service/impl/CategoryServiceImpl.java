@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final ModelMapper mapper;
 
     @Override
-    public List<CategoryResponse> findAll() {
+    public List<CategoryResponse> findAllCategory() {
         return categoryRepository.findAll()
                 .stream()
                 .map(Category -> mapper.map(Category, CategoryResponse.class))
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse create(CategoryRequest request) {
+    public CategoryResponse createCategory(CategoryRequest request) {
         Category category = categoryRepository.save(Category.builder()
                 .categoryName(request.getCategoryName())
                 .build());
@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse update(Integer id, CategoryRequest request) {
+    public CategoryResponse updateCategory(Integer id, CategoryRequest request) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Category not found", 404));
         category.setCategoryName(request.getCategoryName());
@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse findById(Integer id) {
+    public CategoryResponse findCategoryById(Integer id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Category not found", 404));
         List<Product> products = productRepository.findByCategory(category);
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deleteCategory(Integer id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Category not found", 404));
         categoryRepository.delete(category);

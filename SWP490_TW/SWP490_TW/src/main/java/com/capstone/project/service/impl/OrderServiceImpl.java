@@ -3,6 +3,7 @@ package com.capstone.project.service.impl;
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.*;
 import com.capstone.project.repository.*;
+import com.capstone.project.request.CartRequest;
 import com.capstone.project.request.OrderRequest;
 import com.capstone.project.response.CartResponse;
 import com.capstone.project.response.OrderResponse;
@@ -41,16 +42,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponse> getAllOrderByUserName(@RequestBody String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("User not found", 404));
+    public List<OrderResponse> getAllOrderByUserName() {
+//        User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new AppException("User not found", 404));
+//        return orderRepository.getOrderByUser(user).stream()
+//                .map(order -> mapper.map(order, OrderResponse.class))
+//                .collect(Collectors.toList());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            String username = auth.getName();
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new AppException("User not found", 404));
         return orderRepository.getOrderByUser(user).stream()
                 .map(order -> mapper.map(order, OrderResponse.class))
                 .collect(Collectors.toList());
+        } else {
+            throw new AppException("User not login", 404);
+        }
     }
 
     @Override
-    public OrderResponse create(OrderRequest orderRequest) {
+    public OrderResponse createOrder(OrderRequest orderRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             String username = auth.getName();
@@ -72,6 +84,13 @@ public class OrderServiceImpl implements OrderService {
                             .quantity(cart.getQuantity())
                             .build())
                     .collect(Collectors.toList());
+            for(CartResponse c : carts){
+                Product product = productRepository.findById(c.getProduct().getProductId())
+                        .orElseThrow(() -> new AppException("Product not found", 404));
+                if(product.getAmount() < c.getQuantity()){
+                    return null;
+                }
+            }
 
             Order order = orderRepository.save(Order.builder()
                     .user(user)
@@ -95,6 +114,10 @@ public class OrderServiceImpl implements OrderService {
                                 .productPrice(c.getProduct().getSellPrice())
                                 .quantity(c.getQuantity())
                         .build());
+                Product product = productRepository.findById(c.getProduct().getProductId())
+                        .orElseThrow(() -> new AppException("Product not found", 404));
+                product.setAmount(product.getAmount() - c.getQuantity());
+                productRepository.save(product);
                 detailRepository.save(orderDetail);
             }
             System.out.println(order);
@@ -106,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse update(Integer id, OrderRequest orderRequest) {
+    public OrderResponse updateOrder(Integer id, OrderRequest orderRequest) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new AppException("Order not found", 404));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -139,14 +162,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse findById(Integer id) {
+    public OrderResponse findOrderById(Integer id) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new AppException("Order not found", 404));
         return mapper.map(order, OrderResponse.class);
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deleteOrder(Integer id) {
         Order order = orderRepository.findById(id).
                 orElseThrow(() -> new AppException("Order not found", 404));
         List<OrderDetail> list = detailRepository.findByOrder(order);

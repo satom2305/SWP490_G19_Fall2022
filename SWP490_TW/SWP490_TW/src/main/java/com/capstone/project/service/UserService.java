@@ -13,16 +13,17 @@ public interface UserService {
 
     UserResponse getUserById(Integer id);
 
-    List<UserResponse> getALL();
+    List<UserResponse> getALLUser();
 
     UserResponse disableUser(Integer Id);
 
-    UserResponse create(UserRequest request);
+    UserResponse createUser(UserRequest request);
 
-    UserResponse update(Integer id, UserRequest request);
+    UserResponse updateUser(Integer id, UserRequest request);
 
     UserResponse changePwd(String username,UserRequest userRequest);
     UserResponse ForgotPwd(String username);
     UserResponse createStaff(UserRequest request);
+    Boolean checkPwd(String username,UserRequest request);
 
 }

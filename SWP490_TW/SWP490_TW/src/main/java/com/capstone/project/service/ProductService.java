@@ -11,16 +11,17 @@ public interface ProductService {
 
     List<ProductResponse> getAllProduct();
 
-    ProductResponse findById(Integer id);
+    ProductResponse findProductById(Integer id);
 
-    ProductResponse create(ProductRequest request);
+    ProductResponse createProduct(ProductRequest request);
 
-    ProductResponse update(Integer id, ProductRequest request);
+    ProductResponse updateProduct(Integer id, ProductRequest request);
 
     ProductResponse disableProduct(Integer id);
     List<ProductResponse> getLastSixProducts();
 
     List<ProductResponse> searchProductByName(String productName);
+    List<ProductResponse> searchAvaProductByName(String productName);
 
     List<ProductResponse> getAllProductAvailableASC();
     List<ProductResponse> getAllProductAvailableDES();

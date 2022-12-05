@@ -9,9 +9,9 @@ public interface PromotionService {
     List<PromotionResponse> getAllPromotion();
     PromotionResponse getPromotionByCode(String code);
     Boolean getPromotionById(Integer id);
-    PromotionResponse create(PromotionRequest promotionRequest);
-    PromotionResponse update(Integer id, PromotionRequest promotionRequest);
-    void delete(Integer id);
+    PromotionResponse createPromotion(PromotionRequest promotionRequest);
+    PromotionResponse updatePromotion(Integer id, PromotionRequest promotionRequest);
+    void deletePromotion(Integer id);
     boolean checkPromotion(String code);
 
 

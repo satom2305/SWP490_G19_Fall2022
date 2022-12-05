@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public List<PostResponse> getALL() {
+    public List<PostResponse> getALLPost() {
         return postRepository.findAll()
                 .stream()
                 .map(post -> mapper.map(post, PostResponse.class))
@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse create(PostRequest request) {
+    public PostResponse createPost(PostRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException("User not found",404));
         Post post = postRepository.save(Post.builder()
@@ -56,7 +56,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse update(Integer id, PostRequest request) {
+    public PostResponse updatePost(Integer id, PostRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException("User not found",404));
         Post post = postRepository.findById(id)
@@ -73,7 +73,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public void delete(Integer id) {
+    public void deletePost(Integer id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new AppException("Account not found", 404));
         postRepository.delete(post);

@@ -53,7 +53,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public PromotionResponse create(PromotionRequest promotionRequest) {
+    public PromotionResponse createPromotion(PromotionRequest promotionRequest) {
         Promotion promotion = promotionRepository.save(Promotion.builder()
                         .promotionCode(promotionRequest.getPromotionCode())
                         .salePercent(promotionRequest.getSalePercent())
@@ -63,7 +63,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public PromotionResponse update(Integer id, PromotionRequest promotionRequest) {
+    public PromotionResponse updatePromotion(Integer id, PromotionRequest promotionRequest) {
         Promotion promotion = promotionRepository.findById(id)
                 .orElseThrow(() -> new AppException("Promotion not found", 404));
         promotion.setPromotionCode(promotionRequest.getPromotionCode());
@@ -74,7 +74,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deletePromotion(Integer id) {
         Promotion promotion = promotionRepository.findById(id)
                 .orElseThrow(() -> new AppException("Promotion not found", 404));
         promotionRepository.delete(promotion);

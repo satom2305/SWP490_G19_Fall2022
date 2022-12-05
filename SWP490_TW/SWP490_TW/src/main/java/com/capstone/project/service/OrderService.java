@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface OrderService {
         List<OrderResponse> getAllOrder();
-        List<OrderResponse> getAllOrderByUserName(String username);
-        OrderResponse create(OrderRequest orderRequest);
-        OrderResponse update(Integer id ,OrderRequest orderRequest);
-        OrderResponse findById(Integer id);
-        void delete(Integer id);
+        List<OrderResponse> getAllOrderByUserName();
+        OrderResponse createOrder(OrderRequest orderRequest);
+        OrderResponse updateOrder(Integer id ,OrderRequest orderRequest);
+        OrderResponse findOrderById(Integer id);
+        void deleteOrder(Integer id);
 
 }

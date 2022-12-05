@@ -6,13 +6,15 @@ import com.capstone.project.response.CartResponse;
 import java.util.List;
 
 public interface CartService {
-    CartResponse create(CartRequest cartRequest);
+    CartResponse createCart(CartRequest cartRequest);
 
-    CartResponse update(int id, CartRequest cartRequest);
+    CartResponse updateCart(int id, CartRequest cartRequest);
+
+    List<CartResponse> updateListCart(List<CartRequest> cartRequests);
 
     List<CartResponse> getCartByUsername();
 
-    void delete(Integer id);
+    void deleteCart(Integer id);
 
     void deleteCartByUserId();
 

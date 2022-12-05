@@ -18,29 +18,29 @@ public class CategoryController {
     @GetMapping()
     public ResponseEntity<?> getAllCategory() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, categoryService.findAll()));
+                new ResponseObject("ok", "Successfully", true, categoryService.findAllCategory()));
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CategoryRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, categoryService.create(request)));
+                new ResponseObject("ok", "Successfully", true, categoryService.createCategory(request)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody CategoryRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, categoryService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, categoryService.updateCategory(id, request)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, categoryService.findById(id)));
+                new ResponseObject("ok", "Successfully", true, categoryService.findCategoryById(id)));
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Integer id) {
-        categoryService.delete(id);
+        categoryService.deleteCategory(id);
     }
 }

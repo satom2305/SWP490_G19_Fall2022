@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface OrderDetailService {
     List<OrderDetailResponse> getAllOrderDetails();
-    OrderDetailResponse getById(Integer id);
+    OrderDetailResponse getOrderDetailById(Integer id);
     OrderDetailResponse createOrderDetail(OrderDetailRequest detailRequest);
     OrderDetailResponse updateOrderDetail(Integer id ,OrderDetailRequest detailRequest);
-    void delete(Integer id);
-    List<OrderDetailResponse> getByOrderId(Integer id);
+    void deleteOrderDetail(Integer id);
+    List<OrderDetailResponse> getOrderDetailByOrderId(Integer id);
     List<OrderDetailResponse> updateOrderDetailByOrderId(Integer id,List<OrderDetailRequest> requests);
 
     List<?> createListOrderDetail(List<OrderDetailRequest> requests);

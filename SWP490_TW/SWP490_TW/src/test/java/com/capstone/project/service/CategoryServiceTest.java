@@ -52,7 +52,7 @@ public class CategoryServiceTest {
 
         Mockito.when(categoryRepository.save(Category.builder().categoryName(categoryRequest.getCategoryName()).build())).thenReturn(category);
 
-        CategoryResponse actual = categoryService.create(categoryRequest);
+        CategoryResponse actual = categoryService.createCategory(categoryRequest);
 
         Mockito.verify(mapper, Mockito.timeout(1)).map(category, CategoryResponse.class);
 
@@ -73,7 +73,7 @@ public class CategoryServiceTest {
         Mockito.when(categoryRepository.save(category)).thenReturn(category);
 
         //execute
-        Exception ex = Assert.assertThrows(Exception.class, () -> categoryService.create(categoryRequest));
+        Exception ex = Assert.assertThrows(Exception.class, () -> categoryService.createCategory(categoryRequest));
 
         //verify
         Assert.assertEquals("source cannot be null", ex.getMessage());
@@ -88,7 +88,7 @@ public class CategoryServiceTest {
         Integer id = 2;
         Mockito.when(categoryRepository.findById(id)).thenThrow(new AppException("Category not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.update(id, categoryRequest));
+        AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.updateCategory(id, categoryRequest));
 
         Assert.assertEquals("Category not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
@@ -102,7 +102,7 @@ public class CategoryServiceTest {
         Integer id = 1;
         Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.ofNullable(category));
 
-        CategoryResponse categoryResponse = categoryService.update(id, categoryRequest);
+        CategoryResponse categoryResponse = categoryService.updateCategory(id, categoryRequest);
 
         Assert.assertEquals("hello", categoryResponse.getCategoryName());
     }

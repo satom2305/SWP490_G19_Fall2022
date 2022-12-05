@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/carts")
@@ -24,12 +26,24 @@ public class CartController {
     @PostMapping()
     public ResponseEntity<?> addToCart(@RequestBody CartRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, cartService.create(request)));
+                new ResponseObject("ok", "Successfully", true, cartService.createCart(request)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCartByUsername(@PathVariable("id") Integer id,@RequestBody CartRequest request){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, cartService.updateCart(id,request)));
+    }
+
+    @PutMapping("/updateListCart/{id}")
+    public ResponseEntity<?> updateListCart(@RequestBody List<CartRequest> request){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, cartService.updateListCart(request)));
     }
 
     @DeleteMapping("/{id}")
     public void deleteCart(@PathVariable("id") Integer id) {
-        cartService.delete(id);
+        cartService.deleteCart(id);
     }
 
     @DeleteMapping()

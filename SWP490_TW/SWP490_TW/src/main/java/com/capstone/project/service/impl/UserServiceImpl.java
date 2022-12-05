@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getALL() {
+    public List<UserResponse> getALLUser() {
         return userRepository.findAll()
                 .stream()
                 .map(user -> mapper.map(user, UserResponse.class))
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse create(UserRequest request) {
+    public UserResponse createUser(UserRequest request) {
         if(!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
             User user = userRepository.save(User.builder()
                     .username(request.getUsername())
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse update(Integer id, UserRequest request) {
+    public UserResponse updateUser(Integer id, UserRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException("Account not found", 404));
 
@@ -136,6 +136,17 @@ public class UserServiceImpl implements UserService {
             return mapper.map(user, UserResponse.class);
         }
         return null;
+    }
+
+    @Override
+    public Boolean checkPwd(String username,UserRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("Account not found", 404));
+        boolean result = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        if (result){
+            return true;
+        }
+        return false;
     }
 
 

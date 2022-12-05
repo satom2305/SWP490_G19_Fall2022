@@ -26,13 +26,13 @@ public class OrderDetailController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderDetailById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, detailService.getById(id)));
+                new ResponseObject("ok", "Successfully", true, detailService.getOrderDetailById(id)));
     }
 
     @GetMapping("/order/{id}")
     public ResponseEntity<?> getByOrderId(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, detailService.getByOrderId(id)));
+                new ResponseObject("ok", "Successfully", true, detailService.getOrderDetailByOrderId(id)));
     }
 
     @PostMapping()
@@ -60,7 +60,7 @@ public class OrderDetailController {
 
     @DeleteMapping("/{id}")
     public void deleteOrderDetail(@PathVariable("id") Integer id) {
-        detailService.delete(id);
+        detailService.deleteOrderDetail(id);
     }
 
 }

@@ -35,7 +35,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public OrderDetailResponse getById(Integer id) {
+    public OrderDetailResponse getOrderDetailById(Integer id) {
         OrderDetail orderDetail = detailRepository.findById(id)
                 .orElseThrow(() -> new AppException("OrderDetail not found", 404));
         return mapper.map(orderDetail, OrderDetailResponse.class);
@@ -124,12 +124,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 
     @Override
-    public void delete(Integer id) {
+    public void deleteOrderDetail(Integer id) {
         detailRepository.deleteById(id);
     }
 
     @Override
-    public List<OrderDetailResponse> getByOrderId(Integer id) {
+    public List<OrderDetailResponse> getOrderDetailByOrderId(Integer id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new AppException("Order not found", 404));
         return detailRepository.findByOrder(order)

@@ -24,7 +24,7 @@ public class UserController {
     public ResponseEntity<?> getAllAccounts() {
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, userService.getALL()));
+                new ResponseObject("ok", "Successfully", true, userService.getALLUser()));
     }
 
     @GetMapping("/{username}")
@@ -58,12 +58,12 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody UserRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, userService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, userService.updateUser(id, request)));
     }
 
     @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
-        UserResponse userResponse = userService.create(request);
+        UserResponse userResponse = userService.createUser(request);
         System.out.println(userResponse);
         if (userResponse == null) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -95,6 +95,18 @@ public class UserController {
                 new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
+    @GetMapping("/checkPwd/{username}")
+    public ResponseEntity<?> checkPwd(@PathVariable("username") String username,@RequestBody UserRequest request){
+        boolean result = userService.checkPwd(username,request);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Mat khau trung voi mat khau cu", true, "null"));
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Mat khau Khong trung voi mat khau cu", false, "null"));
+        }
+    }
+
     @PostMapping("/forgetPassword")
     public ResponseEntity<?> sendPwdToEmail(@RequestBody UserRequest request) {
         if (request == null) {
@@ -110,7 +122,7 @@ public class UserController {
             }
             emailService.sendMailForgetPass(request);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "succsessfully", true, request.getUsername())
+                    new ResponseObject("ok", "successfully", true, request.getUsername())
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

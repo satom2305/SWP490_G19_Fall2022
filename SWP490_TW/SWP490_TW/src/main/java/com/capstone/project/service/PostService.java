@@ -8,11 +8,11 @@ import java.util.List;
 public interface PostService {
     PostResponse getPostById(Integer id);
 
-    List<PostResponse> getALL();
+    List<PostResponse> getALLPost();
 
-    PostResponse create(PostRequest request);
+    PostResponse createPost(PostRequest request);
 
-    PostResponse update(Integer id, PostRequest request);
+    PostResponse updatePost(Integer id, PostRequest request);
 
-    void delete(Integer id);
+    void deletePost(Integer id);
 }

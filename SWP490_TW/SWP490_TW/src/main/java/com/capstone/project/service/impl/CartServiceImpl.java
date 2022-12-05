@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
     private final ModelMapper mapper;
 
     @Override
-    public CartResponse create(CartRequest cartRequest) {
+    public CartResponse createCart(CartRequest cartRequest) {
         Product product = productRepository.findById(cartRequest.getProductId())
                 .orElseThrow(() -> new AppException("Product not found", 404));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,24 +42,21 @@ public class CartServiceImpl implements CartService {
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new AppException("User not found", 404));
             List<Cart> carts = cartRepository.findByUser(user);
-            for (Cart c: carts) {
+            for (Cart c : carts) {
                 if (cartRequest.getProductId() == c.getProduct().getProductId()) {
                     Cart cart = cartRepository.findById(c.getCartId())
                             .orElseThrow(() -> new AppException("Cart not found", 404));
                     cart.setQuantity(cart.getQuantity() + 1);
-                    product.setAmount(product.getAmount() - 1);
                     cartRepository.save(cart);
                     return mapper.map(cart, CartResponse.class);
                 }
             }
-                    Cart cart = cartRepository.save(Cart.builder()
-                            .user(user)
-                            .product(product)
-                            .quantity(cartRequest.getQuantity())
-                            .build());
-                    product.setAmount(product.getAmount() - cartRequest.getQuantity());
-                    productRepository.save(product);
-                    return mapper.map(cart, CartResponse.class);
+            Cart cart = cartRepository.save(Cart.builder()
+                    .user(user)
+                    .product(product)
+                    .quantity(cartRequest.getQuantity())
+                    .build());
+            return mapper.map(cart, CartResponse.class);
 
         } else {
             throw new AppException("User not login", 401);
@@ -67,7 +64,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse update(int id, CartRequest cartRequest) {
+    public CartResponse updateCart(int id, CartRequest cartRequest) {
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new AppException("Cart not found", 404));
         Product product = productRepository.findById(cartRequest.getProductId())
@@ -79,7 +76,6 @@ public class CartServiceImpl implements CartService {
                     .orElseThrow(() -> new AppException("User not found", 404));
             cart.setQuantity(cart.getQuantity() + cartRequest.getQuantity());
             cartRepository.save(cart);
-            product.setAmount(product.getAmount() - cart.getQuantity());
             Cart cartNew = cartRepository.save(Cart.builder()
                     .user(user)
                     .product(product)
@@ -89,6 +85,32 @@ public class CartServiceImpl implements CartService {
         } else {
             throw new AppException("User not login", 401);
         }
+    }
+
+    @Override
+    public List<CartResponse> updateListCart(List<CartRequest> cartRequests) {
+        List<CartRequest> list = cartRequests;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            String username = auth.getName();
+            for (CartRequest c : list){
+                Cart cart = cartRepository.findById(c.getCartId())
+                        .orElseThrow(() -> new AppException("Cart not found", 404));
+                Product product = productRepository.findById(c.getProductId())
+                        .orElseThrow(() -> new AppException("Product not found", 404));
+                User user = userRepository.findByUsername(username)
+                        .orElseThrow(() -> new AppException("User not found", 404));
+                cart.setProduct(product);
+                cart.setQuantity(c.getQuantity());
+                cart.setUser(user);
+                cartRepository.save(cart);
+                return cartRepository.findByUser(user)
+                        .stream()
+                        .map(cart1 -> mapper.map(cart1, CartResponse.class))
+                        .collect(Collectors.toList());
+            }
+        }
+        return null;
     }
 
     @Override
@@ -113,13 +135,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void deleteCart(Integer id) {
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new AppException("Cart not found", 404));
-        Product product = productRepository.findById(cart.getProduct().getProductId())
-                .orElseThrow(() -> new AppException("Product not found", 404));
-        product.setAmount(product.getAmount() + cart.getQuantity());
-        productRepository.save(product);
         cartRepository.delete(cart);
     }
 
@@ -138,7 +156,7 @@ public class CartServiceImpl implements CartService {
                         .quantity(cart.getQuantity())
                         .build())
                 .collect(Collectors.toList());
-        for (CartResponse c :carts) {
+        for (CartResponse c : carts) {
             Product product = productRepository.findById(c.getProduct().getProductId())
                     .orElseThrow(() -> new AppException("User not found", 404));
             product.setAmount(product.getAmount() + c.getQuantity());

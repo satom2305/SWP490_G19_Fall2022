@@ -21,20 +21,31 @@ public class OrderController {
                 new ResponseObject("ok", "Successfully", true, orderService.getAllOrder()));
     }
 
+    @GetMapping("/orderUser")
+    public ResponseEntity<?> getOrderByUsername() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, orderService.getAllOrderByUserName()));
+    }
+
     @PostMapping()
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, orderService.create(orderRequest)));
+        if(orderService.createOrder(orderRequest) != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Successfully", true, null));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("not ok", "False", false, null));
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@PathVariable("id") Integer id, @RequestBody OrderRequest orderRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, orderService.update(id, orderRequest)));
+                new ResponseObject("ok", "Successfully", true, orderService.updateOrder(id, orderRequest)));
     }
 
     @DeleteMapping("/{id}")
     public void deleteOrder(@PathVariable("id") Integer id) {
-        orderService.delete(id);
+        orderService.deleteOrder(id);
     }
 }

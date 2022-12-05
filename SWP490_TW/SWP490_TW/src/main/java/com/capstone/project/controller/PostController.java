@@ -19,13 +19,13 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> getAllPost() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, postService.getALL()));
+                new ResponseObject("ok", "Successfully", true, postService.getALLPost()));
     }
 
     @PostMapping
     public ResponseEntity<?> createPost(@RequestBody PostRequest postRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, postService.create(postRequest)));
+                new ResponseObject("ok", "Successfully", true, postService.createPost(postRequest)));
     }
 
     @GetMapping("/{id}")
@@ -37,12 +37,12 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody PostRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, postService.update(id, request)));
+                new ResponseObject("ok", "Successfully", true, postService.updatePost(id, request)));
 
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
-        postService.delete(id);
+        postService.deletePost(id);
     }
 }

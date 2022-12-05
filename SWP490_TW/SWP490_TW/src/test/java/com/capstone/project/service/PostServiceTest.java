@@ -64,7 +64,7 @@ public class PostServiceTest {
         postList.add(post);
         when(postRepository.findAll()).thenReturn(postList);
 
-        List<PostResponse> actual = postService.getALL();
+        List<PostResponse> actual = postService.getALLPost();
         assertEquals(postList.size(), actual.size());
     }
 
@@ -76,7 +76,7 @@ public class PostServiceTest {
         actual.add(post);
 
         Mockito.when(postRepository.findAll()).thenThrow(new NullPointerException(""));
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> postService.getALL());
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> postService.getALLPost());
         assertEquals("", exception.getMessage());
     }
 
@@ -88,7 +88,7 @@ public class PostServiceTest {
         Mockito.when(userRepository.findById(postRequest.getUserId())).thenReturn(Optional.ofNullable(user));
         Mockito.when(postRepository.findById(id)).thenReturn(Optional.ofNullable(post));
 
-        PostResponse postResponse = postService.update(id,postRequest);
+        PostResponse postResponse = postService.updatePost(id,postRequest);
 
         Assert.assertEquals(postRequest.getTitle(), postResponse.getTitle());
     }
@@ -102,7 +102,7 @@ public class PostServiceTest {
         Mockito.when(userRepository.findById(postRequest.getUserId())).thenReturn(Optional.ofNullable(user));
         Mockito.when(postRepository.findById(id)).thenThrow(new AppException("Post not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> postService.update(id, postRequest) );
+        AppException ex = Assert.assertThrows(AppException.class, () -> postService.updatePost(id, postRequest) );
         Assert.assertEquals("Post not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }
@@ -134,7 +134,7 @@ public class PostServiceTest {
         PostRequest postRequest = new PostRequest(1, 1, "title", "content", "String", null, "String");
         Integer id = 1;
         Mockito.when(postRepository.findById(postRequest.getPostId())).thenReturn(Optional.ofNullable(post));
-        postService.delete(id);
+        postService.deletePost(id);
     }
 
     @Test
@@ -143,7 +143,7 @@ public class PostServiceTest {
         PostRequest postRequest = new PostRequest(1, 1, "title", "content", "String", null, "String");
         Integer id = 2;
         Mockito.when(postRepository.findById(id)).thenThrow(new AppException("Post not found", 404));
-        AppException ex = Assert.assertThrows(AppException.class, () -> postService.delete(postRequest.getPostId()));
+        AppException ex = Assert.assertThrows(AppException.class, () -> postService.deletePost(postRequest.getPostId()));
         Assert.assertEquals("Account not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }
