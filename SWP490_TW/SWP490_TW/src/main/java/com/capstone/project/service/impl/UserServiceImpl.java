@@ -8,6 +8,9 @@ import com.capstone.project.response.UserResponse;
 import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkEmailExist(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return true;
         }
         return false;
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkUserNameExist(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return true;
         }
         return false;
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserRequest request) {
-        if(!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
+        if (!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
             User user = userRepository.save(User.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
@@ -90,7 +93,8 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-    public String encodePwd(String password){
+
+    public String encodePwd(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(password);
         String encoded = encoder.encode(password);
@@ -110,12 +114,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse changePwd(String username, UserRequest userRequest) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Account not found", 404));
-        user.setPassword(encodePwd(userRequest.getPassword()));
-        userRepository.save(user);
-        return mapper.map(user, UserResponse.class);
+    public int changePwd(String OldPassword, String NewPassword) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            User user = userRepository.findByUsername(authentication.getName())
+                    .orElseThrow(() -> new AppException("Account not found", 404));
+            boolean checkOld = passwordEncoder.matches(OldPassword, user.getPassword());
+            boolean checkNew = passwordEncoder.matches(OldPassword, user.getPassword());
+            if (!checkOld) {
+                return 1;
+            } else if (!checkNew) {
+                return 2;
+            } else {
+                user.setPassword(encodePwd(NewPassword));
+                userRepository.save(user);
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -125,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createStaff(UserRequest request) {
-        if(!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
+        if (!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
             User user = userRepository.save(User.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
@@ -139,11 +154,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkPwd(String username,UserRequest request) {
+    public Boolean checkPwd(String username, UserRequest request) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException("Account not found", 404));
         boolean result = passwordEncoder.matches(request.getPassword(), user.getPassword());
-        if (result){
+        if (result) {
             return true;
         }
         return false;

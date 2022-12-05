@@ -84,15 +84,19 @@ public class UserController {
                 new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
-    @PutMapping("/changePwd/{username}")
-    public ResponseEntity<?> changePwd(@PathVariable("username") String username, @RequestBody UserRequest userRequest) {
-        UserResponse userResponse = userService.changePwd(username, userRequest);
-        if (userResponse == null) {
+    @PutMapping("/changePwd/{oldPassword}&{newPassword}")
+    public ResponseEntity<?> changePwd(@PathVariable("oldPassword") String oldPassword, @PathVariable("oldPassword") String newPassword) {
+        Integer check = userService.changePwd(oldPassword, newPassword);
+        if (check == 0) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Error", false, "null"));
+                    new ResponseObject("ok", "Đổi thành công", true, "null"));
+        }else if (check == 1){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Sai mật khẩu cũ", false, "null"));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Mật khẩu mới trùng với mật khẩu cũ", false, "null"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
     @GetMapping("/checkPwd/{username}")
