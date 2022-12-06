@@ -6,7 +6,7 @@
     <!--  </div>-->
 
     <!-- Humberger Begin -->
-    <Humberger/>
+    <Humberger />
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -246,7 +246,7 @@
     <!-- Checkout Section End -->
 
     <!-- Footer Section Begin -->
-    <UserFooter/>
+    <UserFooter />
     <!-- Footer Section End -->
     <modalPayment :total-price="totalPrice" />
   </div>
@@ -266,7 +266,7 @@ import UserHeader from "../Layout/Components/UserHeader";
 import UserFooter from "../Layout/Components/UserFooter";
 import Humberger from "../Layout/Components/Humberger";
 import moment from "moment";
-import modalPayment from "../Layout/Components/PaymentInfo.vue"
+import modalPayment from "../Layout/Components/PaymentInfo.vue";
 
 const DEFAULT_PROMOTION_ID = 3;
 const ORDER_STATUS_ID = 1;
@@ -298,7 +298,7 @@ const validPhoneNumber = helpers.regex(
 export default {
   name: "check-out",
   mixins: [baseMixins],
-  components: { UserHeader,modalPayment,Humberger,UserFooter },
+  components: { UserHeader, modalPayment, Humberger, UserFooter },
   data() {
     return {
       listCart: [],
@@ -357,72 +357,80 @@ export default {
       }
     },
     async handleCreateOrder() {
-      // let successMsg = `Tạo đơn hàng thành công.`;
-      // let errorMsg = `Tạo đơn hàng không thành công.`;
-      // let {
-      //   note,
-      //   address,
-      //   city,
-      //   district,
-      //   wards,
-      //   phoneNumber,
-      //   orderStatusId,
-      //   promotionId,
-      // } = { ...this.currentData };
-      // let payload = {
-      //   totalPrice: this.totalPrice,
-      //   promotionId,
-      //   note: note ? note.trim() : null,
-      //   orderStatusId,
-      //   date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
-      //   phoneNumber: phoneNumber && Number(phoneNumber),
-      //   address,
-      //   city,
-      //   district,
-      //   wards,
-      // };
-      // let payloadForCreateDetail = this.listCart.map((item) => {
-      //   return {
-      //     productId: item.product ? item.product.productId + "" : null,
-      //     productName: item.product ? item.product.productName : null,
-      //     quantity: item.quantity,
-      //     productPrice:
-      //       (item.product && item.quantity
-      //         ? item.product.sellPrice * item.quantity
-      //         : 0) + "",
-      //   };
-      // });
+      let successMsg = `Tạo đơn hàng thành công.`;
+      let errorMsg = `Tạo đơn hàng không thành công.`;
+      let outofProd = `Sản phẩm bạn đặt hiện tại đã hết!`;
+      let {
+        note,
+        address,
+        city,
+        district,
+        wards,
+        phoneNumber,
+        orderStatusId,
+        promotionId,
+      } = { ...this.currentData };
+      let payload = {
+        totalPrice: this.totalPrice,
+        promotionId,
+        note: note ? note.trim() : null,
+        orderStatusId,
+        date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+        phoneNumber: phoneNumber && Number(phoneNumber),
+        address,
+        city,
+        district,
+        wards,
+      };
+      let payloadForCreateDetail = this.listCart.map((item) => {
+        return {
+          productId: item.product ? item.product.productId + "" : null,
+          productName: item.product ? item.product.productName : null,
+          quantity: item.quantity,
+          productPrice:
+            (item.product && item.quantity
+              ? item.product.sellPrice * item.quantity
+              : 0) + "",
+        };
+      });
 
-      // let res = await this.$store.dispatch(CREATE_ORDER, payload);
-      // if (res.status === 200 && res.data && res.data.data) {
-      //   let newOrderId = res.data.data.orderId;
-      //   payloadForCreateDetail = payloadForCreateDetail.map((item) => {
-      //     return {
-      //       ...item,
-      //       orderId: newOrderId,
-      //     };
-      //   });
-      //   let resForDetail = await this.$store.dispatch(
-      //     CREATE_ORDER_DETAIL_BY_ORDER_ID,
-      //     payloadForCreateDetail
-      //   );
-      //   if (resForDetail.status === 200) {
-          
-      //     this.$message({
-      //       message: successMsg,
-      //       type: "success",
-      //       showClose: true,
-      //     });
-      //   }
-      // }
-      this.$root.$emit("bv::show::modal", "modal-payment");
+      let res = await this.$store.dispatch(CREATE_ORDER, payload);
+      console.log(res);
+      if (res.status === 200 && res.data && res.data.data) {
+        let newOrderId = res.data.data.orderId;
+        payloadForCreateDetail = payloadForCreateDetail.map((item) => {
+          return {
+            ...item,
+            orderId: newOrderId,
+          };
+        });
+        let resForDetail = await this.$store.dispatch(
+          CREATE_ORDER_DETAIL_BY_ORDER_ID,
+          payloadForCreateDetail
+        );
+        if (resForDetail.status == 200) {
+          this.$message({
+            message: successMsg,
+            type: "success",
+            showClose: true,
+          });
+        }
+      }
+      if (res.data.status == "not ok") {
+        this.$message({
+          message: outofProd,
+          type: "error",
+          showClose: true,
+        });
+      }
+      // this.$root.$emit("bv::show::modal", "modal-payment");
     },
     handleSubmit() {
-      // this.$v.$reset();
-      // this.$v.$touch();
-      // if (this.$v.currentData.$invalid) {
-      //   return;
-      // }
+      this.$v.$reset();
+      this.$v.$touch();
+      if (this.$v.currentData.$invalid) {
+        return;
+      }
       this.handleCreateOrder();
     },
     validationStatus: function(validation) {

@@ -219,7 +219,7 @@
                 class="primary-btn"
                 :disabled="!quantity || quantity <= 0"
               >
-                ADD TO CARD
+                Thêm vào giỏ hàng
               </button>
               <ul>
                 <li>

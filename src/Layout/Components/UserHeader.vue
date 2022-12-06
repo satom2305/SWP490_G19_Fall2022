@@ -68,7 +68,46 @@
                 id="update-password"
                 :title="'Cập nhật mật khẩu'"
                 :no-close-on-backdrop="true"
+                @hide="cancelUpdatePassword()"
               >
+                <b-form-group id="exampleInputGroup4" label-for="exampleInput4">
+                  <b-form-input
+                    id="exampleInput4"
+                    v-model="form.oldPassword"
+                    type="password"
+                    required
+                    placeholder="Nhập lại mật khẩu cũ"
+                    :class="{
+                      'is-invalid':
+                        ($v.form.password.required &&
+                          (!form.oldPassword ||
+                            form.oldPassword.trim() === '')) ||
+                        ($v.form.password.required &&
+                          form.oldPassword &&
+                          form.oldPassword.trim() !== form.password.trim()),
+                    }"
+                  >
+                  </b-form-input>
+                  <div
+                    v-if="
+                      $v.form.password.required &&
+                        (!form.oldPassword || form.oldPassword.trim() === '')
+                    "
+                    class="invalid-feedback"
+                  >
+                    Mật khẩu không được để trống.
+                  </div>
+                  <div
+                    v-if="
+                      $v.form.password.required &&
+                        form.rePassword &&
+                        form.rePassword.trim() !== form.password.trim()
+                    "
+                    class="invalid-feedback"
+                  >
+                    Mật khẩu nhập lại không trùng khớp.
+                  </div>
+                </b-form-group>
                 <b-form-group id="exampleInputGroup2" label-for="exampleInput2">
                   <b-form-input
                     id="exampleInput2"
@@ -86,6 +125,12 @@
                     class="invalid-feedback"
                   >
                     Mật khẩu không được để trống.
+                  </div>
+                  <div
+                    v-if="$v.form.password == form.oldPassword"
+                    class="invalid-feedback"
+                  >
+                    Mật khẩu không được trùng với mật khẩu cũ.
                   </div>
                   <div
                     v-if="!$v.form.password.minLength"
@@ -192,7 +237,7 @@
         <div class="col-lg-3">
           <div class="header__cart">
             <ul>
-                <!-- <li>
+              <!-- <li>
                   <a href="#">
                     <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
                   </a>
@@ -266,6 +311,9 @@ export default {
     },
     cancelUpdatePassword() {
       this.$root.$emit("bv::hide::modal", "update-password");
+      this.form.password = "";
+      this.form.oldPassword = "";
+      this.form.rePassword = "";
     },
     async handleUpdatePassword() {
       if (!this.userInfo || !this.userInfo.username) {

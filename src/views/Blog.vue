@@ -3,7 +3,7 @@
     <!-- Page Preloder -->
 
     <!-- Humberger Begin -->
-    <Humberger/>
+    <Humberger />
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -11,8 +11,8 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
-    <SectionBegin/>
-    
+    <SectionBegin />
+
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
@@ -24,26 +24,8 @@
         <div class="row">
           <div class="col-lg-4 col-md-5">
             <div class="blog__sidebar">
-              <div class="blog__sidebar__search">
-                <form action="#">
-                  <input type="text" placeholder="Search..." />
-                  <button type="submit">
-                    <span class="icon_search"></span>
-                  </button>
-                </form>
-              </div>
               <div class="blog__sidebar__item">
-                <h4>Categories</h4>
-                <ul>
-                  <li><a href="#">All</a></li>
-                  <li><a href="#">Beauty (20)</a></li>
-                  <li><a href="#">Food (5)</a></li>
-                  <li><a href="#">Life Style (9)</a></li>
-                  <li><a href="#">Travel (10)</a></li>
-                </ul>
-              </div>
-              <div class="blog__sidebar__item">
-                <h4>Recent News</h4>
+                <h4>Tin mới</h4>
                 <div class="blog__sidebar__recent">
                   <a href="#" class="blog__sidebar__recent__item">
                     <div class="blog__sidebar__recent__item__pic">
@@ -80,17 +62,6 @@
                       <span>MAR 05, 2019</span>
                     </div>
                   </a>
-                </div>
-              </div>
-              <div class="blog__sidebar__item">
-                <h4>Search By</h4>
-                <div class="blog__sidebar__item__tags">
-                  <a href="#">Apple</a>
-                  <a href="#">Beauty</a>
-                  <a href="#">Vegetables</a>
-                  <a href="#">Fruit</a>
-                  <a href="#">Healthy Food</a>
-                  <a href="#">Lifestyle</a>
                 </div>
               </div>
             </div>
@@ -134,7 +105,7 @@
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
-    <UserFooter/>
+    <UserFooter />
     <!-- Footer Section End -->
   </div>
 </template>
@@ -149,7 +120,7 @@ import Humberger from "../Layout/Components/Humberger";
 import SectionBegin from "../Layout/Components/SectionBegin.vue";
 export default {
   name: "BlogPage",
-  components: { UserHeader,UserFooter,Humberger,SectionBegin },
+  components: { UserHeader, UserFooter, Humberger, SectionBegin },
   mixins: [baseMixins],
   data() {
     return {
