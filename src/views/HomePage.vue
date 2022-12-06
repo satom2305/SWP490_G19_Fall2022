@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Humberger/>
+    <Humberger />
     <!--    Humberger End-->
     <!--    Header Section Begin-->
     <UserHeader />
@@ -34,8 +34,16 @@
                   Tìm kiếm sản phẩm
                   <span class="arrow_carrot-down"></span>
                 </div>
-                <input type="text" placeholder="Bạn muốn tìm sản phẩm nào?" v-model="searchValue" />
-                <button :disabled="(!searchValue || searchValue.trim() === '')" @click="navigateToSearch(`/search`)" class="site-btn">
+                <input
+                  type="text"
+                  placeholder="Bạn muốn tìm sản phẩm nào?"
+                  v-model="searchValue"
+                />
+                <button
+                  :disabled="!searchValue || searchValue.trim() === ''"
+                  @click="navigateToSearch(`/search`)"
+                  class="site-btn"
+                >
                   TÌM KIẾM
                 </button>
               </div>
@@ -59,7 +67,7 @@
                   Hãy ngắm nhìn thiên nhiên <br />để thấy tâm hồn chính mình
                 </h2>
                 <p>Vận chuyển tận tình</p>
-                <a href="#" class="primary-btn">Mua ngay</a>
+                <a href="/shop-product" class="primary-btn">Mua ngay</a>
               </div>
             </div>
           </div>
@@ -174,7 +182,10 @@
                 class="latest-product__slider owl-carousel"
               >
                 <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
+                  <a
+                    class="latest-product__item"
+                    @click="showProductDetail(item.productId)"
+                  >
                     <div class="latest-product__item__pic">
                       <img :src="item.mainImg" alt="" />
                     </div>
@@ -196,7 +207,10 @@
                 class="latest-product__slider owl-carousel"
               >
                 <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
+                  <a
+                    @click="showProductDetail(item.productId)"
+                    class="latest-product__item"
+                  >
                     <div class="latest-product__item__pic">
                       <img :src="item.mainImg" alt="" />
                     </div>
@@ -211,14 +225,17 @@
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="latest-product__text">
-              <h4>Đánh giá cao</h4>
+              <h4>Đề cử cho bạn</h4>
               <div
                 v-for="(item, index) in reviewProduct"
                 :key="index"
                 class="latest-product__slider owl-carousel"
               >
                 <div class="latest-prdouct__slider__item">
-                  <a href="#" class="latest-product__item">
+                  <a
+                    @click="showProductDetail(item.productId)"
+                    class="latest-product__item"
+                  >
                     <div class="latest-product__item__pic">
                       <img :src="item.mainImg" alt="" />
                     </div>
@@ -291,7 +308,7 @@
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
-    <UserFooter/>
+    <UserFooter />
   </div>
 </template>
 
@@ -307,7 +324,7 @@ import Humberger from "../Layout/Components/Humberger.vue";
 import router from "../router/index";
 export default {
   name: "HomePage",
-  components: { VueSlickCarousel, UserHeader,UserFooter,Humberger },
+  components: { VueSlickCarousel, UserHeader, UserFooter, Humberger },
   mixins: [baseMixins],
   data() {
     return {
@@ -423,9 +440,9 @@ export default {
       router.push({
         path: url,
         query: {
-          searchValue: this.searchValue
-        }
-      })
+          searchValue: this.searchValue,
+        },
+      });
     },
     async getListProduct() {
       // const res = await clientService.getListProduct()
@@ -437,7 +454,8 @@ export default {
           0,
           this.pagination.perPage
         );
-        this.rateProduct = res.data.data.slice(3, 9);
+        this.rateProduct = res.data.data.slice(2, 8);
+        this.reviewProduct = res.data.data.slice(9, 15);
       }
     },
     async getTopProduct() {
@@ -445,7 +463,6 @@ export default {
       const res = await this.getWithBigInt("/rest/products/lastSixProducts");
       if (res && res.data && res.data.data) {
         this.topProduct = res.data.data;
-        this.reviewProduct = res.data.data.reverse();
       }
     },
     async getListCategory() {
