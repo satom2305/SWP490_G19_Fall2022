@@ -330,8 +330,8 @@ export default {
   },
   watch: {
     order() {
-      this.setCurrentUpdateData()
-      this.fetchOrderDetailById()
+      // this.setCurrentUpdateData()
+      // this.fetchOrderDetailById()
     }
   },
   mounted() {

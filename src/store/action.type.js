@@ -8,6 +8,7 @@ export const CHANGE_PASSWORD = 'changePassword'
 export const LOGIN = 'login'
 export const REGISTER = 'register'
 export const SEND_EMAIL_RESET_PASSWORD = 'sendEmailResetPassword'
+export const CREATE_STAFF = 'createStaff'
 
 export const FETCH_PRODUCTS = 'fetchProducts'
 export const FETCH_PRODUCTS_AVAILABLE = 'fetchProductsAvailable'

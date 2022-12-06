@@ -149,6 +149,9 @@ export default {
       : null;
     if (!userInfo) return;
     if (userInfo.role === "[ADMIN]") return;
+    if (userInfo.role.includes("STAFF")) {
+      this.menu = this.menu.filter(item => item.title !== 'Quản trị')
+    }
     // userInfo.permissions = userInfo.permissions.replaceAll(' ', '').split(',')
     // this.menu.forEach((item) => {
     //   item.child = item.child.filter((child) => userInfo.permissions.includes(child.permission))

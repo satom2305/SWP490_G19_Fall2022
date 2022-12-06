@@ -79,21 +79,14 @@
             <div class="d-flex justify-content-center flex-wrap">
               <div>
                 <a
-                  v-if="
-                    row.item.orderStatus &&
-                      checkShowAction(
-                        ACTION_FOR_ORDER.UPDATE,
-                        row.item.orderStatus.id
-                      )
-                  "
                   href="javascript:void(0)"
                   type="button"
                   v-b-tooltip.hover
-                  title="Cập nhật"
+                  title="Chi tiết đơn hàng"
                   class="m-2"
-                  @click.prevent="navigateToUpdateOrder(row.item)"
+                  @click.prevent="openModalOrderDetail(row.item)"
                 >
-                  <i class="fas fa-edit" style="font-size: 1rem"></i>
+                  <i class="fas fa-info" style="font-size: 1rem"></i>
                 </a>
                 <a
                   v-if="
@@ -259,6 +252,7 @@
         Đồng ý
       </b-button>
     </b-modal>
+    <ModalOrderDetail :current-order-detail="currentOrderDetail" />
   </div>
 </template>
 
@@ -280,6 +274,7 @@ import {
 } from "@/store/action.type";
 import { formatPriceSearchV2 } from "../../common/common";
 import ModalCreateOrder from "@/Layout/Components/admin/ModalCreateOrder.vue";
+import ModalOrderDetail from "@/Layout/Components/ModalOrderDetail.vue";
 const initDataFilter = {
   page: 1,
   limit: 10,
@@ -413,6 +408,7 @@ export default {
   components: {
     PageTitle,
     ModalCreateOrder,
+    ModalOrderDetail,
   },
   mounted() {
     this.fetchOrders();
@@ -462,6 +458,17 @@ export default {
     },
     changePage(e) {
       this.dataFilter.page = e;
+    },
+    async openModalOrderDetail(order) {
+      this.currentOrder = { ...order };
+      const res = await this.getWithBigInt(
+        "/rest/orderDetails/order",
+        order.orderId
+      );
+      if (res && res.data && res.data.data) {
+        this.currentOrderDetail = res.data.data;
+        this.$root.$emit("bv::show::modal", "modal-order-detail");
+      }
     },
     async fetchOrders() {
       let response = await this.$store.dispatch(FETCH_ORDERS);

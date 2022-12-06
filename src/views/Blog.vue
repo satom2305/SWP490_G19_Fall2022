@@ -111,7 +111,6 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import moment from "moment";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -119,7 +118,7 @@ import UserFooter from "../Layout/Components/UserFooter";
 import Humberger from "../Layout/Components/Humberger";
 import SectionBegin from "../Layout/Components/SectionBegin.vue";
 export default {
-  name: "BlogPage",
+  name: "Blog",
   components: { UserHeader, UserFooter, Humberger, SectionBegin },
   mixins: [baseMixins],
   data() {
@@ -134,7 +133,6 @@ export default {
     };
   },
   mounted() {
-    handleJQuery();
     this.getListBlog();
     // console.log(this.$router);
   },
