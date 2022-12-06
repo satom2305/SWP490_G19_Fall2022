@@ -17,7 +17,7 @@ public interface UserService {
 
     UserResponse disableUser(Integer Id);
 
-    UserResponse createUser(UserRequest request);
+    Integer createUser(UserRequest request);
 
     UserResponse updateUser(Integer id, UserRequest request);
 

@@ -1,4 +1,4 @@
-package com.capstone.project.service;
+package com.capstone.project.controller;
 
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Post;
@@ -6,9 +6,7 @@ import com.capstone.project.domain.User;
 import com.capstone.project.repository.PostRepository;
 import com.capstone.project.repository.UserRepository;
 import com.capstone.project.request.PostRequest;
-import com.capstone.project.request.ProductRequest;
 import com.capstone.project.response.PostResponse;
-import com.capstone.project.response.ProductResponse;
 import com.capstone.project.service.impl.PostServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +32,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PostServiceTest {
+public class PostControllerTest {
     @InjectMocks
     private PostServiceImpl postService;
 

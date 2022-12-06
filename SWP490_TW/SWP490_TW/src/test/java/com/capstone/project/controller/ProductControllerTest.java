@@ -1,4 +1,4 @@
-package com.capstone.project.service;
+package com.capstone.project.controller;
 
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Category;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProductServiceTest {
+public class ProductControllerTest {
 
     @InjectMocks
     private ProductServiceImpl productService;

@@ -1,18 +1,13 @@
-package com.capstone.project.service;
+package com.capstone.project.controller;
 
 import com.capstone.project.config.exception.AppException;
-import com.capstone.project.domain.Category;
-import com.capstone.project.domain.Product;
 import com.capstone.project.domain.User;
 import com.capstone.project.repository.UserRepository;
-import com.capstone.project.request.CategoryRequest;
 import com.capstone.project.request.UserRequest;
-import com.capstone.project.response.CategoryResponse;
 import com.capstone.project.response.UserResponse;
 import com.capstone.project.service.impl.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UserServiceTest {
+public class UserControllerTest {
     @InjectMocks
     private UserServiceImpl userService;
 

@@ -63,14 +63,17 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
-        UserResponse userResponse = userService.createUser(request);
-        System.out.println(userResponse);
-        if (userResponse == null) {
+        Integer check = userService.createUser(request);
+        if (check == 1) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Error", false, "null"));
+                    new ResponseObject("ok", "Email này đã tồn tại", false, "null"));
+        } else if(check == 2){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Username đã tồn tại", false, "null"));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Tạo user thành công", true, "null"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
     @PostMapping("/staff")

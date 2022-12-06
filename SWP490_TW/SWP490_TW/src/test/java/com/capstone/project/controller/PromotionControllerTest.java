@@ -1,14 +1,9 @@
-package com.capstone.project.service;
+package com.capstone.project.controller;
 
 import com.capstone.project.config.exception.AppException;
-import com.capstone.project.domain.Category;
 import com.capstone.project.domain.Promotion;
 import com.capstone.project.repository.PromotionRepository;
-import com.capstone.project.request.CategoryRequest;
-import com.capstone.project.request.ProductRequest;
 import com.capstone.project.request.PromotionRequest;
-import com.capstone.project.response.CategoryResponse;
-import com.capstone.project.response.ProductResponse;
 import com.capstone.project.response.PromotionResponse;
 import com.capstone.project.service.impl.PromotionServiceImpl;
 import org.junit.Assert;
@@ -28,7 +23,7 @@ import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PromotionServiceTest {
+public class PromotionControllerTest {
     @InjectMocks
     private PromotionServiceImpl promotionService;
 

@@ -1,4 +1,4 @@
-package com.capstone.project.service;
+package com.capstone.project.controller;
 
 import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Category;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CategoryServiceTest {
+public class CategoryControllerTest {
 
     @InjectMocks
     private CategoryServiceImpl categoryService;
@@ -82,16 +82,16 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("test update category fail when category not found")
-    public void TestUpdateCategoryFail() {
-        //set up
-        CategoryRequest categoryRequest = new CategoryRequest("test category");
-        Integer id = 2;
-        Mockito.when(categoryRepository.findById(id)).thenThrow(new AppException("Category not found", 404));
+        public void TestUpdateCategoryFail() {
+            //set up
+            CategoryRequest categoryRequest = new CategoryRequest("test category");
+            Integer id = 2;
+            Mockito.when(categoryRepository.findById(id)).thenThrow(new AppException("Category not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.updateCategory(id, categoryRequest));
+            AppException ex = Assert.assertThrows(AppException.class, () -> categoryService.updateCategory(id, categoryRequest));
 
-        Assert.assertEquals("Category not found", ex.getMessage());
-        Assert.assertEquals(404, ex.getErrorCode());
+            Assert.assertEquals("Category not found", ex.getMessage());
+            Assert.assertEquals(404, ex.getErrorCode());
     }
 
     @Test
