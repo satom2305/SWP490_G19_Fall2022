@@ -56,7 +56,10 @@ public class PostControllerTest {
     }
 
 
+
+
     @Test
+    @DisplayName("Test get all post")
     public void TestGetAllPost() {
         List<Post> postList = new ArrayList<>();
         postList.add(post);
@@ -67,6 +70,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Test get all post fail")
     public void TestGetAllProductFail() {
         List<Post> expect = new ArrayList<>();
         expect.add(post);

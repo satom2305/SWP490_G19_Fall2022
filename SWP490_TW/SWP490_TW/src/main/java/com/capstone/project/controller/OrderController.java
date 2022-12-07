@@ -1,6 +1,7 @@
 package com.capstone.project.controller;
 
 import com.capstone.project.request.OrderRequest;
+import com.capstone.project.response.OrderResponse;
 import com.capstone.project.response.ResponseObject;
 import com.capstone.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +30,13 @@ public class OrderController {
 
     @PostMapping()
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
-        if(orderService.createOrder(orderRequest) != null) {
+        OrderResponse orderResponse = orderService.createOrder(orderRequest);
+        if(orderResponse != null) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Successfully", true, null));
+                    new ResponseObject("ok", "Successfully", true, orderResponse));
         }else{
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("not ok", "False", false, null));
+                    new ResponseObject("not ok", "False", false, orderResponse));
         }
     }
 

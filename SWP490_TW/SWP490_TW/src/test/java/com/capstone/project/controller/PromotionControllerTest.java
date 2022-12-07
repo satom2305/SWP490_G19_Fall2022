@@ -19,7 +19,13 @@ import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,6 +47,57 @@ public class PromotionControllerTest {
     }
 
     @Test
+    @DisplayName("Create Promotion")
+    public void TestCreatePromotion() {
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 50.0, 10);
+        Mockito.when(promotionRepository.save(Promotion.builder()
+                .promotionCode(promotionRequest.getPromotionCode())
+                .amount(promotionRequest.getAmount())
+                .salePercent(promotionRequest.getSalePercent())
+                .build())).thenReturn(promotion);
+
+        PromotionResponse actual = promotionService.createPromotion(promotionRequest);
+
+        Mockito.verify(mapper, Mockito.timeout(1)).map(promotion, PromotionResponse.class);
+        Assert.assertEquals(promotion.getPromotionCode(), actual.getPromotionCode());
+    }
+
+    @Test
+    @DisplayName("Create promotion fail")
+    public void TestCreatePromotionFail() {
+        Promotion promotion = new Promotion();
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 50.0, 10);
+        Mockito.when(promotionRepository.save(promotion)).thenReturn(promotion);
+        Exception ex = Assert.assertThrows(Exception.class, () -> promotionService.createPromotion(promotionRequest));
+        Assert.assertEquals("source cannot be null", ex.getMessage());
+    }
+
+
+    @Test
+    @DisplayName("Test get All Promotion")
+    public void TestGetAllPromotion() {
+        List<Promotion> promotions = new ArrayList<>();
+        promotions.add(promotion);
+        when(promotionRepository.findAll()).thenReturn(promotions);
+
+        List<PromotionResponse> actual = promotionService.getAllPromotion();
+        assertEquals(promotions.size(), actual.size());
+    }
+
+    @Test
+    @DisplayName("Test get All Promotion fail")
+    public void TestGetAllPromotionFail() {
+        List<Promotion> expect = new ArrayList<>();
+        expect.add(promotion);
+        List<Promotion> actual = new ArrayList<>();
+        actual.add(promotion);
+
+        Mockito.when(promotionRepository.findAll()).thenThrow(new NullPointerException(""));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> promotionService.getAllPromotion());
+        assertEquals("", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("test create promotion fail")
     public void TestCreateCategoryFail() {
         //set up
@@ -55,6 +112,27 @@ public class PromotionControllerTest {
         //verify
         Assert.assertEquals("source cannot be null", ex.getMessage());
     }
+
+    @Test
+    @DisplayName("Get promotion by code")
+    public void GetPromotionByCode() {
+        String code = "String";
+        Mockito.when(promotionRepository.findByPromotionCode(code)).thenReturn(Optional.ofNullable(promotion));
+        PromotionResponse promotionResponse = promotionService.getPromotionByCode(code);
+        Assert.assertEquals(promotion.getPromotionCode(), promotionResponse.getPromotionCode());
+    }
+
+    @Test
+    @DisplayName("Get promotion by code fail")
+    public void GetPromotionByCodeFail() {
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 50.0, 10);
+        String code = "String";
+        Mockito.when(promotionRepository.findByPromotionCode(code)).thenThrow(new AppException("Promotion not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.getPromotionByCode(promotionRequest.getPromotionCode()));
+        Assert.assertEquals("Promotion not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
 
     @Test
     @DisplayName("test update promotion success")
