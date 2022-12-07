@@ -46,6 +46,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse findProductById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException("Product not found", 404));
+        Category category = categoryRepository.findById(product.getCategory().getCategoryId())
+                .orElseThrow(() -> new AppException("Category not found", 404));
         List<ProductImg> imgs = productImgRepository.findByProduct(product);
         return ProductResponse.builder()
                 .productId(product.getProductId())
@@ -56,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
                 .sellPrice(product.getSellPrice())
                 .amount(product.getAmount())
                 .createdDate(product.getCreatedDate())
+                .category(category)
                 .productStatus(product.getProductStatus())
                 .mainImg(product.getMainImg())
                 .productImgs(imgs)

@@ -8,6 +8,7 @@ import com.capstone.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -22,7 +23,6 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllAccounts() {
-
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Successfully", true, userService.getALLUser()));
     }

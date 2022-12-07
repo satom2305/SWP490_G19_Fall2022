@@ -1,5 +1,6 @@
 package com.capstone.project.response;
 
+import com.capstone.project.domain.Category;
 import com.capstone.project.domain.ProductImg;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class ProductResponse {
     private int amount;
     private Date createdDate;
     private int productStatus;
-    private CategoryResponse category;
+    private Category category;
     private String mainImg;
     private List<ProductImg> productImgs;
 

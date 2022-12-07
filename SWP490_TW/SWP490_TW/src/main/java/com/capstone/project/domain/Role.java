@@ -1,17 +1,17 @@
 package com.capstone.project.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
+@Builder
 @Table(name = "role")
 public class Role {
     @Id
@@ -21,5 +21,6 @@ public class Role {
 
     @Column(name = "role_name")
     private String roleName;
+
 
 }

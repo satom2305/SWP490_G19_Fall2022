@@ -1,6 +1,7 @@
 package com.capstone.project.repository;
 
 import com.capstone.project.domain.Post;
+import com.capstone.project.domain.Product;
 import com.capstone.project.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +24,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
     List<User> searchUserByUsername(@Param("username") String username);
+    @Modifying
+    @Query(value = "SELECT * FROM railway.user inner join authorities on user.user_id = authorities.user_id where authorities.role_id != 1",nativeQuery = true)
+    @Transactional
+    List<User> findAllUserExAdmin();
 }
