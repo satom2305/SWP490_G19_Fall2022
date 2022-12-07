@@ -48,4 +48,11 @@ public class OrderController {
     public void deleteOrder(@PathVariable("id") Integer id) {
         orderService.deleteOrder(id);
     }
+
+    @GetMapping("/searchOrderByUsername/{username}")
+    public ResponseEntity<?> searchOrderByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, orderService.searchOrderByUsername(username))
+        );
+    }
 }

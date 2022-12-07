@@ -138,4 +138,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/searchUserByUsername/{username}")
+    public ResponseEntity<?> searchUserByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, userService.searchUserByUsername(username))
+        );
+    }
+
 }

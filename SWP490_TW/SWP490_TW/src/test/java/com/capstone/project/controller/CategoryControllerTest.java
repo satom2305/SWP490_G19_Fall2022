@@ -77,7 +77,6 @@ public class CategoryControllerTest {
 
         //verify
         Assert.assertEquals("source cannot be null", ex.getMessage());
-
     }
 
     @Test

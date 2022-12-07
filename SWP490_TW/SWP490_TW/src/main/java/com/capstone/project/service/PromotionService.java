@@ -14,5 +14,7 @@ public interface PromotionService {
     void deletePromotion(Integer id);
     boolean checkPromotion(String code);
 
+    List<PromotionResponse> searchPromotionByCode(String promotionCode);
+
 
 }

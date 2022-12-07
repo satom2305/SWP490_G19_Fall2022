@@ -19,5 +19,4 @@ public interface ReviewService {
 
     void deleteReview(Integer id);
 
-    List<ReviewResponse> getAllReviewByPid(Integer pid);
 }

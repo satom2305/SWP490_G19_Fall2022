@@ -61,4 +61,11 @@ public class PromotionController {
                 new ResponseObject("ok", "Error", false, "null"));
     }
 
+    @GetMapping("/searchPromotion/{promotionCode}")
+    public ResponseEntity<?> searchProductByName(@PathVariable("promotionCode") String promotionCode) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, promotionService.searchPromotionByCode(promotionCode))
+        );
+    }
+
 }

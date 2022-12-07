@@ -22,8 +22,9 @@ public interface UserService {
     UserResponse updateUser(Integer id, UserRequest request);
 
     int changePwd(String OldPassword, String NewPassword);
-    UserResponse ForgotPwd(String username);
     UserResponse createStaff(UserRequest request);
     Boolean checkPwd(String username,UserRequest request);
+
+    List<UserResponse> searchUserByUsername(String username);
 
 }

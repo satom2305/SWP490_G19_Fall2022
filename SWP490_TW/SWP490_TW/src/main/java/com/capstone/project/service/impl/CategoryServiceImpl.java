@@ -66,4 +66,12 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new AppException("Category not found", 404));
         categoryRepository.delete(category);
     }
+
+    @Override
+    public List<CategoryResponse> searchCategoryByName(String categoryName) {
+        return categoryRepository.searchListCategoryByName(categoryName)
+                .stream()
+                .map(category -> mapper.map(category, CategoryResponse.class))
+                .collect(Collectors.toList());
+    }
 }

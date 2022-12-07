@@ -15,4 +15,6 @@ public interface PostService {
     PostResponse updatePost(Integer id, PostRequest request);
 
     void deletePost(Integer id);
+
+    List<PostResponse> searchPostByTitle(String title);
 }

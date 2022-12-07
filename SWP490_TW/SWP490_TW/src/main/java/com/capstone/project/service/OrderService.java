@@ -12,5 +12,6 @@ public interface OrderService {
         OrderResponse updateOrder(Integer id ,OrderRequest orderRequest);
         OrderResponse findOrderById(Integer id);
         void deleteOrder(Integer id);
+        List<OrderResponse> searchOrderByUsername(String username);
 
 }

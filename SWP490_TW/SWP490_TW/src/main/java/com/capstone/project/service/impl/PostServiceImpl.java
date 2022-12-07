@@ -27,9 +27,8 @@ public class PostServiceImpl implements PostService {
     public PostResponse getPostById(Integer id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new AppException("Account not found", 404));
-        return mapper.map(post,PostResponse.class);
+        return mapper.map(post, PostResponse.class);
     }
-
 
     @Override
     public List<PostResponse> getALLPost() {
@@ -42,7 +41,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponse createPost(PostRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException("User not found",404));
+                .orElseThrow(() -> new AppException("User not found", 404));
         Post post = postRepository.save(Post.builder()
                 .user(user)
                 .title(request.getTitle())
@@ -58,7 +57,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponse updatePost(Integer id, PostRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException("User not found",404));
+                .orElseThrow(() -> new AppException("User not found", 404));
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new AppException("Account not found", 404));
         post.setUser(user);
@@ -71,11 +70,18 @@ public class PostServiceImpl implements PostService {
         return mapper.map(post, PostResponse.class);
     }
 
-
     @Override
     public void deletePost(Integer id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new AppException("Account not found", 404));
         postRepository.delete(post);
+    }
+
+    @Override
+    public List<PostResponse> searchPostByTitle(String title) {
+        return postRepository.searchPostByTitle(title)
+                .stream()
+                .map(post -> mapper.map(post, PostResponse.class))
+                .collect(Collectors.toList());
     }
 }

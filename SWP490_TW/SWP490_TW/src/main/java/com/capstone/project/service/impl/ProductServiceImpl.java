@@ -127,14 +127,6 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<ProductResponse> searchAvaProductByName(String productName) {
-        System.out.println(productName);
-        return productRepository.searchListAvaProductByName(productName)
-                .stream()
-                .map(product -> mapper.map(product, ProductResponse.class))
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<ProductResponse> getAllProductAvailableASC() {

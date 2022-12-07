@@ -4,6 +4,7 @@ import com.capstone.project.config.exception.AppException;
 import com.capstone.project.domain.Promotion;
 import com.capstone.project.repository.PromotionRepository;
 import com.capstone.project.request.PromotionRequest;
+import com.capstone.project.response.ProductResponse;
 import com.capstone.project.response.PromotionResponse;
 import com.capstone.project.service.PromotionService;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,14 @@ public class PromotionServiceImpl implements PromotionService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<PromotionResponse> searchPromotionByCode(String promotionCode) {
+        return promotionRepository.searchListPromotionByCode(promotionCode)
+                .stream()
+                .map(promotion -> mapper.map(promotion, PromotionResponse.class))
+                .collect(Collectors.toList());
     }
 
     @Override

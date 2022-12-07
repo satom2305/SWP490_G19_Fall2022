@@ -7,6 +7,7 @@ import com.capstone.project.request.CartRequest;
 import com.capstone.project.request.OrderRequest;
 import com.capstone.project.response.CartResponse;
 import com.capstone.project.response.OrderResponse;
+import com.capstone.project.response.ProductResponse;
 import com.capstone.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -177,5 +178,13 @@ public class OrderServiceImpl implements OrderService {
             detailRepository.delete(c);
         }
         orderRepository.delete(order);
+    }
+
+    @Override
+    public List<OrderResponse> searchOrderByUsername(String username) {
+        return orderRepository.searchOrderByUsername(username)
+                .stream()
+                .map(order -> mapper.map(order, OrderResponse.class))
+                .collect(Collectors.toList());
     }
 }

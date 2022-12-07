@@ -78,10 +78,4 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.delete(review);
     }
 
-    @Override
-    public List<ReviewResponse> getAllReviewByPid(Integer pid) {
-        return reviewRepository.findByProductId(pid).stream()
-                .map(review -> mapper.map(review, ReviewResponse.class))
-                .collect(Collectors.toList());
-    }
 }

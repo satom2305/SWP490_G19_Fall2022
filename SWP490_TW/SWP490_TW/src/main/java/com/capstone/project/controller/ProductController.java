@@ -44,12 +44,6 @@ public class ProductController {
                 new ResponseObject("ok", "Successfully", true, productService.searchProductByName(productName))
         );
     }
-    @GetMapping("/searchAvaProductByName/{productName}")
-    public ResponseEntity<?> searchAvaProductByName(@PathVariable("productName") String productName) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Successfully", true, productService.searchProductByName(productName))
-        );
-    }
 
     @GetMapping("/sort/asc")
     public ResponseEntity<?> sortProductASC() {

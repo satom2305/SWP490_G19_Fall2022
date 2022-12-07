@@ -45,4 +45,11 @@ public class PostController {
     public void delete(@PathVariable("id") Integer id) {
         postService.deletePost(id);
     }
+
+    @GetMapping("/searchPostByTitle/{title}")
+    public ResponseEntity<?> searchPostByTitle(@PathVariable("title") String title) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, postService.searchPostByTitle(title))
+        );
+    }
 }

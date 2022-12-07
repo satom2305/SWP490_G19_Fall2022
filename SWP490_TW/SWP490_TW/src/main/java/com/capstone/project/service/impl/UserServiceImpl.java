@@ -81,20 +81,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer createUser(UserRequest request) {
-            if(checkEmailExist(request.getEmail())){
-                return 1;
-            } else if(checkUserNameExist(request.getUsername())){
-                return 2;
-            } else {
-                User user = userRepository.save(User.builder()
-                        .username(request.getUsername())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .email(request.getEmail())
-                        .status(true)
-                        .build());
-                userRepository.setRole(user.getUserId(), 2);
-                return 0;
-            }
+        if (checkEmailExist(request.getEmail())) {
+            return 1;
+        } else if (checkUserNameExist(request.getUsername())) {
+            return 2;
+        } else {
+            User user = userRepository.save(User.builder()
+                    .username(request.getUsername())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .email(request.getEmail())
+                    .status(true)
+                    .build());
+            userRepository.setRole(user.getUserId(), 2);
+            return 0;
+        }
     }
 
     public String encodePwd(String password) {
@@ -137,11 +137,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse ForgotPwd(String username) {
-        return null;
-    }
-
-    @Override
     public UserResponse createStaff(UserRequest request) {
         if (!checkUserNameExist(request.getUsername()) & !checkEmailExist(request.getEmail())) {
             User user = userRepository.save(User.builder()
@@ -167,5 +162,11 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-
+    @Override
+    public List<UserResponse> searchUserByUsername(String username) {
+        return userRepository.searchUserByUsername(username)
+                .stream()
+                .map(user -> mapper.map(user, UserResponse.class))
+                .collect(Collectors.toList());
+    }
 }

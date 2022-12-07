@@ -43,4 +43,11 @@ public class CategoryController {
     public void deleteById(@PathVariable("id") Integer id) {
         categoryService.deleteCategory(id);
     }
+
+    @GetMapping("/searchCategoryByName/{categoryName}")
+    public ResponseEntity<?> searchCategoryByName(@PathVariable("categoryName") String categoryName){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Successfully", true, categoryService.searchCategoryByName(categoryName))
+        );
+    }
 }
