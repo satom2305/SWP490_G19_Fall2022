@@ -227,7 +227,7 @@ export default {
         path: `/admin/post/create`,
       });
     },
-    openModalDeletePost(product) {
+    openModalDeletePost(post) {
       this.$root.$emit("bv::show::modal", "delete-post");
       this.currentPost = { ...post };
     },

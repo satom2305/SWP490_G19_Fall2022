@@ -18,21 +18,6 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="breadcrumb__text">
-              <h2>Contact Us</h2>
-              <div class="breadcrumb__option">
-                <a href="./">Home</a>
-                <span>Contact Us</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Breadcrumb Section End -->
 
     <!-- Contact Section Begin -->
@@ -42,15 +27,15 @@
           <div class="col-lg-3 col-md-3 col-sm-6 text-center">
             <div class="contact__widget">
               <span class="icon_phone"></span>
-              <h4>Phone</h4>
-              <p>+01-3-8888-6868</p>
+              <h4>Số điện thoại</h4>
+              <p>+84384137197</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 text-center">
             <div class="contact__widget">
               <span class="icon_pin_alt"></span>
-              <h4>Address</h4>
-              <p>60-49 Road 11378 New York</p>
+              <h4>Địa chỉ</h4>
+              <p>Thôn Bến, xã Phụng Công, huyện Văn Giang, tỉnh Hưng Yên</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 text-center">

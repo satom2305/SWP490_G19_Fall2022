@@ -10,12 +10,13 @@
                 <span>Danh Mục</span>
               </div>
               <ul
+                @click="handleGetProductbyCategory(item.categoryId)"
                 class="listCate"
                 v-for="(item, index) in listCategory"
                 :key="index"
               >
                 <li>
-                  <a href="#">{{ item.categoryName }}</a>
+                  <a>{{ item.categoryName }}</a>
                 </li>
               </ul>
             </div>
@@ -61,6 +62,7 @@
 import { handleJQuery } from "@/common/utils";
 import baseMixins from "@/components/mixins/base";
 import router from "@/router/index";
+import { FETCH_CATEGORY_BY_ID } from "@/store/action.type";
 export default {
   name: "SectionBegin",
   components: {},
@@ -68,7 +70,7 @@ export default {
   data() {
     return {
       searchValue: null,
-      listCategory: [],
+      listCategory: null,
     };
   },
   mounted() {
@@ -110,6 +112,17 @@ export default {
       if (res && res.data && res.data.data) {
         this.listCategory = res.data.data;
       }
+    },
+    async handleGetProductbyCategory(categoryId) {
+      let res = await this.$store.dispatch(FETCH_CATEGORY_BY_ID, categoryId);
+      if (res && res.data && res.data.data) {
+        this.listProductbyCategory = res.data.data.products;
+      }
+      this.$router.push({ path: `/product-category/${categoryId}` });
+      if (this.$route.name == "CategoryProduct") {
+        this.$router.go(this.$router.currentRoute);
+      }
+      console.log(this.$route);
     },
   },
 };

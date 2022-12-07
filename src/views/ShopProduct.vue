@@ -343,7 +343,7 @@ export default {
     };
   },
   mounted() {
-    handleJQuery();
+    // handleJQuery();
     // handlebotfe();
     this.getListProduct();
     this.getTopProduct();

@@ -122,9 +122,9 @@
                 <img :src="item.mainImg" />
                 <ul class="featured__item__pic__hover">
                   <li>
-                    <a href="#">
+                    <div>
                       <font-awesome-icon icon="fa fa-shopping-cart" />
-                    </a>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -444,6 +444,7 @@ export default {
         },
       });
     },
+
     async getListProduct() {
       // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt("/rest/products/listProduct");

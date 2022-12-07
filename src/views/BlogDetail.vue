@@ -216,7 +216,7 @@ export default {
     };
   },
   mounted() {
-    handleJQuery();
+    // handleJQuery();
     this.getDetailBlog();
     // console.log(this.$router);
   },

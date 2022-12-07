@@ -56,6 +56,12 @@ const router = new Router({
       component: () => import("@/views/ShopDetail"),
     },
     {
+      path: '/product-category/:id',
+      name: 'CategoryProduct',
+      meta: { title: 'Category Product', layout: 'userpages' },
+      component: () => import("@/views/ProductByCategory"),
+    },
+    {
       path: '/cart',
       name: 'ShoppingCart',
       meta: { title: 'Shopping Cart', layout: 'userpages' },

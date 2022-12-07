@@ -18,9 +18,6 @@
             <div class="header__top__right">
               <div class="header__top__right__auth">
                 <div class="d-flex align-items-center">
-                  <template v-if="userInfo && userInfo.role === '[ADMIN]'">
-                    <a href="/admin"> Management </a>
-                  </template>
                   <template v-if="userInfo && userInfo.username">
                     <a-dropdown>
                       <a class="ant-dropdown-link" @click.prevent>
@@ -34,6 +31,13 @@
                       </a>
                       <template #overlay>
                         <a-menu>
+                          <a-menu-item
+                            v-if="userInfo && userInfo.role === '[ADMIN]'"
+                          >
+                            <template>
+                              <div @click="navigateToAdmin">Trang quản lý</div>
+                            </template>
+                          </a-menu-item>
                           <a-menu-item>
                             <div
                               @click="openModalUpdatePassword"
@@ -368,8 +372,17 @@ export default {
         });
       }
     },
+    // async checkoldPassword(){
+    //   let response = await this.$store.dispatch(CHANGE_PASSWORD, payload);
+    //   if(res){
+
+    //   }
+    // },
     navigateToLogin() {
       router.push({ path: "/login" });
+    },
+    navigateToAdmin() {
+      router.push({ path: "/admin" });
     },
   },
 };

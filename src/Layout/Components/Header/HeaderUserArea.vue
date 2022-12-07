@@ -33,6 +33,15 @@
                 type="button"
                 tabindex="0"
                 class="dropdown-item"
+                @click="navigateToUserPage"
+              >
+                Trang bán hàng
+              </button>
+              <div tabindex="-1" class="dropdown-divider"></div>
+              <button
+                type="button"
+                tabindex="0"
+                class="dropdown-item"
                 @click="logout"
               >
                 Đăng xuất
@@ -73,6 +82,9 @@ export default {
     },
     logout() {
       logout();
+    },
+    navigateToUserPage() {
+      this.$router.push({ path: `/` });
     },
   },
 };

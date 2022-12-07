@@ -45,7 +45,7 @@ const actions = {
   },
   [DELETE_POST](context, postId) {
     return new Promise(async resolve => {
-      let response = await baseMixins.methods.put(`/rest/posts/${postId}`)
+      let response = await baseMixins.methods.delete(`/rest/posts/${postId}`)
       resolve(response)
     })
   },

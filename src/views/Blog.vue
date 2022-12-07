@@ -92,7 +92,7 @@
             <div class="t-mx-auto t-w-fit">
               <b-pagination
                 v-model="currentPage"
-                :total-rows="pagination.totalRows"
+                :total-rows="listBlog.length"
                 :per-page="pagination.perPage"
                 aria-controls="my-table"
                 @change="onPageChanged"

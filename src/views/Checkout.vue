@@ -14,56 +14,7 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="hero__categories">
-              <div class="hero__categories__all">
-                <i class="fa fa-bars"></i>
-                <span>All departments</span>
-              </div>
-              <ul>
-                <li><a href="#">Fresh Meat</a></li>
-                <li><a href="#">Vegetables</a></li>
-                <li><a href="#">Fruit & Nut Gifts</a></li>
-                <li><a href="#">Fresh Berries</a></li>
-                <li><a href="#">Ocean Foods</a></li>
-                <li><a href="#">Butter & Eggs</a></li>
-                <li><a href="#">Fastfood</a></li>
-                <li><a href="#">Fresh Onion</a></li>
-                <li><a href="#">Papayaya & Crisps</a></li>
-                <li><a href="#">Oatmeal</a></li>
-                <li><a href="#">Fresh Bananas</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-9">
-            <div class="hero__search">
-              <div class="hero__search__form">
-                <form action="#">
-                  <div class="hero__search__categories">
-                    All Categories
-                    <span class="arrow_carrot-down"></span>
-                  </div>
-                  <input type="text" placeholder="What do yo u need?" />
-                  <button type="submit" class="site-btn">SEARCH</button>
-                </form>
-              </div>
-              <div class="hero__search__phone">
-                <div class="hero__search__phone__icon">
-                  <i class="fa fa-phone"></i>
-                </div>
-                <div class="hero__search__phone__text">
-                  <h5>+65 11.188.888</h5>
-                  <span>support 24/7 time</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <SectionBegin />
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
@@ -235,7 +186,7 @@
                   @click="handleSubmit"
                   style="cursor:pointer"
                 >
-                  PLACE ORDER
+                  Đặt hàng
                 </button>
               </div>
             </div>
@@ -258,13 +209,14 @@ import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "@/common/common";
 import {
   CREATE_ORDER,
-  CREATE_ORDER_DETAIL,
+  // CREATE_ORDER_DETAIL,
   CREATE_ORDER_DETAIL_BY_ORDER_ID,
 } from "@/store/action.type";
 import { required, helpers } from "vuelidate/lib/validators";
 import UserHeader from "../Layout/Components/UserHeader";
 import UserFooter from "../Layout/Components/UserFooter";
 import Humberger from "../Layout/Components/Humberger";
+import SectionBegin from "../Layout/Components/SectionBegin";
 import moment from "moment";
 import modalPayment from "../Layout/Components/PaymentInfo.vue";
 
@@ -298,7 +250,7 @@ const validPhoneNumber = helpers.regex(
 export default {
   name: "check-out",
   mixins: [baseMixins],
-  components: { UserHeader, modalPayment, Humberger, UserFooter },
+  components: { UserHeader, modalPayment, Humberger, UserFooter, SectionBegin },
   data() {
     return {
       listCart: [],
@@ -326,7 +278,7 @@ export default {
     },
   },
   mounted() {
-    handleJQuery();
+    // handleJQuery();
     this.getListCart();
   },
   computed: {
@@ -395,7 +347,6 @@ export default {
       });
 
       let res = await this.$store.dispatch(CREATE_ORDER, payload);
-      console.log(res);
       if (res.status === 200 && res.data && res.data.data) {
         let newOrderId = res.data.data.orderId;
         payloadForCreateDetail = payloadForCreateDetail.map((item) => {
@@ -408,7 +359,7 @@ export default {
           CREATE_ORDER_DETAIL_BY_ORDER_ID,
           payloadForCreateDetail
         );
-        if (resForDetail.status == 200) {
+        if (resForDetail.status === 200) {
           this.$message({
             message: successMsg,
             type: "success",
@@ -416,6 +367,7 @@ export default {
           });
         }
       }
+      this.$root.$emit("bv::show::modal", "modal-payment");
       if (res.data.status == "not ok") {
         this.$message({
           message: outofProd,
@@ -423,7 +375,6 @@ export default {
           showClose: true,
         });
       }
-      // this.$root.$emit("bv::show::modal", "modal-payment");
     },
     handleSubmit() {
       this.$v.$reset();

@@ -18,21 +18,6 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
-      <div class="container">
-        <!-- <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="breadcrumb__text">
-              <h2>Shopping Cart</h2>
-              <div class="breadcrumb__option">
-                <a href="./">Home</a>
-                <span>Shopping Cart</span>
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
-    </section>
     <!-- Breadcrumb Section End -->
 
     <!-- Shoping Cart Section Begin -->
@@ -205,7 +190,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+// import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -224,7 +209,7 @@ export default {
     };
   },
   mounted() {
-    handleJQuery();
+    // handleJQuery();
     this.getListCart();
   },
   computed: {
