@@ -18,18 +18,21 @@ export default {
   name: "App",
   computed: {
     layout() {
-      return ((this.$route.meta.layout) ? (this.$route.meta.layout) : userpages_layout) + "-layout" ;
-    }
+      return (
+        (this.$route.meta.layout ? this.$route.meta.layout : userpages_layout) +
+        "-layout"
+      );
+    },
   },
-  created() {}
+  created() {},
 };
 </script>
 
 <style>
 #app {
   font-family: Roboto, Inter var, ui-sans-serif, system-ui, -apple-system,
-  BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif,
-  Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   line-height: 1.5;
   font-weight: 400;
   color: #212121 !important;
