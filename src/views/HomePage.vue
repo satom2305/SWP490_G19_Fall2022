@@ -17,12 +17,13 @@
                 <span>Danh Mục</span>
               </div>
               <ul
+                @click="handleGetProductbyCategory(item.categoryId)"
                 class="listCate"
                 v-for="(item, index) in listCategory"
                 :key="index"
               >
                 <li>
-                  <a href="#">{{ item.categoryName }}</a>
+                  <a>{{ item.categoryName }}</a>
                 </li>
               </ul>
             </div>
@@ -82,7 +83,9 @@
         <div v-for="(item, index) in listTypeProduct" :key="index" class="p-5">
           <img :src="item.img" height="300" width="350" />
           <h5 class="t-text-center block p-4">
-            <a href="#">{{ item.name }}</a>
+            <a @click="handleGetProductbyCategory(item.categoryId)">{{
+              item.name
+            }}</a>
           </h5>
         </div>
       </VueSlickCarousel>
@@ -114,22 +117,19 @@
             :key="index"
             class="col"
           >
-            <div
-              class="featured__item"
-              @click="showProductDetail(item.productId)"
-            >
+            <div class="featured__item">
               <div class="featured__item__pic">
                 <img :src="item.mainImg" />
                 <ul class="featured__item__pic__hover">
                   <li>
-                    <div>
-                      <font-awesome-icon icon="fa fa-shopping-cart" />
+                    <div @click="addToCart(item.productId)">
+                      <a><font-awesome-icon icon="fa fa-shopping-cart"/></a>
                     </div>
                   </li>
                 </ul>
               </div>
               <div class="featured__item__text">
-                <h6>
+                <h6 @click="showProductDetail(item.productId)">
                   <span>{{ item.productName }}</span>
                 </h6>
                 <h5>{{ formatPrice(item.sellPrice) }}đ</h5>
@@ -314,7 +314,7 @@
 
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
-import { handleJQuery, botChatAI } from "@/common/utils";
+import { handleJQuery, botChatAI, verifyAccountRole } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 // import { handlebotfe } from "@/common/bot-fe";
 import { formatPriceSearchV2 } from "../common/common";
@@ -337,6 +337,11 @@ export default {
       rateProduct: [],
       reviewProduct: [],
       listPostPaginate: [],
+      productDetail: null,
+      quantity: 1,
+      userInfo: localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo"))
+        : null,
       pagination: {
         currentPostPage: 1,
         currentProductPage: 1,
@@ -345,46 +350,55 @@ export default {
       },
       listTypeProduct: [
         {
+          categoryId: 1,
           name: "Cây Cảnh Trong Nhà",
           img:
             "https://res.cloudinary.com/des083zke/image/upload/v1666838904/Capstone_Project_tw/gia-cay-thiet-moc-lan-dep_wb4ce1.jpg",
         },
         {
+          categoryId: 2,
           name: "Cây Cảnh Phong Thủy",
           img:
             "https://res.cloudinary.com/des083zke/image/upload/v1667445194/Capstone_Project_tw/trong-cay-nguyet-que-mong-cau-vinh-quang-cho-gia-dinh-cay-nguyet-que-1-1507715523-width660height639_ejwxti.jpg",
         },
         {
+          categoryId: 3,
           name: "Cây Cảnh Để Bàn",
           img:
             "https://res.cloudinary.com/des083zke/image/upload/v1667446961/Capstone_Project_tw/sen-nuda-bui-9-10cm-350-350-jpg_fk27d3.jpg",
         },
         {
+          categoryId: 4,
           name: "Cây Cảnh Văn Phòng",
           img:
             "https://res.cloudinary.com/des083zke/image/upload/v1667467662/Capstone_Project_tw/cay-ngu-gia-bi-mini_wzeso7.jpg",
         },
         {
+          categoryId: 5,
           name: "Cây Cảnh Loại To",
           img:
             "https://thietkesanvuonviet.com/wp-content/uploads/2020/01/cay-bong-mat-it-rung-la_14.jpg",
         },
         {
+          categoryId: 6,
           name: "Cây Cảnh Sen Đá",
           img:
             "https://res.cloudinary.com/des083zke/image/upload/v1667446961/Capstone_Project_tw/sen-nuda-bui-9-10cm-350-350-jpg_fk27d3.jpg",
         },
         {
+          categoryId: 7,
           name: "Cây Thủy Sinh",
           img:
             "https://wikihow.com.vn/wp-content/uploads/2020/04/cay-thuy-sinh-la-gi.jpg",
         },
         {
+          categoryId: 8,
           name: "Cây Dây Leo",
           img:
             "https://mamnonhoami.edu.vn/wp-content/uploads/2021/04/cay-day-leo-bai-tho-mam-non.jpg",
         },
         {
+          categoryId: 9,
           name: "Xương Rồng Cảnh",
           img:
             "https://dalatfarm.net/wp-content/uploads/2020/11/xuong-rong-kim-ho-1.jpg",
@@ -435,6 +449,11 @@ export default {
     this.getListPost();
     this.getTopProduct();
   },
+  computed: {
+    verifyAccountRole() {
+      return verifyAccountRole();
+    },
+  },
   methods: {
     navigateToSearch(url) {
       router.push({
@@ -443,6 +462,46 @@ export default {
           searchValue: this.searchValue,
         },
       });
+    },
+    // async getDetailProduct() {
+    //   const id = this.$router.currentRoute.params.id;
+    //   const res = await this.getWithBigInt(`/rest/products`, id);
+    //   if (res && res.data && res.data.data) {
+    //     this.productDetail = res.data.data;
+    //   }
+    // },
+    async addToCart(productId) {
+      if (!this.verifyAccountRole) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
+      const userId = this.userInfo ? this.userInfo.userId : null;
+      // const productId = this.$router.currentRoute.params.id;
+
+      console.log(this.$route);
+      if (!userId || !productId) return;
+      const res = await this.post(`/rest/carts`, {
+        userId,
+        productId,
+        quantity: this.quantity,
+      });
+
+      if (res && res.data && res.data.success) {
+        this.$message.closeAll();
+        this.$message({
+          message: "Thêm sản phẩm vào giỏ hàng thành công",
+          type: "success",
+          showClose: true,
+        });
+        // this.getDetailProduct();
+      }
+    },
+    async handleGetProductbyCategory(categoryId) {
+      this.$router.push({ path: `/product-category/${categoryId}` });
+      if (this.$route.name == "CategoryProduct") {
+        this.$router.go(this.$router.currentRoute);
+      }
+      console.log(this.$route);
     },
 
     async getListProduct() {

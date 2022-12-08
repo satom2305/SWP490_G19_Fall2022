@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="humberger__menu__overlay"></div>
+  <div>
+    <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
       <div class="humberger__menu__logo">
         <a href="/"><img src="img/logo.png" alt=""/></a>
@@ -36,33 +36,33 @@
       <!--      </div>-->
       <nav class="humberger__menu__nav mobile-menu">
         <ul>
-              <li class="active">
-                <a href="/">Trang chủ</a>
+          <li class="active">
+            <a href="/">Trang chủ</a>
+          </li>
+          <li>
+            <a href="/shop-product">Sản phẩm</a>
+          </li>
+          <li>
+            <a href="#">Chức năng</a>
+            <ul class="header__menu__dropdown">
+              <li>
+                <a href="/cart">Giỏ hàng</a>
               </li>
               <li>
-                <a href="/shop-product">Sản phẩm</a>
+                <a href="/my-order">Đơn hàng của tôi</a>
               </li>
               <li>
-                <a href="#">Chức năng</a>
-                <ul class="header__menu__dropdown">
-                  <li>
-                    <a href="/cart">Giỏ hàng</a>
-                  </li>
-                  <li>
-                    <a href="/my-order">Đơn hàng của tôi</a>
-                  </li>
-                  <li>
-                    <a href="/contact">Liên hệ </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="/blog">Tin tức</a>
+                <a href="/contact">Liên hệ </a>
               </li>
             </ul>
+          </li>
+          <li>
+            <a href="/blog">Tin tức</a>
+          </li>
+        </ul>
       </nav>
       <div id="mobile-menu-wrap"></div>
-         <!-- <div class="header__top__right__social">-->
+      <!-- <div class="header__top__right__social">-->
       <!--      <a href="#"><font-awesome-icon icon="fa fa-facebook"/></a>-->
       <!--      <a href="#"><font-awesome-icon icon="fa fa-twitter"/></a>-->
       <!--      <a href="#"><font-awesome-icon icon="fa fa-linkedin"/></a>-->
@@ -77,12 +77,12 @@
         </ul>
       </div>
     </div>
-</div>
+  </div>
 </template>
 <script>
-
 export default {
   name: "Humberger",
   components: {},
 };
 </script>
+<style scoped></style>

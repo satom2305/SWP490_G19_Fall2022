@@ -71,6 +71,7 @@ export default {
     return {
       searchValue: null,
       listCategory: null,
+      listProductbyCategory: null,
     };
   },
   mounted() {
@@ -114,10 +115,10 @@ export default {
       }
     },
     async handleGetProductbyCategory(categoryId) {
-      let res = await this.$store.dispatch(FETCH_CATEGORY_BY_ID, categoryId);
-      if (res && res.data && res.data.data) {
-        this.listProductbyCategory = res.data.data.products;
-      }
+      // let res = await this.$store.dispatch(FETCH_CATEGORY_BY_ID, categoryId);
+      // if (res && res.data && res.data.data) {
+      //   this.listProductbyCategory = res.data.data.products;
+      // }
       this.$router.push({ path: `/product-category/${categoryId}` });
       if (this.$route.name == "CategoryProduct") {
         this.$router.go(this.$router.currentRoute);

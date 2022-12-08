@@ -32,7 +32,11 @@
                       <template #overlay>
                         <a-menu>
                           <a-menu-item
-                            v-if="userInfo && userInfo.role === '[ADMIN]'"
+                            v-if="
+                              userInfo &&
+                                (userInfo.role === '[ADMIN]' ||
+                                  userInfo.role === '[STAFF]')
+                            "
                           >
                             <template>
                               <div @click="navigateToAdmin">Trang quản lý</div>
@@ -238,24 +242,23 @@
             </ul>
           </nav>
         </div>
-        <div class="col-lg-3">
+        <!-- <div class="col-lg-3">
           <div class="header__cart">
             <ul>
-              <!-- <li>
+              <li>
                   <a href="#">
                     <font-awesome-icon icon="fa fa-heart" /> <span>1</span>
                   </a>
-                </li> -->
+                </li>
               <li>
                 <a href="/cart">
                   <font-awesome-icon icon="fa fa-shopping-bag" />
-                  <!-- <span>3</span> -->
+                  <span>3</span>
                 </a>
               </li>
             </ul>
-            <!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="humberger__open">
         <font-awesome-icon icon="fa fa-bars" />

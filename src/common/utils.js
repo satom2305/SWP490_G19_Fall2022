@@ -239,7 +239,7 @@ export const botChatAI =()=>{
         {
           selector: "#webchat",
   customData: {"language": "en"}, // arbitrary custom data. Stay minimal as this will be added to the socket
-  socketUrl: "http://192.168.193.61:5005/",
+  socketUrl: "http://14.225.205.220:5005/",
   socketPath: "/socket.io/",
   title: "Tree World",
   inputTextFieldHint: "Mời nhập câu hỏi",

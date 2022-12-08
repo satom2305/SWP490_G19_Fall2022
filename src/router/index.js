@@ -185,8 +185,9 @@ router.beforeEach((to, from, next) => {
 
   const authRequired = !publicPages.includes(to.path) && (publicNestedPages.filter(path => to.path.includes(path)).length === 0)
   const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'
+  const isStaff = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[STAFF]'
   const isAuthenticated = !!StorageService.get("Token") || verifyAccountRole();
-  if (to.path.includes('/admin') && isAuthenticated && !isAdmin) {
+  if (to.path.includes('/admin') && isAuthenticated && !isAdmin && !isStaff) {
     next('/error-not-allow')
   }
   if (authRequired && !isAuthenticated) {
