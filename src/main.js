@@ -54,6 +54,9 @@ import 'ant-design-vue/lib/form/style/css';
 import 'ant-design-vue/lib/list/style/css';
 import 'ant-design-vue/lib/dropdown/style/css';
 import { Menu, Icon, Select, Spin, Table, Row, Col, Input, Button, Pagination, Steps, TreeSelect, Skeleton, Comment, Avatar, Form, List, Dropdown } from 'ant-design-vue';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import 'leaflet/dist/leaflet.css';
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 Vue.use(Icon);
 Vue.use(Select);
 Vue.use(Spin);
@@ -120,7 +123,9 @@ Vue.config.productionTip = false;
 Vue.component('default-layout', Default);
 Vue.component('userpages-layout', Pages);
 Vue.component("multiselect", Multiselect);
-
+Vue.component('l-map', LMap);
+Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-marker', LMarker);
 setInterval(async () => {
 }, intervalMilliSeconds);
 /* eslint-disable no-new */

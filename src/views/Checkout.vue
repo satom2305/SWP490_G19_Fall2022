@@ -159,6 +159,21 @@
                   placeholder="Nhập ghi chú của bạn cho shop hoặc đơn vị vận chuyển."
                 />
               </div>
+              <div class="checkout__input">
+                <p>Mã giảm giá</p>
+                <input
+                  type="text"
+                  v-model="currentData.note"
+                  placeholder="Nhập mã giảm giá"
+                />
+                <button
+                  class="site-btn"
+                  @click="handleSubmit"
+                  style="cursor:pointer"
+                >
+                  Áp mã giảm giá
+                </button>
+              </div>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="checkout__order">
