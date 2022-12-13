@@ -397,4 +397,17 @@ export default {
 .listCate {
   margin-bottom: 0px;
 }
+.hero__categories {
+  position: absolute;
+  top: 0;
+  width: 90%;
+  z-index: 1000000;
+  background: #fff;
+}
+.row {
+  position: relative;
+}
+.hero__categories ul {
+  display: none;
+}
 </style>

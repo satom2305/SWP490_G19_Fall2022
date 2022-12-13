@@ -27,41 +27,19 @@
           <div class="col-lg-4 col-md-5 order-md-1 order-2">
             <div class="blog__sidebar">
               <div class="blog__sidebar__item">
-                <h4>Recent News</h4>
+                <h4>Tin liên quan</h4>
                 <div class="blog__sidebar__recent">
-                  <a href="#" class="blog__sidebar__recent__item">
+                  <a
+                    v-for="(item, index) in listBlogCare"
+                    :key="index"
+                    class="blog__sidebar__recent__item"
+                  >
                     <div class="blog__sidebar__recent__item__pic">
                       <img src="img/blog/sidebar/sr-1.jpg" alt="" />
                     </div>
                     <div class="blog__sidebar__recent__item__text">
-                      <h6>
-                        09 Kinds Of Vegetables<br />
-                        Protect The Liver
-                      </h6>
-                      <span>MAR 05, 2019</span>
-                    </div>
-                  </a>
-                  <a href="#" class="blog__sidebar__recent__item">
-                    <div class="blog__sidebar__recent__item__pic">
-                      <img src="img/blog/sidebar/sr-2.jpg" alt="" />
-                    </div>
-                    <div class="blog__sidebar__recent__item__text">
-                      <h6>
-                        Tips You To Balance<br />
-                        Nutrition Meal Day
-                      </h6>
-                      <span>MAR 05, 2019</span>
-                    </div>
-                  </a>
-                  <a href="#" class="blog__sidebar__recent__item">
-                    <div class="blog__sidebar__recent__item__pic">
-                      <img src="img/blog/sidebar/sr-3.jpg" alt="" />
-                    </div>
-                    <div class="blog__sidebar__recent__item__text">
-                      <h6>
-                        4 Principles Help You Lose <br />Weight With Vegetables
-                      </h6>
-                      <span>MAR 05, 2019</span>
+                      <h6>{{ item.title }}</h6>
+                      <span>{{ dateFormat }}</span>
                     </div>
                   </a>
                 </div>
@@ -132,57 +110,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-6">
+          <div
+            v-for="(item, index) in listBlogCare"
+            :key="index"
+            class="col-lg-4 col-md-4 col-sm-6"
+          >
             <div class="blog__item">
               <div class="blog__item__pic">
-                <img src="img/blog/blog-1.jpg" alt="" />
+                <img :src="item.image_link_thumbnail" height="300" alt="" />
               </div>
               <div class="blog__item__text">
                 <ul>
                   <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                  <li><i class="fa fa-comment-o"></i> 5</li>
                 </ul>
-                <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic">
-                <img src="img/blog/blog-2.jpg" alt="" />
-              </div>
-              <div class="blog__item__text">
-                <ul>
-                  <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                  <li><i class="fa fa-comment-o"></i> 5</li>
-                </ul>
-                <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic">
-                <img src="img/blog/blog-3.jpg" alt="" />
-              </div>
-              <div class="blog__item__text">
-                <ul>
-                  <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                  <li><i class="fa fa-comment-o"></i> 5</li>
-                </ul>
-                <h5><a href="#">Visit the clean farm in the US</a></h5>
-                <p>
-                  Sed quia non numquam modi tempora indunt ut labore et dolore
-                  magnam aliquam quaerat
-                </p>
+                <h5>
+                  <a href="#">{{ item.title }}</a>
+                </h5>
               </div>
             </div>
           </div>
@@ -213,11 +156,13 @@ export default {
       currentYear: new Date().getFullYear(),
       blogDetail: null,
       dateFormat: null,
+      listBlogCare: null,
     };
   },
   mounted() {
     // handleJQuery();
     this.getDetailBlog();
+    this.getListBlog();
     // console.log(this.$router);
   },
   methods: {
@@ -230,8 +175,21 @@ export default {
         console.log(this.blogDetail);
       }
     },
+    async getListBlog() {
+      const res = await this.getWithBigInt(`/rest/posts`);
+      if (res && res.data && res.data.data) {
+        this.listBlogCare = res.data.data.slice(0, 3);
+      }
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.blog__sidebar__item {
+  width: 70%;
+}
+.title_sidebar {
+  text-align: center;
+}
+</style>

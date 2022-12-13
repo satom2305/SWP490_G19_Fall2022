@@ -11,6 +11,33 @@
         <a-skeleton active :paragraph="{ rows: 5 }"></a-skeleton>
       </template>
       <template v-else>
+        <div class="d-flex">
+          <div style="width: 20rem" class="mr-2">
+            <div class="label-form">Tên bài đăng</div>
+            <b-input
+              type="text"
+              placeholder="Nhập tên bài đăng"
+              v-model="dataFilter.productName"
+              @input="fetchProductByName($event)"
+            />
+          </div>
+          <b-button
+            variant="primary"
+            class="mr-2 mb-4 custom-btn-common"
+            @click="handleSearch"
+          >
+            <font-awesome-icon :icon="['fas', 'search']" />
+            Tìm kiếm
+          </b-button>
+          <b-button
+            variant="light"
+            @click="handleReset"
+            class="mr-2 mb-4 custom-btn-common"
+          >
+            <font-awesome-icon :icon="['fas', 'eraser']" />
+            Xóa lọc
+          </b-button>
+        </div>
         <div class="text-right">
           <b-button
             variant="info"

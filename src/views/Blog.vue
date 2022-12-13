@@ -25,41 +25,22 @@
           <div class="col-lg-4 col-md-5">
             <div class="blog__sidebar">
               <div class="blog__sidebar__item">
-                <h4>Tin mới</h4>
+                <h4 class="title_sidebar">Có thể bạn quan tâm</h4>
                 <div class="blog__sidebar__recent">
-                  <a href="#" class="blog__sidebar__recent__item">
+                  <a
+                    v-for="(item, index) in listBlogCare"
+                    :key="index"
+                    class="blog__sidebar__recent__item"
+                    @click="showBlogDetail(item.postId)"
+                  >
                     <div class="blog__sidebar__recent__item__pic">
                       <img src="img/blog/sidebar/sr-1.jpg" alt="" />
                     </div>
                     <div class="blog__sidebar__recent__item__text">
                       <h6>
-                        09 Kinds Of Vegetables<br />
-                        Protect The Liver
+                        {{ item.title }}
                       </h6>
-                      <span>MAR 05, 2019</span>
-                    </div>
-                  </a>
-                  <a href="#" class="blog__sidebar__recent__item">
-                    <div class="blog__sidebar__recent__item__pic">
-                      <img src="img/blog/sidebar/sr-2.jpg" alt="" />
-                    </div>
-                    <div class="blog__sidebar__recent__item__text">
-                      <h6>
-                        Tips You To Balance<br />
-                        Nutrition Meal Day
-                      </h6>
-                      <span>MAR 05, 2019</span>
-                    </div>
-                  </a>
-                  <a href="#" class="blog__sidebar__recent__item">
-                    <div class="blog__sidebar__recent__item__pic">
-                      <img src="img/blog/sidebar/sr-3.jpg" alt="" />
-                    </div>
-                    <div class="blog__sidebar__recent__item__text">
-                      <h6>
-                        4 Principles Help You Lose <br />Weight With Vegetables
-                      </h6>
-                      <span>MAR 05, 2019</span>
+                      <span>{{ getDateFormat(index) }}</span>
                     </div>
                   </a>
                 </div>
@@ -124,6 +105,7 @@ export default {
   data() {
     return {
       listBlog: null,
+      listBlogCare: null,
       listBlogPaginate: null,
       pagination: {
         currentPage: 1,
@@ -141,6 +123,7 @@ export default {
       const res = await this.getWithBigInt(`/rest/posts`);
       if (res && res.data && res.data.data) {
         this.listBlog = res.data.data;
+        this.listBlogCare = res.data.data.slice(0, 3);
         this.pagination.totalRows = res.data.data.length;
         this.listBlogPaginate = res.data.data.slice(0, this.pagination.perPage);
       }
@@ -161,4 +144,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.blog__sidebar__item {
+  width: 70%;
+}
+.title_sidebar {
+  text-align: center;
+}
+</style>
