@@ -6,6 +6,32 @@
           <a-skeleton active :paragraph="{ rows: 5 }"></a-skeleton>
         </template>
         <template v-else>
+          <div class="d-flex">
+          <div style="width: 20rem" class="mr-2">
+            <div class="label-form">Tên loại sản phẩm</div>
+            <b-input
+              type="text"
+              placeholder="Nhập tên loại sản phẩm"
+              v-model="dataFilter.categoryName"
+            />
+          </div>
+          <b-button
+            variant="primary"
+            class="mr-2 mb-4 custom-btn-common"
+            @click="handleSearch"
+          >
+            <font-awesome-icon :icon="['fas', 'search']" />
+            Tìm kiếm
+          </b-button>
+          <b-button
+            variant="light"
+            @click="handleReset"
+            class="mr-2 mb-4 custom-btn-common"
+          >
+            <font-awesome-icon :icon="['fas', 'eraser']" />
+            Xóa lọc
+          </b-button>
+        </div>
           <!-- <div class="search-area mb-3">
             <b-row class="mb-3">
               <b-col md="2">
@@ -144,7 +170,7 @@
   import { required } from "vuelidate/lib/validators";
   import { mapGetters } from "vuex";
   import router from '@/router';
-  import { FETCH_CATEGORY, FETCH_CATEGORY_BY_ID, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from "@/store/action.type";
+  import { FETCH_CATEGORY, FETCH_CATEGORY_BY_ID, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY,FETCH_CATEGORY_BY_CATEGORYNAME } from "@/store/action.type";
 
   
   const initCategory = {
@@ -221,6 +247,29 @@
       },
     },
     methods: {
+      handleSearch() {
+      if (
+        !this.dataFilter.categoryName ||
+        this.dataFilter.categoryName.trim() === ""
+      ) {
+        this.fetchCategory();
+      } else {
+        this.fetchCategoryByName(this.dataFilter.categoryName);
+      }
+    },
+    handleReset() {
+      this.dataFilter.categoryName = null;
+      this.fetchCategory();
+    },
+    async fetchCategoryByName(value) {
+      if (!value || value.trim() === "") return;
+      let response = await this.$store.dispatch(
+        FETCH_CATEGORY_BY_CATEGORYNAME,
+        value.trim()
+      );
+      if (response && response.data)
+        this.$store.commit("setCategory", response.data.data);
+    },
       validationStatus: function (validation) {
         return typeof validation != "undefined" ? validation.$error : false;
       },
@@ -233,16 +282,16 @@
         }
         // this.fetchCategory();
       },
-      handleSearch() {
-        this.dataFilter.page = 1
-        router.push({ path: '/admin/product-category', query: { dataSearch: JSON.stringify(this.dataFilter) }})
-        this.fetchCategory();
-      },
-      handleResetFilter() {
-        this.$router.replace('/admin/product-category');
-        this.dataFilter = Object.assign({}, initDataFilter);
-        this.handleSearch();
-      },
+      // handleSearch() {
+      //   this.dataFilter.page = 1
+      //   router.push({ path: '/admin/product-category', query: { dataSearch: JSON.stringify(this.dataFilter) }})
+      //   this.fetchCategory();
+      // },
+      // handleResetFilter() {
+      //   this.$router.replace('/admin/product-category');
+      //   this.dataFilter = Object.assign({}, initDataFilter);
+      //   this.handleSearch();
+      // },
       async fetchCategory() {
         let payload = {...this.dataFilter}
         let response = await this.$store.dispatch(FETCH_CATEGORY, payload);

@@ -11,6 +11,32 @@
         <a-skeleton active :paragraph="{ rows: 5 }"></a-skeleton>
       </template>
       <template v-else>
+        <div class="d-flex">
+          <div style="width: 20rem" class="mr-2">
+            <div class="label-form">Mã giảm giá</div>
+            <b-input
+              type="text"
+              placeholder="Nhập mã giảm giá cần tìm"
+              v-model="dataFilter.promotionCode"
+            />
+          </div>
+          <b-button
+            variant="primary"
+            class="mr-2 mb-4 custom-btn-common"
+            @click="handleSearch"
+          >
+            <font-awesome-icon :icon="['fas', 'search']" />
+            Tìm kiếm
+          </b-button>
+          <b-button
+            variant="light"
+            @click="handleReset"
+            class="mr-2 mb-4 custom-btn-common"
+          >
+            <font-awesome-icon :icon="['fas', 'eraser']" />
+            Xóa lọc
+          </b-button>
+        </div>
         <!-- <div class="search-area mb-3">
           <b-row class="mb-3">
             <b-col md="2">
@@ -245,6 +271,7 @@ import {
   CREATE_PROMOTION,
   UPDATE_PROMOTION,
   DELETE_PROMOTION,
+  SEARCH_PROMOTION_BY_CODE
 } from "@/store/action.type";
 
 const initPromotion = {
@@ -377,18 +404,41 @@ export default {
       }
       // this.fetchPromotion();
     },
+    // handleSearch() {
+    //   this.dataFilter.page = 1;
+    //   router.push({
+    //     path: "/admin/promotion",
+    //     query: { dataSearch: JSON.stringify(this.dataFilter) },
+    //   });
+    //   this.fetchPromotion();
+    // },
+    // handleResetFilter() {
+    //   this.$router.replace("/admin/promotion");
+    //   this.dataFilter = Object.assign({}, initDataFilter);
+    //   this.handleSearch();
+    // },
     handleSearch() {
-      this.dataFilter.page = 1;
-      router.push({
-        path: "/admin/promotion",
-        query: { dataSearch: JSON.stringify(this.dataFilter) },
-      });
+      if (
+        !this.dataFilter.promotionCode ||
+        this.dataFilter.promotionCode.trim() === ""
+      ) {
+        this.fetchPromotion();
+      } else {
+        this.searchPromotionByCode(this.dataFilter.promotionCode);
+      }
+    },
+    handleReset() {
+      this.dataFilter.promotionCode = null;
       this.fetchPromotion();
     },
-    handleResetFilter() {
-      this.$router.replace("/admin/promotion");
-      this.dataFilter = Object.assign({}, initDataFilter);
-      this.handleSearch();
+    async searchPromotionByCode(value) {
+      if (!value || value.trim() === "") return;
+      let response = await this.$store.dispatch(
+        SEARCH_PROMOTION_BY_CODE,
+        value.trim()
+      );
+      if (response && response.data)
+        this.$store.commit("setPromotions", response.data.data);
     },
     async fetchPromotion() {
       let payload = { ...this.dataFilter };

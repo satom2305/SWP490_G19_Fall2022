@@ -42,14 +42,14 @@ export function s2ab(s) {
 export function formatDate(date) {
   if (!date) return null;
   return [date.getDate().padLeft(), (date.getMonth() + 1).padLeft(),
-    date.getFullYear()].join('/');
+  date.getFullYear()].join('/');
 }
 
 export function formatDate2(value) {
   if (!value) return null;
   let date = new Date(value);
   return [date.getDate().padLeft(), (date.getMonth() + 1).padLeft(),
-    date.getFullYear()].join('/');
+  date.getFullYear()].join('/');
 }
 
 export function formatDateYYYYMMDD(date) {
@@ -60,10 +60,10 @@ export function formatDateYYYYMMDD(date) {
 export function formatDateTime(date) {
   if (!date) return '';
   return [date.getDate().padLeft(), (date.getMonth() + 1).padLeft(),
-      date.getFullYear()].join('/') + ' ' +
+  date.getFullYear()].join('/') + ' ' +
     [date.getHours().padLeft(),
-      date.getMinutes().padLeft(),
-      date.getSeconds().padLeft()].join(':');
+    date.getMinutes().padLeft(),
+    date.getSeconds().padLeft()].join(':');
 }
 
 export function formatDateTimeCs(date) {
@@ -149,7 +149,7 @@ export async function logout() {
 
 export async function checkToken() {
   httpResource.defaults.baseURL = Configuration.value("baseURL");
-  const response = await httpResource.get("/profile", {headers: authHeader()});
+  const response = await httpResource.get("/profile", { headers: authHeader() });
   return response.status;
 }
 
@@ -165,7 +165,7 @@ export const intervalMilliSeconds = 300000; // 5 minutes
 let delayTimer;
 export const doSearch = (callback) => {
   clearTimeout(delayTimer);
-  delayTimer = setTimeout(function() {
+  delayTimer = setTimeout(function () {
     callback()
   }, 1000); // Will do the ajax stuff after 1000 ms, or 1 s
 }
@@ -224,39 +224,42 @@ export const strForSearch = (str) => {
       .replace(/đ/g, "d")
     : str;
 };
-export const botChatAI =()=>{
+export const botChatAI = () => {
   !(function () {
-  let e = document.createElement("script"),
-    t = document.head || document.getElementsByTagName("head")[0];
+    let e = document.createElement("script"),
+      t = document.head || document.getElementsByTagName("head")[0];
     sessionStorage.clear();
-  (e.src =
-    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+    (e.src =
+      "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
 
-    // Replace 1.x.x with the version that you want
-    (e.async = !0),
-    (e.onload = () => {
-      window.WebChat.default(
-        {
-          selector: "#webchat",
-  customData: {"language": "en"}, // arbitrary custom data. Stay minimal as this will be added to the socket
-  socketUrl: "http://14.225.205.220:5005/",
-  socketPath: "/socket.io/",
-  title: "Tree World",
-  inputTextFieldHint: "Mời nhập câu hỏi",
-  embedded: false,
-  showFullScreenButton: true,
-  showMessageDate: false,
-  hideWhenNotConnected: false,
-  displayUnreadCount: true,
-  mainColor: "#7fad39",
-
-  params: {"storage": "session"} // can be set to "local"  or "session". details in storage section.
-        },
-        null
-      );
-    }),
-    t.insertBefore(e, t.firstChild);
-})();
+      // Replace 1.x.x with the version that you want
+      (e.async = !0),
+      (e.onload = () => {
+        window.WebChat.default(
+          {
+            selector: "#webchat",
+            customData: { "language": "en" }, // arbitrary custom data. Stay minimal as this will be added to the socket
+            socketUrl: "http://14.225.205.220:5005/",
+            socketPath: "/socket.io/",
+            title: "Tree World",
+            inputTextFieldHint: "Mời nhập câu hỏi",
+            embedded: false,
+            showFullScreenButton: true,
+            showMessageDate: false,
+            hideWhenNotConnected: false,
+            displayUnreadCount: true,
+            mainColor: "#7fad39",
+            subtitle: 'Say hi and get started!',
+            profileAvatar: "https://res.cloudinary.com/des083zke/image/upload/v1670951098/bot/pngtree-chatbot-color-icon-chat-bot-png-image_5274901_mpggry.png",
+            openLauncherImage: "https://res.cloudinary.com/des083zke/image/upload/v1670951098/bot/pngtree-chatbot-color-icon-chat-bot-png-image_5274901_mpggry.png",
+            showMessageDate: true,
+            params: { "storage": "session" } // can be set to "local"  or "session". details in storage section.
+          },
+          null
+        );
+      }),
+      t.insertBefore(e, t.firstChild);
+  })();
 }
 export const handleJQuery = () => {
   const jQuery = document.createElement('script')

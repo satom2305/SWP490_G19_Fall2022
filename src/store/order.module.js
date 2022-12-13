@@ -1,7 +1,7 @@
 import {
   FETCH_ORDERS, CREATE_ORDER, UPDATE_ORDER, DELETE_ORDER,
   FETCH_ORDER_DETAIL, FETCH_ORDER_DETAIL_BY_ID, FETCH_ORDER_DETAIL_BY_ORDER_ID, CREATE_ORDER_DETAIL,
-  UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_BY_ORDER_ID, CREATE_ORDER_DETAIL_BY_ORDER_ID, DELETE_ORDER_DETAIL
+  UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_BY_ORDER_ID, CREATE_ORDER_DETAIL_BY_ORDER_ID, DELETE_ORDER_DETAIL,FETCH_ORDERS_BY_USERNAME
 } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
@@ -39,6 +39,12 @@ const actions = {
   [CREATE_ORDER](context, payload) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.post('/rest/orders', payload)
+      resolve(response)
+    })
+  },
+  [FETCH_ORDERS_BY_USERNAME](context, username) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/orders/searchOrderByUsername/${username}`)
       resolve(response)
     })
   },

@@ -1,4 +1,4 @@
-import { FETCH_POSTS, FETCH_POST_BY_ID, CREATE_POST, UPDATE_POST, DELETE_POST } from "./action.type";
+import { FETCH_POSTS, FETCH_POST_BY_ID, CREATE_POST, UPDATE_POST, DELETE_POST,FETCH_POST_BY_TITLE } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
   posts: []
@@ -20,7 +20,7 @@ const actions = {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.getWithBigInt('/rest/posts')
       if (response && response.status === 200 && response.data) {
-        context.commit("setPOSTS", response.data.data)
+        context.commit("setPosts", response.data.data)
       }
       resolve(response)
     })
@@ -28,6 +28,12 @@ const actions = {
   [FETCH_POST_BY_ID](context, postId) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.getWithBigInt('/rest/posts', postId)
+      resolve(response)
+    })
+  },
+  [FETCH_POST_BY_TITLE](context, title) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/posts/searchPostByTitle/${title}`)
       resolve(response)
     })
   },

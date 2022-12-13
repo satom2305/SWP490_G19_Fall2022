@@ -20,8 +20,8 @@
                   type="text"
                   placeholder="Nhập tên sản phẩm"
                   v-model="dataFilter.productName"
-                  @input="fetchProductByName($event)"
                 />
+                <!-- @input="fetchProductByName($event)" -->
               </div>
               <b-button
                 variant="primary"

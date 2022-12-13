@@ -11,6 +11,32 @@
         <a-skeleton active :paragraph="{ rows: 5 }"></a-skeleton>
       </template>
       <template v-else>
+        <div class="d-flex">
+          <div style="width: 20rem" class="mr-2">
+            <div class="label-form">Tên người dùng</div>
+            <b-input
+              type="text"
+              placeholder="Nhập tên người dùng"
+              v-model="dataFilter.usernameSearch"
+            />
+          </div>
+          <b-button
+            variant="primary"
+            class="mr-2 mb-4 custom-btn-common"
+            @click="handleSearch"
+          >
+            <font-awesome-icon :icon="['fas', 'search']" />
+            Tìm kiếm
+          </b-button>
+          <b-button
+            variant="light"
+            @click="handleReset"
+            class="mr-2 mb-4 custom-btn-common"
+          >
+            <font-awesome-icon :icon="['fas', 'eraser']" />
+            Xóa lọc
+          </b-button>
+        </div>
         <div class="text-right">
           <b-button
             variant="info"
@@ -265,6 +291,7 @@ import router from "@/router";
 import { formatDateTime } from "../../common/utils";
 import {
   FETCH_ORDERS,
+  FETCH_ORDERS_BY_USERNAME,
   UPDATE_ORDER,
   DELETE_ORDER,
   FETCH_ORDER_DETAIL_BY_ORDER_ID,
@@ -275,7 +302,9 @@ import {
 import { formatPriceSearchV2 } from "../../common/common";
 import ModalCreateOrder from "@/Layout/Components/admin/ModalCreateOrder.vue";
 import ModalOrderDetail from "@/Layout/Components/ModalOrderDetail.vue";
+import debounce from "lodash/debounce";
 const initDataFilter = {
+  usernameSearch:null,
   page: 1,
   limit: 10,
 };
@@ -312,6 +341,7 @@ const initOrderDetail = {
 export default {
   name: "OrderManagement",
   data() {
+    this.fetchOrderByUsername = debounce(this.fetchOrderByUsername, 500);
     return {
       ACTION_FOR_ORDER,
       subheading: "Tạo và quản lý các đơn hàng",
@@ -430,6 +460,29 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      if (
+        !this.dataFilter.usernameSearch ||
+        this.dataFilter.usernameSearch.trim() === ""
+      ) {
+        this.fetchOrders();
+      } else {
+        this.fetchOrderByUsername(this.dataFilter.usernameSearch);
+      }
+    },
+    handleReset() {
+      this.dataFilter.usernameSearch = null;
+      this.fetchOrders();
+    },
+    async fetchOrderByUsername(value) {
+      if (!value || value.trim() === "") return;
+      let response = await this.$store.dispatch(
+        FETCH_ORDERS_BY_USERNAME,
+        value.trim()
+      );
+      if (response && response.data)
+        this.$store.commit("setOrders", response.data.data);
+    },
     getUserPlace(order) {
       if (!order) return "";
       return [order.address, order.wards, order.district, order.city]

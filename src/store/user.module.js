@@ -1,4 +1,4 @@
-import { FETCH_USERS, FETCH_USER_BY_USERNAME, FETCH_USER_BY_ID, UPDATE_USER, CREATE_USER, DISABLE_USER, CHANGE_PASSWORD, CREATE_STAFF } from "./action.type";
+import { FETCH_USERS, FETCH_USER_BY_USERNAME, FETCH_USER_BY_ID, UPDATE_USER, CREATE_USER, DISABLE_USER, CHANGE_PASSWORD, CREATE_STAFF,SEARCH_USERS_BY_USERNAME } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
   users: []
@@ -58,6 +58,12 @@ const actions = {
   [CREATE_STAFF](context, payload) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.post(`/rest/users/staff`, payload)
+      resolve(response)
+    })
+  },
+  [SEARCH_USERS_BY_USERNAME](context, username) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/users/searchUserByUsername/${username}`)
       resolve(response)
     })
   },

@@ -17,8 +17,7 @@
             <b-input
               type="text"
               placeholder="Nhập tên bài đăng"
-              v-model="dataFilter.productName"
-              @input="fetchProductByName($event)"
+              v-model="dataFilter.postTitle"
             />
           </div>
           <b-button
@@ -151,14 +150,17 @@ import { required } from "vuelidate/lib/validators";
 import { mapGetters } from "vuex";
 import router from "@/router";
 import { formatDateTime } from "../../common/utils";
-import { FETCH_POSTS, DELETE_POST } from "@/store/action.type";
+import { FETCH_POSTS, DELETE_POST ,FETCH_POST_BY_TITLE} from "@/store/action.type";
+import debounce from "lodash/debounce";
 const initDataFilter = {
+  postTitle:null,
   page: 1,
   limit: 10,
 };
 export default {
   name: "PostManagement",
   data() {
+    this.fetchPostByTitle = debounce(this.fetchPostByTitle, 500);
     return {
       subheading: "Tạo và quản lý các bài đăng",
       icon: "pe-7s-portfolio icon-gradient bg-happy-itmeo",
@@ -226,6 +228,29 @@ export default {
     },
   },
   methods: {
+    handleSearch() {
+      if (
+        !this.dataFilter.postTitle ||
+        this.dataFilter.postTitle.trim() === ""
+      ) {
+        this.fetchPost();
+      } else {
+        this.fetchPostByTitle(this.dataFilter.postTitle);
+      }
+    },
+    handleReset() {
+      this.dataFilter.postTitle = null;
+      this.fetchPost();
+    },
+    async fetchPostByTitle(value) {
+      if (!value || value.trim() === "") return;
+      let response = await this.$store.dispatch(
+        FETCH_POST_BY_TITLE,
+        value.trim()
+      );
+      if (response && response.data)
+        this.$store.commit("setPosts", response.data.data);
+    },
     formatDateTime(date) {
       if (!date) return "";
       return formatDateTime(new Date(date));

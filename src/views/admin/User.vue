@@ -6,6 +6,32 @@
           <a-skeleton active :paragraph="{ rows: 5 }"></a-skeleton>
         </template>
         <template v-else>
+          <div class="d-flex">
+          <div style="width: 20rem" class="mr-2">
+            <div class="label-form">Tên người dùng</div>
+            <b-input
+              type="text"
+              placeholder="Nhập tên người dùng"
+              v-model="dataFilter.usernameSearch"
+            />
+          </div>
+          <b-button
+            variant="primary"
+            class="mr-2 mb-4 custom-btn-common"
+            @click="handleSearch"
+          >
+            <font-awesome-icon :icon="['fas', 'search']" />
+            Tìm kiếm
+          </b-button>
+          <b-button
+            variant="light"
+            @click="handleReset"
+            class="mr-2 mb-4 custom-btn-common"
+          >
+            <font-awesome-icon :icon="['fas', 'eraser']" />
+            Xóa lọc
+          </b-button>
+        </div>
           <!-- <div class="search-area mb-3">
             <b-row class="mb-3">
               <b-col md="2">
@@ -222,8 +248,8 @@
   import { required, helpers } from "vuelidate/lib/validators";
   import { mapGetters } from "vuex";
   import router from '@/router';
-  import { FETCH_USERS, FETCH_USER_BY_USERNAME, FETCH_USER_BY_ID, UPDATE_USER, CREATE_USER, DISABLE_USER, CHANGE_PASSWORD, CREATE_STAFF } from "@/store/action.type";
-  
+  import { FETCH_USERS, FETCH_USER_BY_USERNAME, FETCH_USER_BY_ID, UPDATE_USER, CREATE_USER, DISABLE_USER, CHANGE_PASSWORD, CREATE_STAFF,SEARCH_USERS_BY_USERNAME } from "@/store/action.type";
+  import debounce from "lodash/debounce";
   const initUser = {
     userId: null,
     username: null,
@@ -233,6 +259,7 @@
   };
   
   const initDataFilter = {
+    usernameSearch:null,
     email: null,
     username: null,
     page: 1,
@@ -246,6 +273,7 @@
   export default {
     name: "UserManagement",
     data() {
+      this.searchUsersByUsername = debounce(this.searchUsersByUsername, 500);
       return {
         subheading: "Tạo và quản lý các tài khoản của người dùng",
         icon: "pe-7s-portfolio icon-gradient bg-happy-itmeo",
@@ -324,6 +352,29 @@
       }
     },
     methods: {
+    handleSearch() {
+      if (
+        !this.dataFilter.usernameSearch ||
+        this.dataFilter.usernameSearch.trim() === ""
+      ) {
+        this.fetchUsers();
+      } else {
+        this.searchUsersByUsername(this.dataFilter.usernameSearch);
+      }
+    },
+    handleReset() {
+      this.dataFilter.usernameSearch = null;
+      this.fetchUsers();
+    },
+    async searchUsersByUsername(value) {
+      if (!value || value.trim() === "") return;
+      let response = await this.$store.dispatch(
+        SEARCH_USERS_BY_USERNAME,
+        value.trim()
+      );
+      if (response && response.data)
+        this.$store.commit("setUsers", response.data.data);
+    },
       checkRole(user, roleName) {
         return user.role && user.role.filter(item => item.roleName === roleName).length > 0
       },
@@ -339,16 +390,16 @@
         }
         // this.fetchUsers();
       },
-      handleSearch() {
-        this.dataFilter.page = 1
-        router.push({ path: '/admin/user', query: { dataSearch: JSON.stringify(this.dataFilter) }})
-        this.fetchUsers();
-      },
-      handleResetFilter() {
-        this.$router.replace('/admin/user');
-        this.dataFilter = Object.assign({}, initDataFilter);
-        this.handleSearch();
-      },
+      // handleSearch() {
+      //   this.dataFilter.page = 1
+      //   router.push({ path: '/admin/user', query: { dataSearch: JSON.stringify(this.dataFilter) }})
+      //   this.fetchUsers();
+      // },
+      // handleResetFilter() {
+      //   this.$router.replace('/admin/user');
+      //   this.dataFilter = Object.assign({}, initDataFilter);
+      //   this.handleSearch();
+      // },
       async fetchUsers() {
         let payload = {...this.dataFilter}
         let response = await this.$store.dispatch(FETCH_USERS, payload);

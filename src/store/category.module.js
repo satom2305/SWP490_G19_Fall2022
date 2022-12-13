@@ -1,4 +1,4 @@
-import { FETCH_CATEGORY, FETCH_CATEGORY_BY_ID, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from "./action.type";
+import { FETCH_CATEGORY, FETCH_CATEGORY_BY_ID, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY,FETCH_CATEGORY_BY_CATEGORYNAME } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
   category: []
@@ -28,6 +28,12 @@ const actions = {
   [FETCH_CATEGORY_BY_ID](context, categoryId) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.getWithBigInt('/rest/categories', categoryId)
+      resolve(response)
+    })
+  },
+  [FETCH_CATEGORY_BY_CATEGORYNAME](context, categoryName) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/categories/searchCategoryByName/${categoryName}`)
       resolve(response)
     })
   },

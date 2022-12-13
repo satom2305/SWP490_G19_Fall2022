@@ -1,4 +1,4 @@
-import { FETCH_PROMOTIONS, FETCH_PROMOTION_BY_CODE, CREATE_PROMOTION, UPDATE_PROMOTION, DELETE_PROMOTION } from "./action.type";
+import { FETCH_PROMOTIONS, FETCH_PROMOTION_BY_CODE, CREATE_PROMOTION, UPDATE_PROMOTION, DELETE_PROMOTION,SEARCH_PROMOTION_BY_CODE } from "./action.type";
 import baseMixins from '../components/mixins/base'
 const state = {
   promotions: []
@@ -28,6 +28,12 @@ const actions = {
   [FETCH_PROMOTION_BY_CODE](context, promotionCode) {
     return new Promise(async resolve => {
       let response = await baseMixins.methods.getWithBigInt('/rest/promotions', promotionCode)
+      resolve(response)
+    })
+  },
+  [SEARCH_PROMOTION_BY_CODE](context, promotionCode) {
+    return new Promise(async resolve => {
+      let response = await baseMixins.methods.getWithBigInt(`/rest/promotions/searchPromotion/${promotionCode}`)
       resolve(response)
     })
   },
