@@ -299,7 +299,7 @@ export default {
         this.loadingButton = false;
         this.$message.closeAll();
       }
-      if (response && response.data.success && response.data.data == "1") {
+      if (response) {
         this.$v.$reset();
         this.cancelUpdatePassword();
         this.$message({
@@ -323,13 +323,14 @@ export default {
               type: "warning",
               showClose: true,
             });
-          } else {
-            this.$message({
-              message: "Có lỗi xảy ra",
-              type: "warning",
-              showClose: true,
-            });
-          }
+          } 
+          // else {
+          //   this.$message({
+          //     message: "Có lỗi xảy ra",
+          //     type: "warning",
+          //     showClose: true,
+          //   });
+          // }
     },
     navigateToLogin() {
       router.push({ path: "/login" });
