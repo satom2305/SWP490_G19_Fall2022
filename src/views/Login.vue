@@ -218,8 +218,11 @@ export default {
       const isAdmin =
         StorageService.get("userInfo") &&
         JSON.parse(StorageService.get("userInfo")).role === "[ADMIN]";
+      const isStaff =
+        StorageService.get("userInfo") &&
+        JSON.parse(StorageService.get("userInfo")).role === "[STAFF]";
       // const savedPath = localStorage.getItem('savedPath');
-      router.push(isAdmin ? "/admin" : "/").catch((e) => {
+      router.push(isAdmin || isStaff ? "/admin" : "/").catch((e) => {
         this.$message({
           message: "Đã có lỗi xảy ra",
           type: "error",

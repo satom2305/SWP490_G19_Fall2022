@@ -195,7 +195,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div
                 v-for="item in seachProductListPaginate"
                 :key="item"
@@ -221,7 +221,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="t-mx-auto t-w-fit">
               <b-pagination
                 v-model="searchPagination.currentProductPage"
@@ -285,7 +285,7 @@ export default {
       searchPagination: {
         currentPostPage: 1,
         currentProductPage: 1,
-        perPage: 3,
+        perPage: 6,
         totalRows: 6,
       },
       pagination: {
@@ -336,13 +336,13 @@ export default {
         page * this.searchPagination.perPage
       );
     },
-    onProductPageChanged(page) {
-      this.pagination.currentPage = page;
-      this.productListPaginate = this.listProduct.slice(
-        (page - 1) * this.pagination.perPage,
-        page * this.pagination.perPage
-      );
-    },
+    // onProductPageChanged(page) {
+    //   this.pagination.currentPage = page;
+    //   this.productListPaginate = this.listProduct.slice(
+    //     (page - 1) * this.pagination.perPage,
+    //     page * this.pagination.perPage
+    //   );
+    // },
     async getListProduct() {
       // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt("/rest/products/listProduct");

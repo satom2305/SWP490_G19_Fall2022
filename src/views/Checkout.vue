@@ -163,7 +163,7 @@
                 <p>Mã giảm giá</p>
                 <input
                   type="text"
-                  v-model="currentData.note"
+                  v-model="currentData.promotion"
                   placeholder="Nhập mã giảm giá"
                 />
                 <button
@@ -248,6 +248,7 @@ const initOrder = {
   district: null,
   wards: null,
   phoneNumber: 0,
+  promotion:null,
 };
 const initOrderDetail = {
   order_detail_id: null,

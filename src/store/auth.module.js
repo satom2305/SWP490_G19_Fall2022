@@ -72,7 +72,7 @@ const actions = {
   },
   [CHANGE_PASSWORD](context, payload) {
     return new Promise(async resolve => {
-      axios.put(`${API_ENDPOINT}/rest/users/changePwd/${payload.username}`, payload.data).then(response => {
+      axios.put(`${API_ENDPOINT}/rest/users/changePwd/${payload}/${payload}`).then(response => {
         resolve(response)
       }).catch((error) => {
         resolve(error)

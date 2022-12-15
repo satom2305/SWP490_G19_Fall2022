@@ -251,9 +251,10 @@
                 <div class="col-lg-4 col-md-5">
                   <div class="filter__sort">
                     <span>Sắp xếp theo</span>
-                    <select>
-                      <option value="0">Giá tăng dần</option>
-                      <option value="0">Giá giảm dần</option>
+                    <select @change="onchange">
+                      <option value="0">Mặc định</option>
+                      <option value="1">Giá tăng dần</option>
+                      <option value="2">Giá giảm dần</option>
                     </select>
                   </div>
                 </div>
@@ -351,7 +352,7 @@ export default {
   methods: {
     async getListProduct() {
       // const res = await clientService.getListProduct()
-      const res = await this.getWithBigInt("/rest/products/listProduct");
+      const res = await this.getWithBigInt("/rest/products/listAllProduct");
       if (res && res.data && res.data.data) {
         this.listProduct = res.data.data;
         this.pagination.totalRows = res.data.data.length;
@@ -359,12 +360,47 @@ export default {
           0,
           this.pagination.perPage
         );
-        console.log(this.listProduct);
       }
     },
     showProductDetail(id) {
       this.$router.push({ path: `/shop-detail/${id}` });
     },
+   async onchange(event){
+      if(event.target.value == "0"){
+        const res = await this.getWithBigInt("/rest/products/listAllProduct");
+        if (res && res.data && res.data.data) {
+        this.listProduct = res.data.data;
+        this.pagination.totalRows = res.data.data.length;
+        this.productListPaginate = res.data.data.slice(
+          0,
+          this.pagination.perPage
+        );
+      }
+      }
+      if(event.target.value == "1"){
+        const res = await this.getWithBigInt("/rest/products/sort/asc");
+        if (res && res.data && res.data.data) {
+        this.listProduct = res.data.data;
+        this.pagination.totalRows = res.data.data.length;
+        this.productListPaginate = res.data.data.slice(
+          0,
+          this.pagination.perPage
+        );
+      }
+      }
+      if(event.target.value == "2"){
+        const res = await this.getWithBigInt("/rest/products/sort/desc");
+        if (res && res.data && res.data.data) {
+        this.listProduct = res.data.data;
+        this.pagination.totalRows = res.data.data.length;
+        this.productListPaginate = res.data.data.slice(
+          0,
+          this.pagination.perPage
+        );
+      }
+      }
+    },
+    
     async getTopProduct() {
       // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt("/rest/products/lastSixProducts");

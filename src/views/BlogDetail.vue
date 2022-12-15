@@ -114,6 +114,7 @@
             v-for="(item, index) in listBlogCare"
             :key="index"
             class="col-lg-4 col-md-4 col-sm-6"
+            @click="showBlogDetail(item.postId)"
           >
             <div class="blog__item">
               <div class="blog__item__pic">
@@ -121,10 +122,10 @@
               </div>
               <div class="blog__item__text">
                 <ul>
-                  <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                  <li><i class="fa fa-calendar-o"></i> {{getDateFormat(index)}}</li>
                 </ul>
                 <h5>
-                  <a href="#">{{ item.title }}</a>
+                  <a>{{ item.title }}</a>
                 </h5>
               </div>
             </div>
@@ -180,6 +181,13 @@ export default {
       if (res && res.data && res.data.data) {
         this.listBlogCare = res.data.data.slice(0, 3);
       }
+    },
+    getDateFormat(index) {
+      return moment(this.listBlogCare[index].date).format("ll");
+    },
+    showBlogDetail(id) {
+      this.$router.push({ path: `/blog-detail/${id}` });
+      this.$router.go(this.$router.currentRoute);
     },
   },
 };
