@@ -365,23 +365,23 @@ export default {
       let res = await this.$store.dispatch(CREATE_ORDER, payload);
       if (res.status === 200 && res.data && res.data.data) {
         let newOrderId = res.data.data.orderId;
-        payloadForCreateDetail = payloadForCreateDetail.map((item) => {
-          return {
-            ...item,
-            orderId: newOrderId,
-          };
-        });
-        let resForDetail = await this.$store.dispatch(
-          CREATE_ORDER_DETAIL_BY_ORDER_ID,
-          payloadForCreateDetail
-        );
-        if (resForDetail.status === 200) {
-          this.$message({
-            message: successMsg,
-            type: "success",
-            showClose: true,
-          });
-        }
+        // payloadForCreateDetail = payloadForCreateDetail.map((item) => {
+        //   return {
+        //     ...item,
+        //     orderId: newOrderId,
+        //   };
+        // });
+        // let resForDetail = await this.$store.dispatch(
+        //   CREATE_ORDER_DETAIL_BY_ORDER_ID,
+        //   payloadForCreateDetail
+        // );
+        // if (resForDetail.status === 200) {
+        //   this.$message({
+        //     message: successMsg,
+        //     type: "success",
+        //     showClose: true,
+        //   });
+        // }
       }
       this.$root.$emit("bv::show::modal", "modal-payment");
       if (res.data.status == "not ok") {

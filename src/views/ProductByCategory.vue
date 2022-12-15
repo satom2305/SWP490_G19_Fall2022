@@ -72,13 +72,13 @@
             <div class="filter__item">
               <div class="row">
                 <div class="col-lg-4 col-md-5">
-                  <div class="filter__sort">
+                  <!-- <div class="filter__sort">
                     <span>Sắp xếp theo</span>
                     <select>
                       <option value="0">Giá tăng dần</option>
                       <option value="0">Giá giảm dần</option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="col-lg-4 col-md-4"></div>
                 <div class="col-lg-4 col-md-3">
