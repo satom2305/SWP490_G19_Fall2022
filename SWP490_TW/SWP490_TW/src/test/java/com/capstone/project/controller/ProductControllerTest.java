@@ -113,9 +113,78 @@ public class ProductControllerTest {
         Integer id = 2;
         Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
 
-        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findProductById(2));
+        AppException ex = Assert.assertThrows(AppException.class, () -> productService.findProductById(productRequest.getProductId()));
 
         Assert.assertEquals("Product not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("test disable product")
+    public void TestDisableProduct() {
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
+        Integer id = 1;
+        Mockito.when(productRepository.findById(productRequest.getProductId())).thenReturn(Optional.ofNullable(product));
+        productService.disableProduct(id);
+    }
+
+    @Test
+    @DisplayName("test disable product fail")
+    public void TestDisableProductFail() {
+        ProductRequest productRequest = new ProductRequest( 1,"Test product", "Test description", 10.0, 10.0, 10.0, 10, null, 1,1, "test img");
+        Integer id = 2;
+        Mockito.when(productRepository.findById(id)).thenThrow(new AppException("Product not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> productService.disableProduct(productRequest.getProductId()));
+
+        Assert.assertEquals("Product not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("TestGetLastSixProducts")
+    public void TestGetLastSixProducts() {
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        when(productRepository.findLastSixProducts()).thenReturn(productList);
+
+        List<ProductResponse> actual = productService.getLastSixProducts();
+        assertEquals(productList.size(), actual.size());
+    }
+
+    @Test
+    @DisplayName("TestGetLastSixProductsFail")
+    public void TestGetLastSixProductsFail() {
+        List<Product> expect  = new ArrayList<>();
+        expect.add(product);
+        List<Product> actual = new ArrayList<>();
+        actual.add(product);
+
+        Mockito.when(productRepository.findLastSixProducts()).thenThrow(new NullPointerException(""));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> productService.getLastSixProducts());
+        assertEquals("",exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("TestGetAllProductAvailableASC")
+    public void TestGetAllProductAvailableASC() {
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        when(productRepository.findProductAvailableDES()).thenReturn(productList);
+
+        List<ProductResponse> actual = productService.getAllProductAvailableDES();
+        assertEquals(productList.size(), actual.size());
+    }
+
+    @Test
+    @DisplayName("TestGetAllProductAvailableASC")
+    public void TestGetAllProductAvailableASCFail() {
+        List<Product> expect  = new ArrayList<>();
+        expect.add(product);
+        List<Product> actual = new ArrayList<>();
+        actual.add(product);
+
+        Mockito.when(productRepository.findProductAvailableDES()).thenThrow(new NullPointerException(""));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> productService.getAllProductAvailableDES());
+        assertEquals("",exception.getMessage());
     }
 }

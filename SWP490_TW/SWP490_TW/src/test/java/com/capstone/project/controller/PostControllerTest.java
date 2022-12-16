@@ -149,4 +149,5 @@ public class PostControllerTest {
         Assert.assertEquals("Account not found", ex.getMessage());
         Assert.assertEquals(404, ex.getErrorCode());
     }
+
 }

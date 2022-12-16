@@ -49,6 +49,7 @@ public class PromotionController {
                 new ResponseObject("ok", "Successfully", true, promotionService.getPromotionByCode(code)));
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
         boolean checkPromotionExist = promotionService.getPromotionById(id);

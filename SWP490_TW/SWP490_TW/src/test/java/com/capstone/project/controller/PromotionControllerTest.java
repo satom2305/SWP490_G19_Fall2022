@@ -181,5 +181,46 @@ public class PromotionControllerTest {
         Assert.assertEquals(404, ex.getErrorCode());
     }
 
+    @Test
+    @DisplayName("test find promotion by id")
+    public void TestFindPromotionById() {
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
+        Integer id = 1;
+        Mockito.when(promotionRepository.findById(id)).thenReturn(Optional.ofNullable(promotion));
+        PromotionResponse promotionResponse = promotionService.updatePromotion(id, promotionRequest);
+        Assert.assertEquals("String", promotionResponse.getPromotionCode());
+    }
+
+    @Test
+    @DisplayName("test find promotion by id fail")
+    public void TestFindPromotionByIdFail() {
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
+        Integer id = 2;
+        Mockito.when(promotionRepository.findById(id)).thenThrow(new AppException("Promotion not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.getPromotionById(promotionRequest.getPromotionId()));
+        Assert.assertEquals("Promotion not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("test delete promotion")
+    public void TestDeletePromotion() {
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
+        Integer id = 1;
+        Mockito.when(promotionRepository.findById(promotionRequest.getPromotionId())).thenReturn(Optional.ofNullable(promotion));
+        promotionService.deletePromotion(id);
+    }
+
+    @Test
+    @DisplayName("test delete promotion fail")
+    public void TestDeletePromotionFail(){
+        PromotionRequest promotionRequest = new PromotionRequest(1, "String", 70.0, 10);
+        Integer id = 2;
+        Mockito.when(promotionRepository.findById(id)).thenThrow(new AppException("Promotion not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> promotionService.getPromotionById(promotionRequest.getPromotionId()));
+        Assert.assertEquals("Promotion not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
 
 }

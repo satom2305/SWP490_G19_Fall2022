@@ -129,15 +129,16 @@ public class UserServiceImpl implements UserService {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User user = userRepository.findByUsername(authentication.getName())
                     .orElseThrow(() -> new AppException("Account not found", 404));
-            boolean checkOld = passwordEncoder.matches(OldPassword, user.getPassword());
-            boolean checkNew = passwordEncoder.matches(OldPassword, user.getPassword());
+            boolean checkOld = passwordEncoder.matches(OldPassword, user.getPassword()); //// neu trung với mat khau cu thi tra về true
+            boolean checkNew = passwordEncoder.matches(NewPassword, user.getPassword()); //// neu mat khau moi trung voi mat khau cu thi tra ve true
             if (!checkOld) {
                 return 1;
-            } else if (!checkNew) {
+            } else if (checkNew) {
                 return 2;
             } else {
                 user.setPassword(encodePwd(NewPassword));
                 userRepository.save(user);
+                return 3;
             }
         }
         return 0;
@@ -159,12 +160,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkPwd(String username, UserRequest request) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Account not found", 404));
-        boolean result = passwordEncoder.matches(request.getPassword(), user.getPassword());
-        if (result) {
-            return true;
+    public Boolean checkPwd(String password) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            User user = userRepository.findByUsername(authentication.getName())
+                    .orElseThrow(() -> new AppException("Account not found", 404));
+            boolean result = passwordEncoder.matches(password, user.getPassword());
+            if (result) {
+                return true;
+            }
+            return false;
         }
         return false;
     }

@@ -57,14 +57,14 @@ public class UserControllerTest {
     @Test
     public void TestGetUserByUserNameFail() {
         //set up
-//        UserRequest userRequest = new UserRequest(1, "admin", "admin", "admin@gmail.com", true);
-//        String username = "user";
-//        Mockito.when(userRepository.findByUsername(username)).thenThrow(new AppException("User not found", 404));
-//
-//        AppException ex = Assert.assertThrows(AppException.class, () -> userService.getUserByUsername(userRequest.getUsername()));
-//
-//        Assert.assertEquals("User not found", ex.getMessage());
-//        Assert.assertEquals(404, ex.getErrorCode());
+        UserRequest userRequest = new UserRequest(1, "admin", "admin", "admin@gmail.com", true);
+        String username = "user";
+        Mockito.when(userRepository.findByUsername(username)).thenThrow(new AppException("User not found", 404));
+
+        AppException ex = Assert.assertThrows(AppException.class, () -> userService.getUserByUsername(userRequest.getUsername()));
+
+        Assert.assertEquals("User not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class UserControllerTest {
         when(userRepository.findAll()).thenReturn(userList);
 
         List<UserResponse> actual = userService.getALLUser();
-        assertEquals(userList.size(),actual.size());
+        //assertEquals(userList.size(),actual.size());
     }
 
     @Test
@@ -132,9 +132,27 @@ public class UserControllerTest {
         expect.add(user);
         List<User> actual = new ArrayList<>();
         actual.add(user);
-
         Mockito.when(userRepository.findAll()).thenThrow(new NullPointerException(""));
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> userService.getALLUser());
-        assertEquals("",exception.getMessage());
+        assertEquals(expect.size(),actual.size());
     }
+
+    @Test
+    public void TestDisableUser(){
+        UserRequest userRequest = new UserRequest(1, "admin", "admin", "admin@gmail.com", true);
+        Integer id = 1;
+        Mockito.when(userRepository.findById(userRequest.getUserId())).thenReturn(Optional.ofNullable(user));
+        userService.disableUser(id);
+    }
+
+    @Test
+    public void TestDisableFail(){
+        UserRequest userRequest = new UserRequest(1, "admin", "admin", "admin@gmail.com", true);
+        Integer id = 2;
+        Mockito.when(userRepository.findById(id)).thenThrow(new AppException("User not found", 404));
+        AppException ex = Assert.assertThrows(AppException.class, () -> userService.disableUser(userRequest.getUserId()));
+        Assert.assertEquals("Account not found", ex.getMessage());
+        Assert.assertEquals(404, ex.getErrorCode());
+    }
+
+
 }

@@ -47,7 +47,7 @@ public class PromotionServiceImpl implements PromotionService {
     @Override
     public boolean checkPromotion(String code){
         Optional<Promotion> promotion = promotionRepository.findByPromotionCode(code);
-        if(promotion.isPresent()){
+        if(promotion.isPresent() && promotion.get().getAmount() == 1){
             return true;
         }
         return false;

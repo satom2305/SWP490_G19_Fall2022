@@ -5,10 +5,11 @@ import com.capstone.project.domain.*;
 import com.capstone.project.repository.*;
 import com.capstone.project.request.CartRequest;
 import com.capstone.project.request.OrderRequest;
-import com.capstone.project.response.CartResponse;
-import com.capstone.project.response.OrderResponse;
-import com.capstone.project.response.ProductResponse;
+import com.capstone.project.request.ProductRequest;
+import com.capstone.project.response.*;
+import com.capstone.project.service.OrderDetailService;
 import com.capstone.project.service.OrderService;
+import com.capstone.project.service.PromotionService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -33,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDetailRepository detailRepository;
     private final ProductRepository productRepository;
     private final PromotionRepository promotionRepository;
+    private final PromotionService promotionService;
+    private final OrderDetailService detailService;
     private final ModelMapper mapper;
 
     @Override
@@ -115,13 +118,15 @@ public class OrderServiceImpl implements OrderService {
                                 .productPrice(c.getProduct().getSellPrice())
                                 .quantity(c.getQuantity())
                         .build());
+                System.out.println(orderDetail);
                 Product product = productRepository.findById(c.getProduct().getProductId())
                         .orElseThrow(() -> new AppException("Product not found", 404));
                 product.setAmount(product.getAmount() - c.getQuantity());
                 productRepository.save(product);
                 detailRepository.save(orderDetail);
             }
-            System.out.println(order);
+            promotion.setAmount(0);
+            promotionRepository.save(promotion);
             cartRepository.deleteByUser(user.getUserId());
             return mapper.map(order, OrderResponse.class);
         } else {
@@ -148,6 +153,19 @@ public class OrderServiceImpl implements OrderService {
             order.setTotalPrice(orderRequest.getTotalPrice());
             order.setNote(orderRequest.getNote());
             order.setOrderStatus(orderStatus);
+            if(orderStatus.getId() == 3){
+                List<OrderDetail> orderDetails = detailRepository.findByOrder(order);
+                for (OrderDetail c : orderDetails){
+                    Product product = productRepository.findById(c.getProduct().getProductId())
+                            .orElseThrow(() -> new AppException("Product not found", 404));
+                    product.setAmount(product.getAmount() + c.getQuantity());
+                    productRepository.save(product);
+                }
+                if(promotion != null){
+                    promotion.setAmount(1);
+                    promotionRepository.save(promotion);
+                }
+            }
             order.setDate(date);
             order.setPromotion(promotion);
             order.setAddress(orderRequest.getAddress());
@@ -175,7 +193,7 @@ public class OrderServiceImpl implements OrderService {
                 orElseThrow(() -> new AppException("Order not found", 404));
         List<OrderDetail> list = detailRepository.findByOrder(order);
         for (OrderDetail c: list) {
-            detailRepository.delete(c);
+            detailService.deleteOrderDetail(c.getOrder_detail_id());
         }
         orderRepository.delete(order);
     }

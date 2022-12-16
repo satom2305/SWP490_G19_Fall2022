@@ -87,24 +87,25 @@ public class UserController {
                 new ResponseObject("ok", "Successfully", true, userResponse));
     }
 
-    @PutMapping("/changePwd/{oldPassword}&{newPassword}")
-    public ResponseEntity<?> changePwd(@PathVariable("oldPassword") String oldPassword, @PathVariable("oldPassword") String newPassword) {
+    @PutMapping("/changePwd/{oldPassword}/{newPassword}")
+    public ResponseEntity<?> changePwd(@PathVariable("oldPassword") String oldPassword, @PathVariable("newPassword") String newPassword) {
         Integer check = userService.changePwd(oldPassword, newPassword);
-        if (check == 0) {
+        if (check == 1) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Đổi thành công", true, "null"));
-        }else if (check == 1){
+                    new ResponseObject("ok", "Sai mật khẩu cũ", false, "2"));
+        }else if (check == 2){
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Sai mật khẩu cũ", false, "null"));
-        }else{
+                    new ResponseObject("ok", "Mật khẩu mới trùng với mật khẩu cũ", false, "3"));
+        }else if (check == 3){
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Mật khẩu mới trùng với mật khẩu cũ", false, "null"));
+                    new ResponseObject("ok", "Đổi thành công", true, "1"));
         }
+        return null;
     }
 
-    @GetMapping("/checkPwd/{username}")
-    public ResponseEntity<?> checkPwd(@PathVariable("username") String username,@RequestBody UserRequest request){
-        boolean result = userService.checkPwd(username,request);
+    @GetMapping("/checkPwd/{password}")
+    public ResponseEntity<?> checkPwd(@PathVariable("password") String password){
+        boolean result = userService.checkPwd(password);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Mat khau trung voi mat khau cu", true, "null"));

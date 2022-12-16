@@ -131,7 +131,7 @@ public class OrderControllerTest {
 
     @Test
     @DisplayName("test find order fail")
-    public void TestFindProductFail() {
+    public void TestFindOrderFail() {
         OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", "12345678");
         Integer id = 2;
 
@@ -141,5 +141,12 @@ public class OrderControllerTest {
         Assert.assertEquals(404, ex.getErrorCode());
     }
 
+    @Test
+    @DisplayName("test delete order")
+    public void TestDeleteOrder() {
+        OrderRequest orderRequest = new OrderRequest(1, 1, 100.0, "test", 1, null, 1, "string", "string", "string", "string", "12345678");
+        Integer id = 1;
+        Mockito.when(orderRepository.findById(orderRequest.getUserId())).thenReturn(Optional.ofNullable(order));
+    }
 
 }

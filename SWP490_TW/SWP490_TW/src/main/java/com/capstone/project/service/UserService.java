@@ -23,7 +23,7 @@ public interface UserService {
 
     int changePwd(String OldPassword, String NewPassword);
     UserResponse createStaff(UserRequest request);
-    Boolean checkPwd(String username,UserRequest request);
+    Boolean checkPwd(String password);
 
     List<UserResponse> searchUserByUsername(String username);
 
