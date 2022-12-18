@@ -70,12 +70,17 @@ public class OrderServiceImpl implements OrderService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             String username = auth.getName();
+            Promotion promotion;
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new AppException("User not found", 404));
             OrderStatus orderStatus = orderStatusRepository.findById(orderRequest.getOrderStatusId())
                     .orElseThrow(() -> new AppException("Order status not found", 404));
-            Promotion promotion = promotionRepository.findById(orderRequest.getPromotionId())
-                    .orElseThrow(() -> new AppException("Promotion not found", 404));
+            if(orderRequest.getPromotionId() == 0){
+                promotion = null;
+            }else {
+                promotion = promotionRepository.findById(orderRequest.getPromotionId())
+                        .orElseThrow(() -> new AppException("Promotion not found", 404));
+            }
             LocalDate localDate = LocalDate.now();
             Date date = java.sql.Date.valueOf(localDate);
 
@@ -125,8 +130,10 @@ public class OrderServiceImpl implements OrderService {
                 productRepository.save(product);
                 detailRepository.save(orderDetail);
             }
-            promotion.setAmount(0);
-            promotionRepository.save(promotion);
+            if(promotion != null){
+                promotion.setAmount(0);
+                promotionRepository.save(promotion);
+            }
             cartRepository.deleteByUser(user.getUserId());
             return mapper.map(order, OrderResponse.class);
         } else {
