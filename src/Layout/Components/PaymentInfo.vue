@@ -36,7 +36,7 @@
   <script>
   import PageTitle from "@/Layout/Components/PageTitle";
   import baseMixins from "@/components/mixins/base";
-  import { required, helpers } from "vuelidate/lib/validators";
+  import { required, helpers, integer } from "vuelidate/lib/validators";
   import { formatPriceSearchV2 } from "@/common/common";
   import Vue from "vue";
   import Multiselect from "vue-multiselect";
@@ -117,6 +117,7 @@
         currentSelectDetail: null,
         loadingOrderDetail: true,
         listCart:null,
+        cartData:null,
       };
     },
     mixins: [baseMixins],
@@ -159,6 +160,7 @@
       }
     },
     mounted() {
+       
         this.getListCart();
       if (!this.getPromotions || this.getPromotions.length === 0) {
         this.$store.dispatch(FETCH_PROMOTIONS).then(res => {
@@ -418,6 +420,7 @@
         this.currentDetailData = []
         this.$emit('cancelCreateOrder', isFetchOrders)
         this.$root.$emit("bv::hide::modal", "modal-create-order");
+        this.$router.push({ path: `/my-order` });
       },
       openModalDeleteOrderDetail(orderDetail, indexVal) {
         if (orderDetail && orderDetail.order_detail_id) {
@@ -437,6 +440,8 @@
       const res = await this.getWithBigInt("/rest/carts");
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
+        const cartData = JSON.parse(localStorage.getItem('quantity'));
+        this.listCart = cartData;
       }
     },
       async handleDeleteOrderDetail() {

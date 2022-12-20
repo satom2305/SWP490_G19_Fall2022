@@ -82,7 +82,7 @@
               <div class="product__details__quantity">
                 <div class="quantity">
                   <div class="pro-qty">
-                    <input type="number" v-model="quantity" />
+                    <input type="number" v-model="quantity" :disabled="true" />
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@
               </button>
               <ul>
                 <li>
-                  <b>Availability</b> <span>{{ productDetail.amount }}</span>
+                  <b>Số lượng</b> <span>{{ productDetail.amount }}</span>
                 </li>
               </ul>
             </div>

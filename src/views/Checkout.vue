@@ -214,7 +214,7 @@
     <!-- Footer Section Begin -->
     <UserFooter />
     <!-- Footer Section End -->
-    <modalPayment :total-price="totalPrice" />
+    <modalPayment :total-price="totalPrice"/>
   </div>
 </template>
 
@@ -296,6 +296,7 @@ export default {
   mounted() {
     // handleJQuery();
     this.getListCart();
+    
   },
   computed: {
     totalPrice() {
@@ -322,6 +323,8 @@ export default {
       const res = await this.getWithBigInt("/rest/carts");
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
+        const cartData = JSON.parse(localStorage.getItem('quantity'));
+        this.listCart = cartData;
       }
     },
     async handleCreateOrder() {
@@ -364,7 +367,12 @@ export default {
 
       let res = await this.$store.dispatch(CREATE_ORDER, payload);
       if (res.status === 200 && res.data && res.data.data) {
-        let newOrderId = res.data.data.orderId;
+        this.$message({
+          message: successMsg,
+          type: "success",
+          showClose: true,
+        });
+        // let newOrderId = res.data.data.orderId;
         // payloadForCreateDetail = payloadForCreateDetail.map((item) => {
         //   return {
         //     ...item,

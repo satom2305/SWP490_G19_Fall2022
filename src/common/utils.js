@@ -253,7 +253,8 @@ export const botChatAI = () => {
             profileAvatar: "https://res.cloudinary.com/des083zke/image/upload/v1670951098/bot/pngtree-chatbot-color-icon-chat-bot-png-image_5274901_mpggry.png",
             openLauncherImage: "https://res.cloudinary.com/des083zke/image/upload/v1670951098/bot/pngtree-chatbot-color-icon-chat-bot-png-image_5274901_mpggry.png",
             showMessageDate: true,
-            params: { "storage": "session" } // can be set to "local"  or "session". details in storage section.
+            params: { "storage": "session" },// can be set to "local"  or "session". details in storage section.
+            initPayload: "/greeting",
           },
           null
         );
