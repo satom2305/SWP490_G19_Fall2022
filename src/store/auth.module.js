@@ -72,7 +72,7 @@ const actions = {
   },
   [CHANGE_PASSWORD](context, payload) {
     return new Promise(async resolve => {
-      axios.put(`${API_ENDPOINT}/rest/users/changePwd/${payload}/${payload}`,{},{headers:{'Authorization':'Bearer ' + StorageService.get('Token')}}).then(response => {
+      axios.put(`${API_ENDPOINT}/rest/users/changePwd/${payload.oldPassword}/${payload.password}`,{},{headers:{'Authorization':'Bearer ' + StorageService.get('Token')}}).then(response => {
         resolve(response)
       }).catch((error) => {
         resolve(error)

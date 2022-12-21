@@ -22,28 +22,35 @@
                     <a-dropdown>
                       <a class="ant-dropdown-link" @click.prevent>
                         <div class="ml-4">
-                          <a-avatar src="https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146"
-                            alt="avatar" />
+                          <a-avatar
+                            src="https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146"
+                            alt="avatar"
+                          />
                           <span class="ml-3">{{ userInfo.username }}</span>
                         </div>
                       </a>
                       <template #overlay>
                         <a-menu>
-                          <a-menu-item v-if="
-                            userInfo &&
-                            (userInfo.role === '[ADMIN]' ||
-                              userInfo.role === '[STAFF]')
-                          ">
+                          <a-menu-item
+                            v-if="
+                              userInfo &&
+                                (userInfo.role === '[ADMIN]' ||
+                                  userInfo.role === '[STAFF]')
+                            "
+                          >
                             <template>
                               <div @click="navigateToAdmin">Trang quản lý</div>
                             </template>
                           </a-menu-item>
                           <a-menu-item>
-                            <div @click="openModalUpdatePassword" v-if="
-                              userInfo &&
-                              userInfo &&
-                              userInfo.role !== '[GUEST]'
-                            ">
+                            <div
+                              @click="openModalUpdatePassword"
+                              v-if="
+                                userInfo &&
+                                  userInfo &&
+                                  userInfo.role !== '[GUEST]'
+                              "
+                            >
                               Cập nhật mật khẩu
                             </div>
                           </a-menu-item>
@@ -64,38 +71,65 @@
                   </template>
                 </div>
               </div>
-              <b-modal hide-footer id="update-password" :title="'Cập nhật mật khẩu'" :no-close-on-backdrop="true"
-                @hide="cancelUpdatePassword()">
+              <b-modal
+                hide-footer
+                id="update-password"
+                :title="'Cập nhật mật khẩu'"
+                :no-close-on-backdrop="true"
+                @hide="cancelUpdatePassword()"
+              >
                 <b-form-group id="exampleInputGroup4" label-for="exampleInput4">
-                  <b-form-input id="exampleInput4" v-model="form.oldPassword" type="password" required
-                    placeholder="Nhập lại mật khẩu cũ" :class="{
-                      'is-invalid':
-                        (!form.oldPassword ||
-                          form.oldPassword === '') 
-                    }">
+                  <b-form-input
+                    id="exampleInput4"
+                    v-model="form.oldPassword"
+                    type="password"
+                    required
+                    placeholder="Nhập lại mật khẩu cũ"
+                    :class="{
+                      'is-invalid': form.oldPassword == '',
+                    }"
+                  >
                   </b-form-input>
-                  <div v-if="
-                    (!form.oldPassword || form.oldPassword.trim() === '')
-                  " class="invalid-feedback">
+                  <div
+                    v-if="!form.oldPassword || form.oldPassword.trim() === ''"
+                    class="invalid-feedback"
+                  >
                     Mật khẩu không được để trống.
                   </div>
                 </b-form-group>
                 <b-form-group id="exampleInputGroup2" label-for="exampleInput2">
-                  <b-form-input id="exampleInput2" v-model="$v.form.password.$model" type="password" required
-                    placeholder="Mật khẩu mới" :class="{
+                  <b-form-input
+                    id="exampleInput2"
+                    v-model="$v.form.password.$model"
+                    type="password"
+                    required
+                    placeholder="Mật khẩu mới"
+                    :class="{
                       'is-invalid': validationStatus($v.form.password),
-                    }">
+                    }"
+                  >
                   </b-form-input>
-                  <div v-if="!$v.form.password.required" class="invalid-feedback">
+                  <div
+                    v-if="!$v.form.password.required"
+                    class="invalid-feedback"
+                  >
                     Mật khẩu không được để trống.
                   </div>
-                  <div v-if="!$v.form.password.minLength" class="invalid-feedback">
+                  <div
+                    v-if="!$v.form.password.minLength"
+                    class="invalid-feedback"
+                  >
                     Mật khẩu không được ít hơn 6 kí tự.
                   </div>
                 </b-form-group>
                 <b-form-group id="exampleInputGroup3" label-for="exampleInput3">
-                  <b-form-input id="exampleInput3" v-model="form.rePassword" type="password" required
-                    placeholder="Nhập lại mật khẩu mới" :class="{
+                  <b-form-input
+                    id="exampleInput3"
+                    v-model="form.rePassword"
+                    type="password"
+                    required
+                    placeholder="Nhập lại mật khẩu mới"
+                    :class="{
                       'is-invalid':
                         ($v.form.password.required &&
                           (!form.rePassword ||
@@ -103,27 +137,42 @@
                         ($v.form.password.required &&
                           form.rePassword &&
                           form.rePassword.trim() !== form.password.trim()),
-                    }">
+                    }"
+                  >
                   </b-form-input>
-                  <div v-if="
-                    $v.form.password.required &&
-                    (!form.rePassword || form.rePassword.trim() === '')
-                  " class="invalid-feedback">
+                  <div
+                    v-if="
+                      $v.form.password.required &&
+                        (!form.rePassword || form.rePassword.trim() === '')
+                    "
+                    class="invalid-feedback"
+                  >
                     Mật khẩu nhập lại không được để trống.
                   </div>
-                  <div v-if="
-                    $v.form.password.required &&
-                    form.rePassword &&
-                    form.rePassword.trim() !== form.password.trim()
-                  " class="invalid-feedback">
+                  <div
+                    v-if="
+                      $v.form.password.required &&
+                        form.rePassword &&
+                        form.rePassword.trim() !== form.password.trim()
+                    "
+                    class="invalid-feedback"
+                  >
                     Mật khẩu nhập lại không trùng khớp.
                   </div>
                 </b-form-group>
-                <b-button class="mr-2 btn-light2 pull-right" @click="cancelUpdatePassword()">
+                <b-button
+                  class="mr-2 btn-light2 pull-right"
+                  @click="cancelUpdatePassword()"
+                >
                   Hủy
                 </b-button>
-                <b-button :disabled="loadingButton" variant="primary pull-right" class="mr-2" type="submit"
-                  @click="handleUpdatePassword()">
+                <b-button
+                  :disabled="loadingButton"
+                  variant="primary pull-right"
+                  class="mr-2"
+                  type="submit"
+                  @click="handleUpdatePassword()"
+                >
                   Đồng ý
                 </b-button>
               </b-modal>
@@ -136,7 +185,7 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="header__logo">
-            <a href="/"><img src="@/assets/static/images/logo.png" alt="" /></a>
+            <a href="/"><img src="@/assets/static/images/logo.png" alt=""/></a>
           </div>
         </div>
         <div class="col-lg-6">
@@ -228,7 +277,7 @@ export default {
       },
     },
   },
-  mounted() { },
+  mounted() {},
   // computed: {
   //   verifyAccountRole() {
   //     return verifyAccountRole();
@@ -242,7 +291,7 @@ export default {
         this.isFinishTimer = true;
       }, 1000);
     },
-    validationStatus: function (validation) {
+    validationStatus: function(validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
     openModalUpdatePassword() {
@@ -279,7 +328,7 @@ export default {
       //   },
       //   username: this.userInfo.username,
       // };
-      let response = await this.$store.dispatch(CHANGE_PASSWORD, this.form.oldPassword, this.form.oldPassword);
+      let response = await this.$store.dispatch(CHANGE_PASSWORD, this.form);
       if (response) {
         EventBus.$emit("close-progress", true);
         this.loadingButton = false;
@@ -297,25 +346,33 @@ export default {
         setTimeout(() => {
           this.navigateToLogin();
         }, 3000);
-      } else if (response && response.data.data == "2" && !response.data.success) {
-          this.$message({
-            message: "Sai mật khẩu cũ,vui lòng nhập lại",
-            type: "warning",
-            showClose: true,
-          });
-        } else if (response && response.data.data == "3" && !response.data.success) {
-            this.$message({
-              message: "Mật khẩu mới trùng với mật khẩu cũ,vui lòng nhập lại",
-              type: "warning",
-              showClose: true,
-            });
-          } else {
-            this.$message({
-              message: "Có lỗi xảy ra",
-              type: "warning",
-              showClose: true,
-            });
-          }
+      } else if (
+        response &&
+        response.data.data == "2" &&
+        !response.data.success
+      ) {
+        this.$message({
+          message: "Sai mật khẩu cũ,vui lòng nhập lại",
+          type: "warning",
+          showClose: true,
+        });
+      } else if (
+        response &&
+        response.data.data == "3" &&
+        !response.data.success
+      ) {
+        this.$message({
+          message: "Mật khẩu mới trùng với mật khẩu cũ,vui lòng nhập lại",
+          type: "warning",
+          showClose: true,
+        });
+      } else {
+        this.$message({
+          message: "Có lỗi xảy ra",
+          type: "warning",
+          showClose: true,
+        });
+      }
     },
     navigateToLogin() {
       router.push({ path: "/login" });
@@ -327,6 +384,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

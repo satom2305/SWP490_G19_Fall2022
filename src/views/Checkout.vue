@@ -167,8 +167,11 @@
                   placeholder="Nhập mã giảm giá"
                 />
                 <button
+                  :disabled="
+                    currentData.promotion === '' || !currentData.promotion
+                  "
                   class="site-btn"
-                  @click="handleSubmit"
+                  @click="handlePromotion(currentData.promotion)"
                   style="cursor:pointer"
                 >
                   Áp mã giảm giá
@@ -194,6 +197,9 @@
                   Giá <span>{{ formatPrice(subPrice) }}đ</span>
                 </div>
                 <div class="checkout__order__total">
+                  Giảm giá <span>{{ formatPrice(subPrice - totalPrice) }}</span>
+                </div>
+                <div class="checkout__order__total">
                   Tổng giá đơn hàng <span>{{ formatPrice(totalPrice) }}đ</span>
                 </div>
                 <button
@@ -214,7 +220,7 @@
     <!-- Footer Section Begin -->
     <UserFooter />
     <!-- Footer Section End -->
-    <modalPayment :total-price="totalPrice"/>
+    <modalPayment :total-price="totalPrice" />
   </div>
 </template>
 
@@ -235,7 +241,7 @@ import SectionBegin from "../Layout/Components/SectionBegin";
 import moment from "moment";
 import modalPayment from "../Layout/Components/PaymentInfo.vue";
 
-const DEFAULT_PROMOTION_ID = 3;
+const DEFAULT_PROMOTION_ID = 0;
 const ORDER_STATUS_ID = 1;
 const initOrder = {
   totalPrice: 0,
@@ -248,7 +254,7 @@ const initOrder = {
   district: null,
   wards: null,
   phoneNumber: 0,
-  promotion:null,
+  promotion: null,
 };
 const initOrderDetail = {
   order_detail_id: null,
@@ -258,9 +264,10 @@ const initOrderDetail = {
   productPrice: 0,
   quantity: 1,
 };
+
 const validPhoneNumber = helpers.regex(
   "validPhoneNumber",
-  /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+  /(84|0[3|5|7|8|9])+([0-9]{8})\b/g
 );
 
 export default {
@@ -271,6 +278,9 @@ export default {
     return {
       listCart: [],
       currentData: Object.assign({}, initOrder),
+      salePercent: 0,
+      totalPrice: 0,
+      subPrice: 0,
     };
   },
   validations: {
@@ -296,34 +306,39 @@ export default {
   mounted() {
     // handleJQuery();
     this.getListCart();
-    
   },
   computed: {
-    totalPrice() {
-      return this.listCart && this.listCart.length > 0
-        ? this.listCart
-            .map((cart) => cart.quantity * cart.product.sellPrice)
-            .reduce((prev, current) => prev + current, 0)
-        : 0;
-    },
-    subPrice() {
-      return this.listCart && this.listCart.length > 0
-        ? this.listCart
-            .map((cart) => cart.quantity * cart.product.sellPrice)
-            .reduce((prev, current) => prev + current, 0)
-        : 0;
-    },
+    // totalPrice() {
+    //   let result = 0;
+    //   if (this.listCart && this.listCart.length > 0) {
+    //     result = this.listCart
+    //       .map((cart) => cart.quantity * cart.product.sellPrice)
+    //       .reduce((prev, current) => prev + current, 0);
+    //   }
+    //   return result;
+    // },
+    // subPrice() {
+    //   return this.listCart && this.listCart.length > 0
+    //     ? this.listCart
+    //         .map((cart) => cart.quantity * cart.product.sellPrice)
+    //         .reduce((prev, current) => prev + current, 0)
+    //     : 0;
+    // },
   },
   methods: {
     formatPrice(price) {
       if (!price) return 0;
       return formatPriceSearchV2(price + "");
     },
+    salePrice(price, percent) {
+      return percent !== 0 ? price * (percent / 100) : 0;
+    },
     async getListCart() {
       const res = await this.getWithBigInt("/rest/carts");
+      console.log(res);
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
-        const cartData = JSON.parse(localStorage.getItem('quantity'));
+        const cartData = JSON.parse(localStorage.getItem("quantity"));
         this.listCart = cartData;
       }
     },
@@ -353,17 +368,17 @@ export default {
         district,
         wards,
       };
-      let payloadForCreateDetail = this.listCart.map((item) => {
-        return {
-          productId: item.product ? item.product.productId + "" : null,
-          productName: item.product ? item.product.productName : null,
-          quantity: item.quantity,
-          productPrice:
-            (item.product && item.quantity
-              ? item.product.sellPrice * item.quantity
-              : 0) + "",
-        };
-      });
+      // let payloadForCreateDetail = this.listCart.map((item) => {
+      //   return {
+      //     productId: item.product ? item.product.productId + "" : null,
+      //     productName: item.product ? item.product.productName : null,
+      //     quantity: item.quantity,
+      //     productPrice:
+      //       (item.product && item.quantity
+      //         ? item.product.sellPrice * item.quantity
+      //         : 0) + "",
+      //   };
+      // });
 
       let res = await this.$store.dispatch(CREATE_ORDER, payload);
       if (res.status === 200 && res.data && res.data.data) {
@@ -408,8 +423,46 @@ export default {
       }
       this.handleCreateOrder();
     },
+    async handlePromotion(promotionCode) {
+      const res = await this.getWithBigInt(
+        "/rest/promotions/promotionCode",
+        promotionCode
+      );
+      if (res && res.data && res.data.success) {
+        // this.promotionDetail = res.data.data;
+        // this.salePrice = (this.totalPrice
+        this.$data.salePercent = res.data.data.salePercent;
+        this.$data.currentData.promotionId = res.data.data.promotionId;
+        this.$message({
+          message: res.data.message,
+          type: "success",
+          showClose: true,
+        });
+      } else if (res && res.data && !res.data.success) {
+        this.$message({
+          message: res.data.message,
+          type: "error",
+          showClose: true,
+        });
+      }
+    },
     validationStatus: function(validation) {
       return typeof validation != "undefined" ? validation.$error : false;
+    },
+  },
+  watch: {
+    listCart(newValue, oldValue) {
+      if (newValue.length > 0) {
+        let result = newValue
+          .map((cart) => cart.quantity * cart.product.sellPrice)
+          .reduce((prev, current) => prev + current, 0);
+        this.subPrice = result;
+        this.totalPrice = result;
+      }
+    },
+    salePercent(newValue, oldValue) {
+      const sale = this.salePrice(this.subPrice, newValue);
+      this.totalPrice = this.subPrice - sale;
     },
   },
 };
