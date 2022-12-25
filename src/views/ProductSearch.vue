@@ -164,11 +164,11 @@
                   >
                     <div class="product__item__pic set-bg">
                       <img :src="item.mainImg" alt="" />
-                      <ul class="product__item__pic__hover">
+                      <!-- <ul class="product__item__pic__hover">
                         <li>
                           <a href="#"><i class="fa fa-shopping-cart"></i></a>
                         </li>
-                      </ul>
+                      </ul> -->
                     </div>
                     <div class="product__item__text">
                       <h6>
@@ -261,7 +261,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -303,6 +303,7 @@ export default {
     }
     handleJQuery();
     // handlebotfe();
+    botChatAI();
     this.getListProduct();
     this.getTopProduct();
     this.getListCategory();

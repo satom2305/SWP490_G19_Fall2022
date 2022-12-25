@@ -17,12 +17,27 @@
             <li>
               {{ item.productName }} x
               {{ item.quantity }}
-              <span>{{ getFormatPrice(item.productPrice) }}đ</span>
+              <span
+                >{{
+                  getFormatPrice(item.product.sellPrice * item.quantity)
+                }}đ</span
+              >
             </li>
           </ul>
-          <div class="checkout__order__total">
+          <div
+            v-if="currentOrderDetail && currentOrderDetail.length > 0"
+            class="checkout__order__total"
+          >
             Tổng giá đơn hàng
-            <span>{{ getFormatPrice(getTotalProductPrice) }}đ</span>
+            <span
+              >{{
+                getFormatPrice(currentOrderDetail[0].order.totalPrice)
+              }}đ</span
+            >
+          </div>
+          <div v-else class="checkout__order__total">
+            Tổng giá đơn hàng
+            <span>0đ</span>
           </div>
         </div>
       </div>
@@ -99,6 +114,8 @@ export default {
   },
   data() {
     return {
+      totalPrice: 0,
+      subPrice: 0,
       heading: "Tạo đơn hàng",
       subheading: "Tạo đơn hàng",
       userInfo: localStorage.getItem("userInfo")
@@ -154,6 +171,19 @@ export default {
     },
   },
   watch: {
+    listCart(newValue, oldValue) {
+      if (newValue.length > 0) {
+        let result = newValue
+          .map((cart) => cart.quantity * cart.product.sellPrice)
+          .reduce((prev, current) => prev + current, 0);
+        this.subPrice = result;
+        this.totalPrice = result;
+      }
+    },
+    salePercent(newValue, oldValue) {
+      const sale = this.salePrice(this.subPrice, newValue);
+      this.totalPrice = this.subPrice - sale;
+    },
     order() {
       this.setCurrentUpdateData();
       this.fetchOrderDetailById();
@@ -198,6 +228,9 @@ export default {
     },
   },
   methods: {
+    salePrice(price, percent) {
+      return percent !== 0 ? price * (percent / 100) : 0;
+    },
     checkInvalidProduct() {
       if (this.currentDetailData && this.currentDetailData.length > 0) {
         let incorrectDetail = this.currentDetailData.filter(

@@ -122,7 +122,9 @@
               </div>
               <div class="blog__item__text">
                 <ul>
-                  <li><i class="fa fa-calendar-o"></i> {{getDateFormat(index)}}</li>
+                  <li>
+                    <i class="fa fa-calendar-o"></i> {{ getDateFormat(index) }}
+                  </li>
                 </ul>
                 <h5>
                   <a>{{ item.title }}</a>
@@ -141,7 +143,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import moment from "moment";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -162,6 +164,7 @@ export default {
   },
   mounted() {
     // handleJQuery();
+    botChatAI();
     this.getDetailBlog();
     this.getListBlog();
     // console.log(this.$router);

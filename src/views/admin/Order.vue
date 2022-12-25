@@ -304,7 +304,7 @@ import ModalCreateOrder from "@/Layout/Components/admin/ModalCreateOrder.vue";
 import ModalOrderDetail from "@/Layout/Components/ModalOrderDetail.vue";
 import debounce from "lodash/debounce";
 const initDataFilter = {
-  usernameSearch:null,
+  usernameSearch: null,
   page: 1,
   limit: 10,
 };
@@ -635,7 +635,7 @@ export default {
             : this.currentActionForOrder === ACTION_FOR_ORDER.REJECT
             ? "3"
             : orderStatus.id + "",
-        promotionId: promotion ? promotion.promotionId : null,
+        promotionId: promotion ? promotion.promotionId : 0,
         address,
         city,
         district,

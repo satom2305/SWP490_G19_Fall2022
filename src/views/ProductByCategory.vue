@@ -72,13 +72,17 @@
             <div class="filter__item">
               <div class="row">
                 <div class="col-lg-4 col-md-5">
-                  <!-- <div class="filter__sort">
-                    <span>Sắp xếp theo</span>
-                    <select>
-                      <option value="0">Giá tăng dần</option>
-                      <option value="0">Giá giảm dần</option>
-                    </select>
-                  </div> -->
+                  <span
+                    v-if="
+                      listProductbyCategory && listProductbyCategory.length > 0
+                    "
+                  >
+                    <p style="font-weight:bold">
+                      Danh mục "{{
+                        listProductbyCategory[1].category.categoryName
+                      }}"
+                    </p>
+                  </span>
                 </div>
                 <div class="col-lg-4 col-md-4"></div>
                 <div class="col-lg-4 col-md-3">
@@ -104,11 +108,11 @@
                   >
                     <div class="product__item__pic set-bg">
                       <img :src="item.mainImg" alt="" />
-                      <ul class="product__item__pic__hover">
+                      <!-- <ul class="product__item__pic__hover">
                         <li>
                           <a href="#"><i class="fa fa-shopping-cart"></i></a>
                         </li>
-                      </ul>
+                      </ul> -->
                     </div>
                     <div class="product__item__text">
                       <h6>
@@ -174,7 +178,7 @@
 </template>
 
 <script>
-// import { handleJQuery } from "../common/utils";
+import { handleJQuery } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -188,7 +192,7 @@ export default {
   data() {
     return {
       productListPaginate: null,
-      listProductbyCategory: null,
+      listProductbyCategory: [],
       topProduct: null,
       pagination: {
         currentPage: 1,

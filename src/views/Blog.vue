@@ -98,6 +98,7 @@ import UserHeader from "../Layout/Components/UserHeader";
 import UserFooter from "../Layout/Components/UserFooter";
 import Humberger from "../Layout/Components/Humberger";
 import SectionBegin from "../Layout/Components/SectionBegin.vue";
+import { handleJQuery, botChatAI } from "../common/utils";
 export default {
   name: "Blog",
   components: { UserHeader, UserFooter, Humberger, SectionBegin },
@@ -115,6 +116,7 @@ export default {
     };
   },
   mounted() {
+    botChatAI();
     this.getListBlog();
     // console.log(this.$router);
   },

@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import UserHeader from "../Layout/Components/UserHeader";
 import UserFooter from "../Layout/Components/UserFooter";
 import Humberger from "../Layout/Components/Humberger";
@@ -83,6 +83,9 @@ import ModalMap from "../Layout/Components/ModalMap";
 export default {
   name: "contact",
   components: { UserHeader, SectionBegin, UserFooter, Humberger, ModalMap },
+  mounted() {
+    botChatAI();
+  },
   created() {
     handleJQuery();
   },

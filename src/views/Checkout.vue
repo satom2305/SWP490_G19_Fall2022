@@ -225,7 +225,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "@/common/common";
 import {
@@ -305,6 +305,7 @@ export default {
   },
   mounted() {
     // handleJQuery();
+    botChatAI();
     this.getListCart();
   },
   computed: {

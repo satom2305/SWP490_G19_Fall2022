@@ -39,7 +39,12 @@
                 <tbody v-for="(item, index) in listCart" :key="index">
                   <tr>
                     <td class="shoping__cart__item">
-                      <img :src="item.product.mainImg" width="150" height="150" alt="" />
+                      <img
+                        :src="item.product.mainImg"
+                        width="150"
+                        height="150"
+                        alt=""
+                      />
                       <h5>{{ item.product.productName }}</h5>
                     </td>
                     <td class="shoping__cart__price">
@@ -48,8 +53,18 @@
                     <td class="shoping__cart__quantity">
                       <div class="quantity">
                         <div class="pro-qty">
-                          <input v-if="toggleUpdateCart" type="number" v-model="item.quantity"
-                            @input="onChangeQuantity($event.target.value, item,item.product.amount)" />
+                          <input
+                            v-if="toggleUpdateCart"
+                            type="number"
+                            v-model="item.quantity"
+                            @input="
+                              onChangeQuantity(
+                                $event.target.value,
+                                item,
+                                item.product.amount
+                              )
+                            "
+                          />
                           <div class="my-2" v-else>
                             {{ item.quantity }}
                           </div>
@@ -59,15 +74,28 @@
                     <td class="shoping__cart__total">
                       {{ formatPrice(item.product.sellPrice * item.quantity) }}đ
                     </td>
-                    <td class="shoping__cart__item__close" v-if="toggleUpdateCart">
-                      <span class="icon_close" @click="openModalConfirmDeleteCart(item)">x</span>
+                    <td
+                      class="shoping__cart__item__close"
+                      v-if="toggleUpdateCart"
+                    >
+                      <span
+                        class="icon_close"
+                        @click="openModalConfirmDeleteCart(item)"
+                        >x</span
+                      >
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-center flex-column align-items-center" v-else>
+              <div
+                class="d-flex justify-content-center flex-column align-items-center"
+                v-else
+              >
                 <div>
-                  <i class="fa-solid fa-bag-shopping" style="color: #b6b6b6; font-size: 2rem;"></i>
+                  <i
+                    class="fa-solid fa-bag-shopping"
+                    style="color: #b6b6b6; font-size: 2rem;"
+                  ></i>
                 </div>
                 <div class="custom-empty-content my-2">Giỏ hàng trống</div>
               </div>
@@ -77,11 +105,19 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="shoping__cart__btns">
-              <a href="/" class="primary-btn cart-btn mx-0">Tiếp tục mua hàng</a>
-              <button v-if="listCart && listCart.length > 0" class="primary-btn cart-btn cart-btn-right"
-                style="border: none; cursor: pointer" @click="confirmUpdateCart">
+              <a href="/" class="primary-btn cart-btn mx-0"
+                >Tiếp tục mua hàng</a
+              >
+              <button
+                v-if="listCart && listCart.length > 0"
+                class="primary-btn cart-btn cart-btn-right"
+                style="border: none; cursor: pointer"
+                @click="confirmUpdateCart"
+              >
                 <span v-if="!toggleUpdateCart">Cập nhật</span>
-                <span v-if="toggleUpdateCart">Xác nhận</span>
+                <span @click="updateListCart()" v-if="toggleUpdateCart"
+                  >Xác nhận</span
+                >
               </button>
             </div>
           </div>
@@ -107,8 +143,12 @@
                   Tổng giá <span>{{ formatPrice(this.totalPrice) }}đ</span>
                 </li>
               </ul>
-              <button style="cursor: pointer; border: none;" @click="proceedToCheckout()" class="primary-btn w-100"
-                v-if="listCart && listCart.length > 0">
+              <button
+                style="cursor: pointer; border: none;"
+                @click="proceedToCheckout()"
+                class="primary-btn w-100"
+                v-if="listCart && listCart.length > 0"
+              >
                 Tiến hành thanh toán
               </button>
             </div>
@@ -120,18 +160,34 @@
 
     <!-- Footer Section Begin -->
     <UserFooter />
-    <b-modal hide-footer id="modal-delete-cart" :title="'Xác nhận xoá sản phẩm khỏi giỏ hàng'"
-      :no-close-on-backdrop="true">
+    <b-modal
+      hide-footer
+      id="modal-delete-cart"
+      :title="'Xác nhận xoá sản phẩm khỏi giỏ hàng'"
+      :no-close-on-backdrop="true"
+    >
       <div class="pb-3">
         Bạn có muốn xoá sản phẩm
-        <span class="font-weight-bold" v-if="currentCart && currentCart.product">
-          {{ currentCart.product.productName }}</span>
+        <span
+          class="font-weight-bold"
+          v-if="currentCart && currentCart.product"
+        >
+          {{ currentCart.product.productName }}</span
+        >
         khỏi giỏ hàng không ?
       </div>
-      <b-button class="mr-2 btn-light2 pull-right" @click="closeModalConfirmDeleteCart()">
+      <b-button
+        class="mr-2 btn-light2 pull-right"
+        @click="closeModalConfirmDeleteCart()"
+      >
         Hủy
       </b-button>
-      <b-button variant="primary pull-right" class="mr-2" type="submit" @click="deleteCart()">
+      <b-button
+        variant="primary pull-right"
+        class="mr-2"
+        type="submit"
+        @click="deleteCart()"
+      >
         Đồng ý
       </b-button>
     </b-modal>
@@ -142,7 +198,7 @@
 </template>
 
 <script>
-// import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -158,34 +214,60 @@ export default {
       listCart: [],
       toggleUpdateCart: false,
       currentCart: null,
+      cartData: null,
     };
   },
   mounted() {
     // handleJQuery();
+
+    botChatAI();
     this.getListCart();
   },
   computed: {
     totalPrice() {
       return this.listCart && this.listCart.length > 0
         ? this.listCart
-          .map((cart) => cart.quantity * cart.product.sellPrice)
-          .reduce((prev, current) => prev + current, 0)
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
         : 0;
     },
     subPrice() {
       return this.listCart && this.listCart.length > 0
         ? this.listCart
-          .map((cart) => cart.quantity * cart.product.sellPrice)
-          .reduce((prev, current) => prev + current, 0)
+            .map((cart) => cart.quantity * cart.product.sellPrice)
+            .reduce((prev, current) => prev + current, 0)
         : 0;
     },
   },
   methods: {
-    handleMaxQuantity(maxQuantity,value) {
-      if (value > maxQuantity) { value = maxQuantity; } else if (value < 0) { value = '0'; }
+    handleMaxQuantity(maxQuantity, value) {
+      if (value > maxQuantity) {
+        value = maxQuantity;
+      } else if (value < 0) {
+        value = "0";
+      }
     },
     async getListCart() {
       const res = await this.getWithBigInt("/rest/carts");
+      if (res && res.data && res.data.data) {
+        this.listCart = res.data.data;
+      }
+    },
+    async updateListCart() {
+      localStorage.setItem("quantity", JSON.stringify(this.listCart));
+      this.cartData = JSON.parse(localStorage.getItem("quantity"));
+      let payloadforUpdateCart = this.cartData.map((item) => {
+        return {
+          cartId: item.cartId,
+          productId: item.product.productId,
+          quantity: item.quantity,
+          userId: item.user.userId,
+        };
+      });
+      const res = await this.put(
+        "/rest/carts/updateListCart",
+        payloadforUpdateCart
+      );
       if (res && res.data && res.data.data) {
         this.listCart = res.data.data;
       }
@@ -205,12 +287,12 @@ export default {
       }
     },
     onChangeQuantity(quantity, cart, maxQuantity) {
-      if(quantity<=maxQuantity){
-      cart.quantity = quantity;
-      }else{
+      if (quantity <= maxQuantity) {
+        cart.quantity = quantity;
+      } else {
         cart.quantity = maxQuantity;
       }
-      this.$nextTick(() => { });
+      this.$nextTick(() => {});
     },
     openModalConfirmDeleteCart(cart) {
       this.currentCart = { ...cart };
@@ -221,7 +303,7 @@ export default {
       this.$root.$emit("bv::hide::modal", "modal-delete-cart");
     },
     proceedToCheckout() {
-      localStorage.setItem('quantity',JSON.stringify(this.listCart));
+      localStorage.setItem("quantity", JSON.stringify(this.listCart));
       this.$router.push({ path: `/checkout` });
     },
     formatPrice(price) {

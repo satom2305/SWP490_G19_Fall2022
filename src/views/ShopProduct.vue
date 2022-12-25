@@ -283,11 +283,11 @@
                 >
                   <div class="product__item__pic set-bg">
                     <img :src="item.mainImg" alt="" />
-                    <ul class="product__item__pic__hover">
+                    <!-- <ul class="product__item__pic__hover">
                       <li>
                         <a href="#"><i class="fa fa-shopping-cart"></i></a>
                       </li>
-                    </ul>
+                    </ul> -->
                   </div>
                   <div class="product__item__text">
                     <h6>
@@ -320,7 +320,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -346,13 +346,14 @@ export default {
   mounted() {
     // handleJQuery();
     // handlebotfe();
+    botChatAI();
     this.getListProduct();
     this.getTopProduct();
   },
   methods: {
     async getListProduct() {
       // const res = await clientService.getListProduct()
-      const res = await this.getWithBigInt("/rest/products/listAllProduct");
+      const res = await this.getWithBigInt("/rest/products/listProduct");
       if (res && res.data && res.data.data) {
         this.listProduct = res.data.data;
         this.pagination.totalRows = res.data.data.length;
@@ -365,42 +366,42 @@ export default {
     showProductDetail(id) {
       this.$router.push({ path: `/shop-detail/${id}` });
     },
-   async onchange(event){
-      if(event.target.value == "0"){
-        const res = await this.getWithBigInt("/rest/products/listAllProduct");
+    async onchange(event) {
+      if (event.target.value == "0") {
+        const res = await this.getWithBigInt("/rest/products/listProduct");
         if (res && res.data && res.data.data) {
-        this.listProduct = res.data.data;
-        this.pagination.totalRows = res.data.data.length;
-        this.productListPaginate = res.data.data.slice(
-          0,
-          this.pagination.perPage
-        );
+          this.listProduct = res.data.data;
+          this.pagination.totalRows = res.data.data.length;
+          this.productListPaginate = res.data.data.slice(
+            0,
+            this.pagination.perPage
+          );
+        }
       }
-      }
-      if(event.target.value == "1"){
+      if (event.target.value == "1") {
         const res = await this.getWithBigInt("/rest/products/sort/asc");
         if (res && res.data && res.data.data) {
-        this.listProduct = res.data.data;
-        this.pagination.totalRows = res.data.data.length;
-        this.productListPaginate = res.data.data.slice(
-          0,
-          this.pagination.perPage
-        );
+          this.listProduct = res.data.data;
+          this.pagination.totalRows = res.data.data.length;
+          this.productListPaginate = res.data.data.slice(
+            0,
+            this.pagination.perPage
+          );
+        }
       }
-      }
-      if(event.target.value == "2"){
+      if (event.target.value == "2") {
         const res = await this.getWithBigInt("/rest/products/sort/desc");
         if (res && res.data && res.data.data) {
-        this.listProduct = res.data.data;
-        this.pagination.totalRows = res.data.data.length;
-        this.productListPaginate = res.data.data.slice(
-          0,
-          this.pagination.perPage
-        );
-      }
+          this.listProduct = res.data.data;
+          this.pagination.totalRows = res.data.data.length;
+          this.productListPaginate = res.data.data.slice(
+            0,
+            this.pagination.perPage
+          );
+        }
       }
     },
-    
+
     async getTopProduct() {
       // const res = await clientService.getListProduct()
       const res = await this.getWithBigInt("/rest/products/lastSixProducts");

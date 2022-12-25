@@ -263,30 +263,35 @@
           </div>
         </div>
         <div class="row">
-          <div v-for="(item, index) in productListPaginate"
-                :key="index" class="col-lg-3 col-md-4 col-sm-6">
+          <div
+            v-for="(item, index) in productListPaginate"
+            :key="index"
+            class="col-lg-3 col-md-4 col-sm-6"
+          >
             <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-              >
-              <img :src="item.mainImg" alt="">
+              <div class="product__item__pic set-bg">
+                <img :src="item.mainImg" alt="" />
               </div>
               <div class="product__item__text">
-                <h6><a @click="showProductDetail(item.productId)">{{item.productName}}</a></h6>
-                <h5>{{formatPrice(item.sellPrice)}}đ</h5>
+                <h6>
+                  <a @click="showProductDetail(item.productId)">{{
+                    item.productName
+                  }}</a>
+                </h6>
+                <h5>{{ formatPrice(item.sellPrice) }}đ</h5>
               </div>
             </div>
           </div>
         </div>
         <div class="t-mx-auto t-w-fit">
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="listProductbyCategory.length"
-                :per-page="pagination.perPage"
-                aria-controls="my-table"
-                @change="onPageChanged"
-              ></b-pagination>
-            </div>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="listProductbyCategory.length"
+            :per-page="pagination.perPage"
+            aria-controls="my-table"
+            @change="onPageChanged"
+          ></b-pagination>
+        </div>
       </div>
     </section>
     <!-- Related Product Section End -->
@@ -299,7 +304,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { handleJQuery, verifyAccountRole } from "@/common/utils";
+import { handleJQuery, verifyAccountRole, botChatAI } from "@/common/utils";
 import baseMixins from "../components/mixins/base";
 import moment from "moment-timezone";
 import { formatPriceSearchV2 } from "@/common/common";
@@ -319,9 +324,9 @@ export default {
   props: {},
   data() {
     return {
-      listProductbyCategory:null,
+      listProductbyCategory: null,
       productDetail: null,
-      cateId:null,
+      cateId: null,
       listImg: [],
       quantity: 1,
       currentProductId: null,
@@ -342,6 +347,7 @@ export default {
   },
   mounted() {
     // handleJQuery();
+    botChatAI();
     this.getDetailProduct();
     this.currentProductId = Number(this.$route.params.id);
     this.fetchReviews();
@@ -366,15 +372,18 @@ export default {
       if (res && res.data && res.data.data) {
         this.productDetail = res.data.data;
         this.cateId = res.data.data.category.categoryId;
-        const resCate = await this.getWithBigInt(`/rest/categories`, this.cateId);
-      if (resCate && resCate.data && resCate.data.data) {
-        this.listProductbyCategory = resCate.data.data.products;
-        this.pagination.totalRows = resCate.data.data.products.length;
-        this.productListPaginate = resCate.data.data.products.slice(
-          0,
-          this.pagination.perPage
+        const resCate = await this.getWithBigInt(
+          `/rest/categories`,
+          this.cateId
         );
-      }
+        if (resCate && resCate.data && resCate.data.data) {
+          this.listProductbyCategory = resCate.data.data.products;
+          this.pagination.totalRows = resCate.data.data.products.length;
+          this.productListPaginate = resCate.data.data.products.slice(
+            0,
+            this.pagination.perPage
+          );
+        }
       }
     },
     onPageChanged(page) {

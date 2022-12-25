@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import { handleJQuery } from "../common/utils";
+import { handleJQuery, botChatAI } from "../common/utils";
 import baseMixins from "../components/mixins/base";
 import { formatPriceSearchV2 } from "../common/common";
 import UserHeader from "../Layout/Components/UserHeader";
@@ -159,6 +159,7 @@ export default {
     };
   },
   mounted() {
+    botChatAI();
     this.getListCart();
     this.getListOrder();
   },
@@ -190,7 +191,6 @@ export default {
       if (res && res.data && res.data.data) {
         this.listOrder = res.data.data;
       }
-      console.log(this.listOrder);
     },
     async deleteCart() {
       if (!this.currentCart || !this.currentCart.cartId) return;
@@ -219,7 +219,6 @@ export default {
       if (res && res.data && res.data.data) {
         this.currentOrderDetail = res.data.data;
         this.$root.$emit("bv::show::modal", "modal-order-detail");
-        console.log(res);
       }
     },
     closeModalConfirmDeleteCart(cart) {
