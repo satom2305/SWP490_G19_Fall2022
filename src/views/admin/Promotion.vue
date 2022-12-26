@@ -112,7 +112,7 @@
                   <i class="fas fa-edit" style="font-size: 1.1rem"></i>
                 </a>
               </div>
-              <div class="px-3">
+              <!-- <div class="px-3">
                 <a
                   href="javascript:void(0)"
                   type="button"
@@ -125,7 +125,7 @@
                     style="font-size: 1.1rem; color: red"
                   ></i>
                 </a>
-              </div>
+              </div> -->
             </div>
           </template>
         </b-table>
@@ -271,7 +271,7 @@ import {
   CREATE_PROMOTION,
   UPDATE_PROMOTION,
   DELETE_PROMOTION,
-  SEARCH_PROMOTION_BY_CODE
+  SEARCH_PROMOTION_BY_CODE,
 } from "@/store/action.type";
 
 const initPromotion = {

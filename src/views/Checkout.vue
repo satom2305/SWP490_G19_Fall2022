@@ -55,7 +55,7 @@
                   'invalid-input': validationStatus($v.currentData.city),
                 }"
               >
-                <p>Thành phố<span>*</span></p>
+                <p>Tỉnh/Thành phố<span>*</span></p>
                 <input
                   type="text"
                   placeholder="Nhập tên thành phố"
@@ -77,7 +77,7 @@
                   'invalid-input': validationStatus($v.currentData.district),
                 }"
               >
-                <p>Phường/xã/huyện<span>*</span></p>
+                <p>Phường/xã/thị trấn<span>*</span></p>
                 <input
                   type="text"
                   placeholder="Nhập tên"
@@ -90,7 +90,7 @@
                   v-if="!$v.currentData.district.required"
                   class="invalid-feedback"
                 >
-                  Phường/xã/huyện không được để trống.
+                  Phường/Xã/Thị trấn không được để trống.
                 </div>
               </div>
               <div
@@ -99,7 +99,7 @@
                   'invalid-input': validationStatus($v.currentData.wards),
                 }"
               >
-                <p>Quận/Thị trấn<span>*</span></p>
+                <p>Quận/Huyện<span>*</span></p>
                 <input
                   type="text"
                   placeholder="Nhập tên"
@@ -112,7 +112,7 @@
                   v-if="!$v.currentData.wards.required"
                   class="invalid-feedback"
                 >
-                  Quận/Thị trấn không được để trống.
+                  Quận/Huyện không được để trống.
                 </div>
               </div>
               <div class="row">
@@ -172,7 +172,7 @@
                   "
                   class="site-btn"
                   @click="handlePromotion(currentData.promotion)"
-                  style="cursor:pointer"
+                  style="cursor:pointer;margin-top: 10px;"
                 >
                   Áp mã giảm giá
                 </button>

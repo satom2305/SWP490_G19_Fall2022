@@ -55,7 +55,12 @@
                   <li>{{ dateFormat }}</li>
                 </ul>
               </div>
-              <img :src="blogDetail.image_link_detail" alt="" />
+              <img
+                :src="blogDetail.image_link_detail"
+                width="300"
+                height="300"
+                alt=""
+              />
               <p>
                 {{ blogDetail.content }}
               </p>
@@ -118,7 +123,12 @@
           >
             <div class="blog__item">
               <div class="blog__item__pic">
-                <img :src="item.image_link_thumbnail" height="300" alt="" />
+                <img
+                  :src="item.image_link_thumbnail"
+                  width="300"
+                  height="300"
+                  alt=""
+                />
               </div>
               <div class="blog__item__text">
                 <ul>

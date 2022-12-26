@@ -77,7 +77,7 @@
                 {{ formatPrice(productDetail.sellPrice) }}đ
               </div>
               <p>
-                {{ productDetail.description }}
+                {{ productDetail.category.categoryName }}
               </p>
               <div class="product__details__quantity">
                 <div class="quantity">
@@ -136,8 +136,9 @@
                   ]"
                   id="tabs-1"
                   role="tabpanel"
+                  style="font-size: 16px;"
                 >
-                  Sản phẩm cây cối.
+                  {{ productDetail.description }}
                 </div>
                 <div
                   :class="['tab-pane', { active: currentNav === 'reviews' }]"
@@ -270,7 +271,7 @@
           >
             <div class="product__item">
               <div class="product__item__pic set-bg">
-                <img :src="item.mainImg" alt="" />
+                <img :src="item.mainImg" height="300" alt="" />
               </div>
               <div class="product__item__text">
                 <h6>

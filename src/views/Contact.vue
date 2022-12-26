@@ -60,7 +60,14 @@
     <!-- Map Begin -->
     <ModalMap />
     <!-- Map End -->
-
+    <div
+      style="font-weight: bold;text-align: center; padding-top: 50px;font-size: 16px;"
+    >
+      Chủ tài khoản : Trần Quang Minh <br />
+      Ngân hàng : MB bank<br />
+      Số tài khoản : 9704 2292 0103 6493<br />
+      Nội dung chuyển khoản : "tên tài khoản" + mua cây
+    </div>
     <!-- Contact Form Begin -->
     <div class="contact-form spad">
       <div class="container"></div>

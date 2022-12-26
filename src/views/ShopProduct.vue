@@ -55,7 +55,7 @@
                         class="latest-product__item"
                       >
                         <div class="latest-product__item__pic">
-                          <img :src="item.mainImg" alt="" />
+                          <img :src="item.mainImg" alt="" height="300" />
                         </div>
                         <div class="latest-product__item__text">
                           <h6>{{ item.productName }}</h6>

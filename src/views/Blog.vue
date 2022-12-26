@@ -57,7 +57,12 @@
               >
                 <div class="blog__item">
                   <div class="blog__item__pic">
-                    <img :src="item.image_link_thumbnail" alt="" />
+                    <img
+                      :src="item.image_link_thumbnail"
+                      width="300"
+                      height="300"
+                      alt=""
+                    />
                   </div>
                   <div class="blog__item__text">
                     <ul>

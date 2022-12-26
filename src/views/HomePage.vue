@@ -279,13 +279,7 @@
             class="col"
           >
             <div class="blog__item" @click="showBlogDetail(item.postId)">
-              <div class="blog__item__pic">
-                <img
-                  :src="item.image_link_thumbnail"
-                  width="300"
-                  height="300"
-                />
-              </div>
+              <img :src="item.image_link_thumbnail" width="300" height="300" />
               <div class="blog__item__text">
                 <h5>
                   <a>{{ item.title }}</a>
