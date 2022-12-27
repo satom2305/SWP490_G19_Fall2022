@@ -136,7 +136,7 @@ export default {
   position: absolute;
   top: 0;
   width: 90%;
-  z-index: 1000000;
+  z-index: 999;
   background: #fff;
 }
 .row {

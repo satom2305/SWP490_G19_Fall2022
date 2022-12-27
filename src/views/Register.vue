@@ -298,6 +298,11 @@ export default {
         response.data.status === "ok" &&
         response.data.success == true
       ) {
+        this.$message({
+          message: "Đăng kí tài khoản thành công!",
+          type: "success",
+          showClose: true,
+        });
         this.navigateToLogin();
       } else {
         this.$message({

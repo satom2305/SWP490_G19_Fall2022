@@ -188,16 +188,19 @@
                   <li>
                     {{ item.product.productName }} x
                     {{ item.quantity }}
-                    <span>{{
-                      formatPrice(item.product.sellPrice * item.quantity)
-                    }}</span>
+                    <span
+                      >{{
+                        formatPrice(item.product.sellPrice * item.quantity)
+                      }}đ</span
+                    >
                   </li>
                 </ul>
                 <div class="checkout__order__subtotal">
                   Giá <span>{{ formatPrice(subPrice) }}đ</span>
                 </div>
                 <div class="checkout__order__total">
-                  Giảm giá <span>{{ formatPrice(subPrice - totalPrice) }}</span>
+                  Giảm giá
+                  <span>{{ formatPrice(subPrice - totalPrice) }}đ</span>
                 </div>
                 <div class="checkout__order__total">
                   Tổng giá đơn hàng <span>{{ formatPrice(totalPrice) }}đ</span>

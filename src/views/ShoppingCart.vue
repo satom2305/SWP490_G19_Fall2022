@@ -112,12 +112,9 @@
                 v-if="listCart && listCart.length > 0"
                 class="primary-btn cart-btn cart-btn-right"
                 style="border: none; cursor: pointer"
-                @click="confirmUpdateCart"
+                @click="updateListCart()"
               >
-                <span v-if="!toggleUpdateCart">Cập nhật</span>
-                <span @click="updateListCart()" v-if="toggleUpdateCart"
-                  >Xác nhận</span
-                >
+                <span>{{ toggleUpdateCart ? "Xác nhận" : "Cập nhật" }}</span>
               </button>
             </div>
           </div>
@@ -254,22 +251,25 @@ export default {
       }
     },
     async updateListCart() {
-      localStorage.setItem("quantity", JSON.stringify(this.listCart));
-      this.cartData = JSON.parse(localStorage.getItem("quantity"));
-      let payloadforUpdateCart = this.cartData.map((item) => {
-        return {
-          cartId: item.cartId,
-          productId: item.product.productId,
-          quantity: item.quantity,
-          userId: item.user.userId,
-        };
-      });
-      const res = await this.put(
-        "/rest/carts/updateListCart",
-        payloadforUpdateCart
-      );
-      if (res && res.data && res.data.data) {
-        this.listCart = res.data.data;
+      this.confirmUpdateCart();
+      if (!this.toggleUpdateCart) {
+        localStorage.setItem("quantity", JSON.stringify(this.listCart));
+        this.cartData = JSON.parse(localStorage.getItem("quantity"));
+        let payloadforUpdateCart = this.cartData.map((item) => {
+          return {
+            cartId: item.cartId,
+            productId: item.product.productId,
+            quantity: item.quantity,
+            userId: item.user.userId,
+          };
+        });
+        const res = await this.put(
+          "/rest/carts/updateListCart",
+          payloadforUpdateCart
+        );
+        if (res && res.data && res.data.data) {
+          this.listCart = res.data.data;
+        }
       }
     },
     async deleteCart() {
@@ -288,6 +288,7 @@ export default {
     },
     onChangeQuantity(quantity, cart, maxQuantity) {
       if (quantity <= maxQuantity) {
+        console.log(quantity, cart, maxQuantity);
         cart.quantity = quantity;
       } else {
         cart.quantity = maxQuantity;

@@ -114,7 +114,9 @@
         <b-row>
           <b-col md="4">
             <b-form-group>
-              <label>Phường/xã/huyện <span class="text-danger">*</span>:</label>
+              <label
+                >Phường/xã/thị trấn <span class="text-danger">*</span>:</label
+              >
               <b-form-input
                 id="input-district"
                 type="text"
@@ -129,13 +131,13 @@
                 v-if="!$v.currentData.district.required"
                 class="invalid-feedback"
               >
-                Phường/xã/huyện không được để trống.
+                Phường/xã/thị trấn không được để trống.
               </div>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group>
-              <label>Quận/Thị trấn <span class="text-danger">*</span>:</label>
+              <label>Quận/Huyện <span class="text-danger">*</span>:</label>
               <b-form-input
                 id="input-wards"
                 type="text"
@@ -150,13 +152,13 @@
                 v-if="!$v.currentData.wards.required"
                 class="invalid-feedback"
               >
-                Quận/Thị trấn không được để trống.
+                Quận/Huyện không được để trống.
               </div>
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group>
-              <label>Thành phố <span class="text-danger">*</span>:</label>
+              <label>Tỉnh/Thành phố <span class="text-danger">*</span>:</label>
               <b-form-input
                 id="input-city"
                 type="text"
@@ -171,7 +173,7 @@
                 v-if="!$v.currentData.city.required"
                 class="invalid-feedback"
               >
-                Thành phố không được để trống.
+                Tỉnh/Thành phố không được để trống.
               </div>
             </b-form-group>
           </b-col>
@@ -491,6 +493,24 @@ export default {
     },
   },
   methods: {
+    // onChangeQuantity(quantity, item, maxQuantity, index) {
+    //   const numberQuantity = Number(quantity);
+    //   const newItem = { ...item }; // destructuring
+    //   let result = 0;
+    //   if (numberQuantity <= maxQuantity) {
+    //     result = numberQuantity;
+    //   } else {
+    //     result = maxQuantity;
+    //   }
+    //   newItem.quantity = result;
+
+    //   this.currentDetailData[index] = newItem;
+
+    //   console.log(this.currentDetailData[index]);
+    //   // this.calculateOrderPrice(index);
+
+    //   this.$nextTick(() => {});
+    // },
     checkInvalidProduct() {
       if (this.currentDetailData && this.currentDetailData.length > 0) {
         let incorrectDetail = this.currentDetailData.filter(

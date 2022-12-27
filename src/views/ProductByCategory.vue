@@ -107,7 +107,12 @@
                     class="product__item"
                   >
                     <div class="product__item__pic set-bg">
-                      <img :src="item.mainImg" alt="" />
+                      <img
+                        :src="item.mainImg"
+                        alt=""
+                        width="250"
+                        height="250"
+                      />
                       <!-- <ul class="product__item__pic__hover">
                         <li>
                           <a href="#"><i class="fa fa-shopping-cart"></i></a>

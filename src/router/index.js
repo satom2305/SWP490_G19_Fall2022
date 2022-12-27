@@ -180,8 +180,8 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     localStorage.setItem('savedPath', to.fullPath)
   }
-  const publicPages = ['/', '/login', '/config-api', '/register', '/reset-password', '/shop-detail', '/search']
-  const publicNestedPages = ['/shop-detail', '/search']
+  const publicPages = ['/', '/login', '/config-api', '/register', '/reset-password', '/shop-detail', '/search','/contact','/Blog','/blog-detail','/shop-product','/product-category']
+  const publicNestedPages = ['/shop-detail', '/search','/product-category','/blog-detail']
 
   const authRequired = !publicPages.includes(to.path) && (publicNestedPages.filter(path => to.path.includes(path)).length === 0)
   const isAdmin = StorageService.get("userInfo") && JSON.parse(StorageService.get("userInfo")).role === '[ADMIN]'

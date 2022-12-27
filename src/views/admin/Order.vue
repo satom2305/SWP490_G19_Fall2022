@@ -503,7 +503,7 @@ export default {
     },
     formatDateTime(date) {
       if (!date) return "";
-      return formatDateTime(new Date(date));
+      return formatDateTime(new Date(date), false);
     },
     formatPrice(price) {
       if (!price) return "";

@@ -150,10 +150,14 @@ import { required } from "vuelidate/lib/validators";
 import { mapGetters } from "vuex";
 import router from "@/router";
 import { formatDateTime } from "../../common/utils";
-import { FETCH_POSTS, DELETE_POST ,FETCH_POST_BY_TITLE} from "@/store/action.type";
+import {
+  FETCH_POSTS,
+  DELETE_POST,
+  FETCH_POST_BY_TITLE,
+} from "@/store/action.type";
 import debounce from "lodash/debounce";
 const initDataFilter = {
-  postTitle:null,
+  postTitle: null,
   page: 1,
   limit: 10,
 };
@@ -178,27 +182,27 @@ export default {
           tdClass: "align-middle",
           thClass: "align-middle",
           visible: true,
-          thStyle: { width: "4%" },
+          thStyle: { width: "10%" },
         },
         {
           key: "title",
           label: "Tiêu đề bài đăng",
           visible: true,
-          thStyle: { width: "8%" },
+          thStyle: { width: "50%" },
           thClass: "text-left align-middle",
         },
         {
           key: "date",
           label: "Ngày đăng",
           visible: true,
-          thStyle: { width: "8%" },
+          thStyle: { width: "20%" },
           thClass: "text-left align-middle",
         },
         {
           key: "actions",
           label: "Chức năng",
           visible: true,
-          thStyle: { width: "5%" },
+          thStyle: { width: "20%" },
           thClass: "text-center align-middle",
         },
       ],
@@ -253,7 +257,7 @@ export default {
     },
     formatDateTime(date) {
       if (!date) return "";
-      return formatDateTime(new Date(date));
+      return formatDateTime(new Date(date), false);
     },
     changePage(e) {
       this.dataFilter.page = e;
